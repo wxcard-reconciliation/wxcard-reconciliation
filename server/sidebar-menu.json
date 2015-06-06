@@ -1,0 +1,49 @@
+[
+  {
+    "text": "Main Navigation",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "Dashboard",
+    "icon": "icon-speedometer",
+    "sref": "app.dashboard",
+    "label": "label label-info", 
+    "translate": "sidebar.nav.DASHBOARD"
+  },
+  {
+    "text": "Reconciliation",
+    "icon": "icon-list",
+    "sref": "app.dashboard_v2",
+    "translate": "sidebar.nav.RECONCILIATION"
+  },
+  {
+    "text": "Clients",
+    "icon": "fa fa-users",
+    "sref": "app.dashboard_v3",
+    "translate": "sidebar.nav.CLIENTS"
+  },
+  {
+    "text": "System Function",
+    "heading": "true",
+    "translate": "sidebar.heading.SYSTEM"
+  },
+  {
+    "text": "My Account",
+    "icon": "icon-user",
+    "sref": "app.myaccount",
+    "translate": "sidebar.nav.MYACCOUNT"
+  },
+  {
+    "text": "Accounts",
+    "icon": "icon-users",
+    "sref": "app.accounts",
+    "translate": "sidebar.nav.ACCOUNTS"
+  },
+  {
+    "text": "Exit",
+    "icon": "icon-logout",
+    "sref": "page.login",
+    "translate": "sidebar.nav.EXIT"
+  }
+]
