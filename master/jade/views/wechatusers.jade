@@ -1,0 +1,23 @@
+h3
+  | 客户列表
+  from.pull-right.col-sm-3
+    .input-group
+      span.input-group-addon
+        .icon-magnifier
+      input.form-control(type='text', placeholder="输入用户名字", ng-model="filter.text", ui-keypress="{13:'tableParams.reload()'}")
+  
+.container-fluid
+  
+  .panel.panel-default
+    .table-responsive
+      table.table.table-bordered.table-striped(ng-table='tableParams')
+        tbody
+          tr(ng-repeat='entity in $data')
+            td(data-title="'用户头像'") 
+              img.img-thumbnail.img-circle(ng-src="{{entity.headimgurl}}", alt="", width="60", height="60")
+            td(data-title="'用户昵称'") {{entity.nickname}}
+            td(data-title="'用户备注'") {{entity.remark}}
+            td(data-title="'性别'") {{entity.sex}}
+            td(data-title="'地区'") {{entity.country}} {{entity.province}} {{entity.city}}
+            td(data-title="'语言'") {{entity.language}}
+            td(data-title="'注册日期'") {{entity.subscribe_time}}

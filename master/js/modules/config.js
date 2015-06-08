@@ -340,6 +340,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         title: 'My Account',
         templateUrl: helper.basepath('account.html')
     })
+    .state('app.wechatusers', {
+        url: '/wechatusers',
+        title: 'Wechatusers List',
+        templateUrl: helper.basepath('wechatusers.html'),
+        resolve: helper.resolveFor('ngTable'),
+        controller: 'WechatusersController'
+    })
     .state('app.accounts', {
         url: '/accounts',
         title: 'Accounts List',

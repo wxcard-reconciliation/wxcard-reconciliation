@@ -20,7 +20,7 @@
   {
     "text": "Clients",
     "icon": "fa fa-users",
-    "sref": "app.dashboard_v3",
+    "sref": "app.wechatusers",
     "translate": "sidebar.nav.CLIENTS"
   },
   {
