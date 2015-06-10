@@ -411,23 +411,42 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('documentation.html'),
         resolve: helper.resolveFor('flatdoc')
     })
-    .state('app.myaccount', {
-        url: '/accounts/:accountId',
-        title: 'My Account',
-        templateUrl: helper.basepath('account.html')
+    .state('app.reconciliation', {
+        url: '/reconciliations/:reconciliationId',
+        title: 'Reconciliation Statement',
+        templateUrl: helper.basepath('reconciliation.html')
+    })
+    .state('app.coupon-records', {
+        url: '/coupon-records',
+        title: 'Coupon Records',
+        templateUrl: helper.basepath('coupon-records.html'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
+        controller: 'CouponRecordsController'
+    })
+    .state('app.coupon-record', {
+        url: '/coupon-records/:recordId',
+        title: 'Coupon Record Detail',
+        templateUrl: helper.basepath('coupon-record.html'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
+        controller: 'CouponRecordController'
     })
     .state('app.wechatusers', {
         url: '/wechatusers',
         title: 'Wechatusers List',
         templateUrl: helper.basepath('wechatusers.html'),
-        resolve: helper.resolveFor('ngTable'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'WechatusersController'
+    })
+    .state('app.myaccount', {
+        url: '/accounts/:accountId',
+        title: 'My Account',
+        templateUrl: helper.basepath('account.html')
     })
     .state('app.accounts', {
         url: '/accounts',
         title: 'Accounts List',
         templateUrl: helper.basepath('accounts.html'),
-        resolve: helper.resolveFor('ngTable'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'AccountsController'
     })
     .state('app.accounts-add', {
@@ -1843,6 +1862,63 @@ App.controller('CodeEditorController', ['$scope', '$http', '$ocLazyLoad', functi
    return $resource('server/editor/filetree.json');
 }]);
 
+/**=========================================================
+ * Module: coupons-ctrl.js
+ * CouponRecords Controller
+ =========================================================*/
+
+App.controller('CouponRecordsController', ["$scope", "CouponRecord", "ngTableParams", function ($scope, CouponRecord, ngTableParams) {
+  
+  $scope.filter = {text: ''}
+  $scope.tableParams = new ngTableParams({
+    count: 10,
+    filter: $scope.filter.text
+  }, {
+    getData: function($defer, params) {
+      var opt = {order: 'created DESC'}
+      opt.limit = params.count()
+      opt.skip = (params.page()-1)*opt.limit
+      opt.where = {}
+      if($scope.filter.text != '') {
+        opt.where.name = {like: $scope.filter.text}
+      }
+      CouponRecord.find({filter:opt}, function (result) {
+        $scope.tableParams.total(result.count)
+        $defer.resolve(result.data.users)
+      })
+    }
+  })   
+}])
+
+App.controller('CouponRecordController', ["$scope", "CouponRecord", "$state", "toaster", function ($scope, CouponRecord, $state, toaster) {
+
+  var accountId = $state.params.accountId || $scope.user.id
+  $scope.entity = CouponRecord.findById({id: accountId})
+  
+  $scope.submitted = false;
+  $scope.validateInput = function(name, type) {
+    var input = $scope.formValidate[name];
+    return (input.$dirty || $scope.submitted) && input.$error[type];
+  };
+
+  // Submit form
+  $scope.submitForm = function() {
+    $scope.submitted = true;
+    if ($scope.formValidate.$valid) {
+      CouponRecord.prototype$updateAttributes($scope.entity.id, $scope.entity, function (entity) {
+        toaster.pop('success', '更新成功', '已经更新帐号 '+entity.name)
+        setTimeout(function () {
+          $state.go('app.wechatusers')
+        }, 2000)
+      }, function (res) {
+        toaster.pop('error', '更新错误', res.data.error.message)
+      })
+    } else {
+      return false;
+    }
+  };
+  
+}])
 /**=========================================================
  * Module: datepicker,js
  * DateTime Picker init
@@ -7423,6 +7499,47 @@ App.service('vectorMap', function() {
         }
   };
 });
+/**=========================================================
+ * Module: common-filter.js
+ * Filter for common use 
+ =========================================================*/
+
+App.filter("moment", function () {
+  return function (input, format) {
+    return moment(input).format(format || 'YYYY-MM-DD HH:mm:ss');
+  }
+});
+
+App.filter("moment_unix", function () {
+  return function (input, format) {
+    return moment.unix(input).format(format || 'YYYY-MM-DD HH:mm:ss');
+  }
+});
+
+App.filter("language", function () {
+  var languages = {
+    'zh_CN': '简体中文',
+    'zh_TW': '繁体中文',
+    'en': '英文'
+  };
+  return function (input) {
+    return languages[input];
+  }
+});
+
+/**=========================================================
+ * Module: wechat-filter.js
+ * Filter for wchat 
+ =========================================================*/
+
+App.filter("wechat_sex", function () {
+  var sexs = ['保密','男','女'];
+  return function (input) {
+    return sexs[input];
+  }
+});
+
+
 // To run this code, edit file 
 // index.html or index.jade and change
 // html data-ng-app attribute from

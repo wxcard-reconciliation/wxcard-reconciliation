@@ -12,10 +12,32 @@
     "translate": "sidebar.nav.DASHBOARD"
   },
   {
+    "text": "Coupon",
+    "heading": "true",
+    "translate": "sidebar.heading.COUPON"
+  },
+  {
     "text": "Reconciliation",
-    "icon": "icon-list",
-    "sref": "app.dashboard_v2",
+    "icon": "fa fa-columns",
+    "sref": "app.reconciliation",
     "translate": "sidebar.nav.RECONCILIATION"
+  },
+  {
+    "text": "Reconciliation History",
+    "icon": "fa fa-history",
+    "sref": "app.icons-font",
+    "translate": "sidebar.nav.RECONCILIATIONHISTORY"
+  },
+  {
+    "text": "Coupon Records",
+    "icon": "icon-list",
+    "sref": "app.coupon-records",
+    "translate": "sidebar.nav.COUPONRECORDS"
+  },
+  {
+    "text": "Base Information",
+    "heading": "true",
+    "translate": "sidebar.heading.BASEINFO"
   },
   {
     "text": "Clients",

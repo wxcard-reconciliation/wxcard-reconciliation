@@ -335,23 +335,42 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('documentation.html'),
         resolve: helper.resolveFor('flatdoc')
     })
-    .state('app.myaccount', {
-        url: '/accounts/:accountId',
-        title: 'My Account',
-        templateUrl: helper.basepath('account.html')
+    .state('app.reconciliation', {
+        url: '/reconciliations/:reconciliationId',
+        title: 'Reconciliation Statement',
+        templateUrl: helper.basepath('reconciliation.html')
+    })
+    .state('app.coupon-records', {
+        url: '/coupon-records',
+        title: 'Coupon Records',
+        templateUrl: helper.basepath('coupon-records.html'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
+        controller: 'CouponRecordsController'
+    })
+    .state('app.coupon-record', {
+        url: '/coupon-records/:recordId',
+        title: 'Coupon Record Detail',
+        templateUrl: helper.basepath('coupon-record.html'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
+        controller: 'CouponRecordController'
     })
     .state('app.wechatusers', {
         url: '/wechatusers',
         title: 'Wechatusers List',
         templateUrl: helper.basepath('wechatusers.html'),
-        resolve: helper.resolveFor('ngTable'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'WechatusersController'
+    })
+    .state('app.myaccount', {
+        url: '/accounts/:accountId',
+        title: 'My Account',
+        templateUrl: helper.basepath('account.html')
     })
     .state('app.accounts', {
         url: '/accounts',
         title: 'Accounts List',
         templateUrl: helper.basepath('accounts.html'),
-        resolve: helper.resolveFor('ngTable'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'AccountsController'
     })
     .state('app.accounts-add', {

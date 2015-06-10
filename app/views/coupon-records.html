@@ -1,0 +1,28 @@
+<h3>优惠券记录
+   <from class="pull-right col-sm-3">
+      <div class="input-group">
+         <span class="input-group-addon">
+            <div class="icon-magnifier"></div>
+         </span>
+         <input type="text" placeholder="输入优惠卷编号" ng-model="filter.text" ui-keypress="{13:'tableParams.reload()'}" class="form-control" />
+      </div>
+   </from>
+</h3>
+<div class="container-fluid">
+   <div class="panel panel-default">
+      <div class="table-responsive">
+         <table ng-table="tableParams" class="table table-bordered table-striped">
+            <tbody>
+               <tr ng-repeat="entity in $data" ui-sref="app.coupon-record({recordId: entity.id})">
+                  <td data-title="'优惠卷编号'">{{entity.email}}</td>
+                  <td data-title="'优惠卷名称'">{{entity.name}}</td>
+                  <td data-title="'类型'">{{entity.job}}</td>
+                  <td data-title="'申领用户'">{{entity.phone}}</td>
+                  <td data-title="'申领日期'">{{entity.created | moment}}</td>
+                  <td data-title="'是否核销'">{{entity.email}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
