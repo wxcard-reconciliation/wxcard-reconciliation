@@ -11,16 +11,16 @@ App.controller('CouponRecordsController', function ($scope, CouponRecord, ngTabl
     filter: $scope.filter.text
   }, {
     getData: function($defer, params) {
-      var opt = {order: 'created DESC'}
+      var opt = {order: 'add_time DESC', include: 'coupon', includeWechatuser: true}
       opt.limit = params.count()
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
         opt.where.name = {like: $scope.filter.text}
       }
-      CouponRecord.find({filter:opt}, function (result) {
+      CouponRecord.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
-        $defer.resolve(result.data.users)
+        CouponRecord.find({filter:opt}, $defer.resolve)
       })
     }
   })   
