@@ -19,6 +19,10 @@ App.controller('DashboardController', function ($scope, CouponRecord) {
     
     CouponRecord.count({where:{is_use: 1}}, function (result) {
       $scope.statistic.cliped = result.count;
+    });
+    
+    CouponRecord.countUser({}, function (result) {
+      $scope.statistic.activeClient = result.count;
     })
   }
   
