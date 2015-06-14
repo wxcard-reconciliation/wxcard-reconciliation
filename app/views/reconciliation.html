@@ -1,6 +1,32 @@
 <h3>
-   <button type="button" class="btn btn-primary pull-right">
-      <em class="fa fa-plus-circle fa-fw mr-sm"></em>生成对账清单</button>核销对账清单</h3>
+   核销对账清单
+   <a type="button" ng-click="make()" class="btn btn-primary pull-right mr-sm">
+      <em class="fa fa-plus-circle fa-fw mr-sm"></em>生成</a>
+   <a type="button" ng-click="try()" class="btn btn-default pull-right mr-sm">
+      <em class="fa fa-search fa-fw mr-sm"></em>试算</a>
+   <div class="pull-right col-sm-6">
+      <div class="col-sm-6">
+         <p class="input-group">
+            <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="beginDate" is-open="openeds[1]" max-date="'2015-06-22'" ng-required="true" close-text="Close" class="form-control" />
+            <span class="input-group-btn">
+               <button type="button" ng-click="open($event, 1)" class="btn btn-default">
+                  <em class="fa fa-calendar"></em>
+               </button>
+            </span>
+         </p>
+      </div>
+      <div class="col-sm-6">
+         <p class="input-group">
+            <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="endDate" is-open="openeds[0]" max-date="'2015-06-22'" ng-required="true" close-text="Close" class="form-control" />
+            <span class="input-group-btn">
+               <button type="button" ng-click="open($event, 0)" class="btn btn-default">
+                  <em class="fa fa-calendar"></em>
+               </button>
+            </span>
+         </p>
+      </div>
+   </div>
+</h3>
 <div class="panel">
    <div class="panel-body">
       <h3 class="mt0">对账单 00004879</h3>
@@ -43,8 +69,12 @@
                <p class="pull-right mr">00004879</p>
             </div>
             <div class="clearfix">
-               <p class="pull-left">日期</p>
-               <p class="pull-right mr">25/08/2014</p>
+               <p class="pull-left">起始日期</p>
+               <p class="pull-right mr">{{beginDate}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">截至日期</p>
+               <p class="pull-right mr">{{endDate}}</p>
             </div>
          </div>
       </div>

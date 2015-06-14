@@ -29,7 +29,8 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/dashboard',
         title: 'Dashboard',
         templateUrl: helper.basepath('dashboard.html'),
-        resolve: helper.resolveFor('flot-chart','flot-chart-plugins')
+        resolve: helper.resolveFor('flot-chart','flot-chart-plugins'),
+        controller: 'DashboardController'
     })
     .state('app.dashboard_v2', {
         url: '/dashboard_v2',
@@ -338,7 +339,9 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     .state('app.reconciliation', {
         url: '/reconciliations/:reconciliationId',
         title: 'Reconciliation Statement',
-        templateUrl: helper.basepath('reconciliation.html')
+        templateUrl: helper.basepath('reconciliation.html'),
+        resolve: helper.resolveFor('moment'),
+        controller: 'ReconciliationController'
     })
     .state('app.coupon-records', {
         url: '/coupon-records',

@@ -1,8 +1,24 @@
 h3 
-  button(type='button').btn.btn-primary.pull-right
-    em.fa.fa-plus-circle.fa-fw.mr-sm
-    | 生成对账清单
   | 核销对账清单
+  a(type='button' ng-click='make()').btn.btn-primary.pull-right.mr-sm
+    em.fa.fa-plus-circle.fa-fw.mr-sm
+    | 生成
+  a(type='button' ng-click='try()').btn.btn-default.pull-right.mr-sm
+    em.fa.fa-search.fa-fw.mr-sm
+    | 试算
+  .pull-right.col-sm-6
+    .col-sm-6
+      p.input-group
+        input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="beginDate", is-open='openeds[1]', max-date="'2015-06-22'", ng-required='true', close-text='Close')
+        span.input-group-btn
+          button.btn.btn-default(type='button', ng-click='open($event, 1)')
+            em.fa.fa-calendar  
+    .col-sm-6
+      p.input-group
+        input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="endDate", is-open='openeds[0]', max-date="'2015-06-22'", ng-required='true', close-text='Close')
+        span.input-group-btn
+          button.btn.btn-default(type='button', ng-click='open($event, 0)')
+            em.fa.fa-calendar
 
 .panel
   .panel-body
@@ -36,9 +52,11 @@ h3
           p.pull-left 对账单号
           p.pull-right.mr 00004879
         .clearfix
-          p.pull-left 日期
-          p.pull-right.mr 25/08/2014
-
+          p.pull-left 起始日期
+          p.pull-right.mr {{beginDate}}
+        .clearfix
+          p.pull-left 截至日期
+          p.pull-right.mr {{endDate}}
     .table-responsive.table-bordered.mb-lg
       table.table
         thead
