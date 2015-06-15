@@ -12,7 +12,7 @@ h3
     .table-responsive
       table.table.table-bordered.table-striped(ng-table='tableParams')
         tbody
-          tr.text-center(ng-repeat='entity in $data' ui-sref='app.coupon-record({recordId: entity.id})')
+          tr.text-center(ng-repeat='entity in $data')
             td(data-title="'优惠卷编号'") {{entity.cancel_code}}
             td(data-title="'优惠卷名称'") {{entity.coupon.title}}
             td(data-title="'申领用户'") {{entity.wechatuser.nickname}}

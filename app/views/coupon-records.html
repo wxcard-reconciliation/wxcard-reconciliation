@@ -13,7 +13,7 @@
       <div class="table-responsive">
          <table ng-table="tableParams" class="table table-bordered table-striped">
             <tbody>
-               <tr ng-repeat="entity in $data" ui-sref="app.coupon-record({recordId: entity.id})" class="text-center">
+               <tr ng-repeat="entity in $data" class="text-center">
                   <td data-title="'优惠卷编号'">{{entity.cancel_code}}</td>
                   <td data-title="'优惠卷名称'">{{entity.coupon.title}}</td>
                   <td data-title="'申领用户'">{{entity.wechatuser.nickname}}</td>

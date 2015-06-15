@@ -49,6 +49,7 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
   }
   
   $scope.try = function () {
+    $scope.reconciliateDate = moment().format('YYYY-MM-DD')
     var filter = {
       where:{use_time:{between: [
         moment($scope.beginDate).unix(), 
