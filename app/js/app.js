@@ -416,7 +416,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/reconciliations/:reconciliationId',
         title: 'Reconciliation Statement',
         templateUrl: helper.basepath('reconciliation.html'),
-        resolve: helper.resolveFor('moment'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'ReconciliationController'
     })
     .state('app.coupon-records', {
@@ -815,36 +815,15 @@ App.controller('ReconciliationsController', ["$scope", "Reconciliation", "ngTabl
   })   
 }])
 
-App.controller('ReconciliationController', ["$scope", "Reconciliation", "$state", "toaster", function ($scope, Reconciliation, $state, toaster) {
+App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", "toaster", function ($scope, CouponRecord, $state, toaster) {
 
-  var accountId = $state.params.accountId || $scope.user.id
+  // var accountId = $state.params.accountId || $scope.user.id
   // $scope.entity = Reconciliation.findById({id: accountId})
-  
-  $scope.submitted = false;
-  $scope.validateInput = function(name, type) {
-    var input = $scope.formValidate[name];
-    return (input.$dirty || $scope.submitted) && input.$error[type];
-  };
-
-  // Submit form
-  $scope.submitForm = function() {
-    $scope.submitted = true;
-    if ($scope.formValidate.$valid) {
-      Reconciliation.prototype$updateAttributes($scope.entity.id, $scope.entity, function (entity) {
-        toaster.pop('success', '更新成功', '已经更新帐号 '+entity.name)
-        setTimeout(function () {
-          $state.go('app.reconciliations')
-        }, 2000)
-      }, function (res) {
-        toaster.pop('error', '更新错误', res.data.error.message)
-      })
-    } else {
-      return false;
-    }
-  };
+  $scope.entities = []
+  $scope.discountAmount = 0
   
   $scope.endDate = moment().format('YYYY-MM-DD')
-  $scope.beginDate = moment().subtract(7, 'days').format('YYYY-MM-DD')
+  $scope.beginDate = moment().subtract(30, 'days').format('YYYY-MM-DD')
   $scope.openeds = [false, false]
   $scope.open = function($event, index) {
     $event.preventDefault();
@@ -859,7 +838,21 @@ App.controller('ReconciliationController', ["$scope", "Reconciliation", "$state"
   }
   
   $scope.try = function () {
-    
+    var filter = {
+      where:{use_time:{between: [
+        moment($scope.beginDate).unix(), 
+        moment($scope.endDate+' 23:59:59').unix()
+      ]}},
+      includeWechatuser: true,
+      include: ['coupon', 'company']
+    };
+    CouponRecord.find({filter: filter}, function (result) {
+      $scope.entities = result
+      $scope.discountAmount = 0
+      $scope.entities.forEach(function (entity) {
+        $scope.discountAmount += entity.coupon && entity.coupon.reduce_cost || 0;
+      })
+    })
   }
 }])
 /**=========================================================

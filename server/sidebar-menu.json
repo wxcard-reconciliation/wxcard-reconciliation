@@ -23,12 +23,6 @@
     "translate": "sidebar.nav.RECONCILIATION"
   },
   {
-    "text": "Reconciliation History",
-    "icon": "fa fa-history",
-    "sref": "app.icons-font",
-    "translate": "sidebar.nav.RECONCILIATIONHISTORY"
-  },
-  {
     "text": "Coupon Records",
     "icon": "icon-list",
     "sref": "app.coupon-records",

@@ -1,11 +1,8 @@
 h3 
   | 核销对账清单
-  a(type='button' ng-click='make()').btn.btn-primary.pull-right.mr-sm
-    em.fa.fa-plus-circle.fa-fw.mr-sm
-    | 生成
-  a(type='button' ng-click='try()').btn.btn-default.pull-right.mr-sm
-    em.fa.fa-search.fa-fw.mr-sm
-    | 试算
+  a(type='button' ng-click='try()').btn.btn-primary.pull-right.mr-sm
+    em.fa.fa-calculator.fa-fw.mr-sm
+    | 生成对账清单
   .pull-right.col-sm-6
     .col-sm-6
       p.input-group
@@ -23,7 +20,7 @@ h3
 .panel
   .panel-body
     //- button(type="button").pull-right.btn.btn-default.btn-sm Copy this invoice
-    h3.mt0 对账单 00004879
+    h3.mt0 对账单 
     hr
 
     .row.mb-lg
@@ -33,7 +30,7 @@ h3
             em.fa.fa-bookmark-o.fa-4x.text-muted
           .col-md-10
             h2 
-              | 700 
+              | {{entities.length}} 
               small 张
             p 累计核销优惠卷  
       .col-lg-4.col-xs-6.br.pv
@@ -42,7 +39,7 @@ h3
             em.fa.fa-rmb.fa-4x.text-muted
           .col-md-10
             h2 
-              | 7500 
+              | {{discountAmount}} 
               small 元
             p 累计优惠金额
       .clearfix.hidden-md.hidden-lg
@@ -50,7 +47,7 @@ h3
       .col-lg-4.col-xs-12.pv
         .clearfix
           p.pull-left 对账单号
-          p.pull-right.mr 00004879
+          p.pull-right.mr {{moment()}}
         .clearfix
           p.pull-left 起始日期
           p.pull-right.mr {{beginDate}}
@@ -63,34 +60,18 @@ h3
           tr
             th 优惠卷编号
             th 优惠券名称
+            th 申领时间
+            th 核销时间
             th 核销加油站
-            th 收银员
-            th.text-right 金额
+            th.text-right 折扣金额
         tbody
-          tr
-            td 1001
-            td Iphone 5s - 64Gb
-            td 3
-            td $ 200
-            td.text-right $ 600
-          tr
-            td 2002
-            td Iphone 6s - 128Gb
-            td 5
-            td $ 500
-            td.text-right $ 2500
-          tr
-            td 3010
-            td Ipad 11z - 512Gb
-            td 1
-            td $ 650
-            td.text-right $ 650
-          tr
-            td 3009
-            td iMac ProRetina 17
-            td 6
-            td $ 1100
-            td.text-right $ 6600
+          tr(ng-repeat='entity in entities')
+            td {{entity.cancel_code}}
+            td {{entity.coupon.title|| entity.card_id}}
+            td {{entity.add_time | moment_unix}}
+            td {{entity.use_time | moment_unix}}
+            td {{entity.company.name || '远程核销'}}
+            td.text-right {{entity.coupon.reduce_cost || 0}}
 
     .row
       .col-sm-offset-8.col-sm-4.pv
@@ -102,7 +83,7 @@ h3
         //-   p.pull-right.mr $ 2700
         .clearfix
           p.pull-left.h3 总计
-          p.pull-right.mr.h3 ¥ 13000
+          p.pull-right.mr.h3 ¥ {{discountAmount}}
 
     hr.hidden-print
     .clearfix
