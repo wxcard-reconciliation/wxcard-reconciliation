@@ -146,7 +146,8 @@ App
       {name: 'angular-chartist',          files: ['vendor/chartist/dist/chartist.min.css',
                                                   'vendor/chartist/dist/chartist.js',
                                                   'vendor/angular-chartist.js/dist/angular-chartist.js'], serie: true},
-      {name: 'ui.map',                    files: ['vendor/angular-ui-map/ui-map.js']}
+      {name: 'ui.map',                    files: ['vendor/angular-ui-map/ui-map.js']},
+      {name: 'angularjs-region',          files: ['vendor/angularjs-region/angularjs-region.js']}
     ]
   })
 ;

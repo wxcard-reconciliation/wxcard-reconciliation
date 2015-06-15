@@ -20,11 +20,11 @@ h3
 .panel
   .panel-body
     //- button(type="button").pull-right.btn.btn-default.btn-sm Copy this invoice
-    h3.mt0 对账单 
+    h3.mt0 对账单  
     hr
 
     .row.mb-lg
-      .col-lg-4.col-xs-6.br.pv
+      .col-lg-3.col-xs-6.br.pv
         .row
           .col-md-2.text-center.visible-md.visible-lg
             em.fa.fa-bookmark-o.fa-4x.text-muted
@@ -33,7 +33,7 @@ h3
               | {{entities.length}} 
               small 张
             p 累计核销优惠卷  
-      .col-lg-4.col-xs-6.br.pv
+      .col-lg-3.col-xs-6.br.pv
         .row
           .col-md-2.text-center.visible-md.visible-lg
             em.fa.fa-rmb.fa-4x.text-muted
@@ -44,7 +44,20 @@ h3
             p 累计优惠金额
       .clearfix.hidden-md.hidden-lg
         hr
-      .col-lg-4.col-xs-12.pv
+      .col-lg-3.col-xs-6.br.pv
+        .clearfix
+          p.pull-left 地市  
+          select.pull-right(ng-model="region.city" ng-options="c.name for c in region.province.sub")  
+            option(value="") 全部地市
+        .clearfix
+          p.pull-left 区县
+          select.pull-right(ng-model="region.district" ng-options="d.name for d in region.city.sub")
+            option(value="") 全部区县
+        .clearfix
+          p.pull-left 加油站
+          select.pull-right(ng-model="gasstation" ng-options="g.id as g.name for g in gasstations")
+            option(value="") 全部加油站
+      .col-lg-3.col-xs-6.br.pv
         .clearfix
           p.pull-left 对账日期
           p.pull-right.mr {{reconciliateDate}}

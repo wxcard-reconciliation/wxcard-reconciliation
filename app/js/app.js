@@ -416,7 +416,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/reconciliations/:reconciliationId',
         title: 'Reconciliation Statement',
         templateUrl: helper.basepath('reconciliation.html'),
-        resolve: helper.resolveFor('ngTable', 'moment'),
+        resolve: helper.resolveFor('angularjs-region', 'moment'),
         controller: 'ReconciliationController'
     })
     .state('app.coupon-records', {
@@ -783,7 +783,8 @@ App
       {name: 'angular-chartist',          files: ['vendor/chartist/dist/chartist.min.css',
                                                   'vendor/chartist/dist/chartist.js',
                                                   'vendor/angular-chartist.js/dist/angular-chartist.js'], serie: true},
-      {name: 'ui.map',                    files: ['vendor/angular-ui-map/ui-map.js']}
+      {name: 'ui.map',                    files: ['vendor/angular-ui-map/ui-map.js']},
+      {name: 'angularjs-region',          files: ['vendor/angularjs-region/angularjs-region.js']}
     ]
   })
 ;
@@ -815,12 +816,21 @@ App.controller('ReconciliationsController', ["$scope", "Reconciliation", "ngTabl
   })   
 }])
 
-App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", "toaster", function ($scope, CouponRecord, $state, toaster) {
+App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", "toaster", "ChinaRegion", "Company", function ($scope, CouponRecord, $state, toaster, ChinaRegion, Company) {
 
-  // var accountId = $state.params.accountId || $scope.user.id
-  // $scope.entity = Reconciliation.findById({id: accountId})
   $scope.entities = []
   $scope.discountAmount = 0
+  $scope.gasstation = null
+  $scope.region = {city: null, district: null}
+  ChinaRegion.provinces.some(function (province) {
+    if(province.name === '江苏') {
+      $scope.region.province = province;
+      console.log(province)
+      return true;
+    } else {
+      return false;
+    }
+  })
   
   $scope.endDate = moment().format('YYYY-MM-DD')
   $scope.beginDate = moment().subtract(30, 'days').format('YYYY-MM-DD')
@@ -833,10 +843,6 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
     $scope.openeds[++index%2] = false
   };
   
-  $scope.make = function () {
-    
-  }
-  
   $scope.try = function () {
     $scope.reconciliateDate = moment().format('YYYY-MM-DD')
     var filter = {
@@ -847,6 +853,13 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
       includeWechatuser: true,
       include: ['coupon', 'company']
     };
+    if($scope.gasstation) {
+      filter.where.company_id = $scope.gasstation;
+    } else if($scope.region.district) {
+      filter.where.company = {district: $scope.region.district};
+    } else if($scope.region.city) {
+      filter.where.company = {city: $scope.region.city};
+    }
     CouponRecord.find({filter: filter}, function (result) {
       $scope.entities = result
       $scope.discountAmount = 0
@@ -855,6 +868,17 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
       })
     })
   }
+  
+  $scope.$watch('region.district', function () {
+    console.log($scope.region.district)
+    if($scope.region.district) {
+      Company.find({filter:{where:{city: $scope.city, district: $scope.district}}}, function (result) {
+        $scope.gasstations = result;
+      });
+    } else {
+      $scope.gassstation = null;
+    }
+  })
 }])
 /**=========================================================
  * Module: access-login.js

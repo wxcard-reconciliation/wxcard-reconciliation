@@ -30,7 +30,7 @@
       <h3 class="mt0">对账单</h3>
       <hr/>
       <div class="row mb-lg">
-         <div class="col-lg-4 col-xs-6 br pv">
+         <div class="col-lg-3 col-xs-6 br pv">
             <div class="row">
                <div class="col-md-2 text-center visible-md visible-lg">
                   <em class="fa fa-bookmark-o fa-4x text-muted"></em>
@@ -44,7 +44,7 @@
                </div>
             </div>
          </div>
-         <div class="col-lg-4 col-xs-6 br pv">
+         <div class="col-lg-3 col-xs-6 br pv">
             <div class="row">
                <div class="col-md-2 text-center visible-md visible-lg">
                   <em class="fa fa-rmb fa-4x text-muted"></em>
@@ -61,7 +61,27 @@
          <div class="clearfix hidden-md hidden-lg">
             <hr/>
          </div>
-         <div class="col-lg-4 col-xs-12 pv">
+         <div class="col-lg-3 col-xs-6 br pv">
+            <div class="clearfix">
+               <p class="pull-left">地市</p>
+               <select ng-model="region.city" ng-options="c.name for c in region.province.sub" class="pull-right">
+                  <option value="">全部地市</option>
+               </select>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">区县</p>
+               <select ng-model="region.district" ng-options="d.name for d in region.city.sub" class="pull-right">
+                  <option value="">全部区县</option>
+               </select>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">加油站</p>
+               <select ng-model="gasstation" ng-options="g.id as g.name for g in gasstations" class="pull-right">
+                  <option value="">全部加油站</option>
+               </select>
+            </div>
+         </div>
+         <div class="col-lg-3 col-xs-6 br pv">
             <div class="clearfix">
                <p class="pull-left">对账日期</p>
                <p class="pull-right mr">{{reconciliateDate}}</p>
