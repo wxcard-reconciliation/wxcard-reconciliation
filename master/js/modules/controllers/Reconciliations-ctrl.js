@@ -35,7 +35,6 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
   ChinaRegion.provinces.some(function (province) {
     if(province.name === '江苏') {
       $scope.region.province = province;
-      console.log(province)
       return true;
     } else {
       return false;
@@ -65,10 +64,12 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
     };
     if($scope.gasstation) {
       filter.where.company_id = $scope.gasstation;
-    } else if($scope.region.district) {
-      filter.where.company = {district: $scope.region.district};
-    } else if($scope.region.city) {
-      filter.where.company = {city: $scope.region.city};
+    } else if($scope.region.district || $scope.region.city) {
+      var ids = []
+      $scope.gasstations.forEach(function (gs) {
+        ids.push(gs.id)
+      })
+      filter.where.company_id = {inq: ids};
     }
     CouponRecord.find({filter: filter}, function (result) {
       $scope.entities = result
@@ -80,13 +81,26 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
   }
   
   $scope.$watch('region.district', function () {
-    console.log($scope.region.district)
     if($scope.region.district) {
-      Company.find({filter:{where:{city: $scope.city, district: $scope.district}}}, function (result) {
+      Company.find({filter:{where:{
+        city: {like: $scope.region.city.name+"%"}, 
+        district: $scope.region.district.name
+      }}}, function (result) {
         $scope.gasstations = result;
       });
     } else {
       $scope.gassstation = null;
+    }
+  })
+  
+  $scope.$watch('region.city', function () {
+    if($scope.region.city) {
+      Company.find({filter:{where:{city: {like: $scope.region.city.name+"%"}}}}, function (result) {
+        $scope.gasstations = result;
+      });
+    } else {
+      $scope.gassstation = null;
+      $scope.region.district = null;
     }
   })
 })
