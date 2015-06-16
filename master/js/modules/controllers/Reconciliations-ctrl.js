@@ -59,8 +59,7 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
         moment($scope.beginDate).unix(), 
         moment($scope.endDate+' 23:59:59').unix()
       ]}},
-      includeWechatuser: true,
-      include: ['coupon', 'company']
+      include: ['coupon', 'company', 'wxuser']
     };
     if($scope.gasstation) {
       filter.where.company_id = $scope.gasstation;

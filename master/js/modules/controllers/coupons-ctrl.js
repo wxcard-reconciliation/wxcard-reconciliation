@@ -11,7 +11,7 @@ App.controller('CouponRecordsController', function ($scope, CouponRecord, ngTabl
     filter: $scope.filter.text
   }, {
     getData: function($defer, params) {
-      var opt = {order: 'add_time DESC', include: 'coupon', includeWechatuser: true}
+      var opt = {order: 'add_time DESC', include: ['coupon', 'wxuser', 'company']}
       opt.limit = params.count()
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}

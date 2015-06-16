@@ -16,7 +16,7 @@
                <tr ng-repeat="entity in $data" class="text-center">
                   <td data-title="'优惠卷编号'">{{entity.cancel_code}}</td>
                   <td data-title="'优惠卷名称'">{{entity.coupon.title}}</td>
-                  <td data-title="'申领用户'">{{entity.wechatuser.nickname}}</td>
+                  <td data-title="'申领用户'">{{entity.wxuser.nickname}}</td>
                   <td data-title="'申领日期'">{{entity.add_time | moment_unix}}</td>
                   <td data-title="'是否核销'">{{entity.is_use ? '已核销' : '未核销'}}</td>
                </tr>

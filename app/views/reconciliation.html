@@ -102,6 +102,7 @@
                <tr>
                   <th>优惠卷编号</th>
                   <th>优惠券名称</th>
+                  <th>申领用户</th>
                   <th>申领时间</th>
                   <th>核销时间</th>
                   <th>核销加油站</th>
@@ -112,6 +113,7 @@
                <tr ng-repeat="entity in entities">
                   <td>{{entity.cancel_code}}</td>
                   <td>{{entity.coupon.title|| entity.card_id}}</td>
+                  <td>{{entity.wxuser.remark || entity.wxuser.nickname}}</td>
                   <td>{{entity.add_time | moment_unix}}</td>
                   <td>{{entity.use_time | moment_unix}}</td>
                   <td>{{entity.company.name || '远程核销'}}</td>

@@ -15,6 +15,6 @@ h3
           tr.text-center(ng-repeat='entity in $data')
             td(data-title="'优惠卷编号'") {{entity.cancel_code}}
             td(data-title="'优惠卷名称'") {{entity.coupon.title}}
-            td(data-title="'申领用户'") {{entity.wechatuser.nickname}}
+            td(data-title="'申领用户'") {{entity.wxuser.nickname}}
             td(data-title="'申领日期'") {{entity.add_time | moment_unix}}
             td(data-title="'是否核销'") {{entity.is_use ? '已核销' : '未核销'}}

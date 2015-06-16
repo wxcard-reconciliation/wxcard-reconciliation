@@ -73,6 +73,7 @@ h3
           tr
             th 优惠卷编号
             th 优惠券名称
+            th 申领用户
             th 申领时间
             th 核销时间
             th 核销加油站
@@ -81,6 +82,7 @@ h3
           tr(ng-repeat='entity in entities')
             td {{entity.cancel_code}}
             td {{entity.coupon.title|| entity.card_id}}
+            td {{entity.wxuser.remark || entity.wxuser.nickname}}
             td {{entity.add_time | moment_unix}}
             td {{entity.use_time | moment_unix}}
             td {{entity.company.name || '远程核销'}}
