@@ -1,0 +1,23 @@
+h3
+  | 加油站列表
+  from.pull-right.col-sm-3
+    .input-group
+      span.input-group-addon
+        .icon-magnifier
+      input.form-control(type='text', placeholder="输入加油站名字", ng-model="filter.text", ui-keypress="{13:'tableParams.reload()'}")
+  
+.container-fluid
+  
+  .panel.panel-default
+    .table-responsive
+      table.table.table-bordered.table-striped(ng-table='tableParams')
+        tbody
+          tr.text-center(ng-repeat='entity in $data')
+            td(data-title="'加油站名称'") {{entity.name}}
+            td(data-title="'加油站简称'") {{entity.shortname}}
+            td(data-title="'电话'") {{entity.tel}}
+            td(data-title="'省份'") {{entity.province}} 
+            td(data-title="'地市'") {{entity.city}}
+            td(data-title="'区县'") {{entity.district}}
+            td(data-title="'地址'") {{entity.address}}
+            td(data-title="'登记时间'") {{entity.add_time}}

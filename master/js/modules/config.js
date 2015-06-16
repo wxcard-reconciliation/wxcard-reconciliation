@@ -364,6 +364,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'WechatusersController'
     })
+    .state('app.gasstations', {
+        url: '/gasstations',
+        title: 'Gasstations List',
+        templateUrl: helper.basepath('gasstations.html'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
+        controller: 'GasstationsController'
+    })
     .state('app.myaccount', {
         url: '/accounts/:accountId',
         title: 'My Account',

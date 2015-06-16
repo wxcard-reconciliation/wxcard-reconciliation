@@ -440,6 +440,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'WechatusersController'
     })
+    .state('app.gasstations', {
+        url: '/gasstations',
+        title: 'Gasstations List',
+        templateUrl: helper.basepath('gasstations.html'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
+        controller: 'GasstationsController'
+    })
     .state('app.myaccount', {
         url: '/accounts/:accountId',
         title: 'My Account',
@@ -3383,6 +3390,33 @@ App.controller('FormxEditableController', ['$scope', 'editableOptions', 'editabl
     $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
 }]);
+/**=========================================================
+ * Module: gasstations-ctrl.js
+ * Gasstations Controller
+ =========================================================*/
+
+App.controller('GasstationsController', ["$scope", "Company", "ngTableParams", function ($scope, Company, ngTableParams) {
+  
+  $scope.filter = {text: ''}
+  $scope.tableParams = new ngTableParams({
+    count: 10,
+    filter: $scope.filter.text
+  }, {
+    getData: function($defer, params) {
+      var opt = {order: 'add_time DESC'}
+      opt.limit = params.count()
+      opt.skip = (params.page()-1)*opt.limit
+      opt.where = {}
+      if($scope.filter.text != '') {
+        opt.where.name = {like: $scope.filter.text}
+      }
+      Company.count({where: opt.where}, function (result) {
+        $scope.tableParams.total(result.count)
+        Company.find({filter:opt}, $defer.resolve)
+      })
+    }
+  })   
+}])
 /**=========================================================
  * Module: modals.js
  * Provides a simple way to implement bootstrap modals from templates
