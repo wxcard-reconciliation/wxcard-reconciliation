@@ -4,7 +4,7 @@
       <em class="fa fa-calculator fa-fw mr-sm"></em>生成对账清单</a>
    <div class="pull-right col-sm-6">
       <div class="col-sm-6">
-         <p class="input-group">
+         <p class="input-group noprint">
             <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="beginDate" is-open="openeds[1]" max-date="'2015-06-22'" ng-required="true" close-text="Close" class="form-control" />
             <span class="input-group-btn">
                <button type="button" ng-click="open($event, 1)" class="btn btn-default">
@@ -14,7 +14,7 @@
          </p>
       </div>
       <div class="col-sm-6">
-         <p class="input-group">
+         <p class="input-group noprint">
             <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="endDate" is-open="openeds[0]" max-date="'2015-06-22'" ng-required="true" close-text="Close" class="form-control" />
             <span class="input-group-btn">
                <button type="button" ng-click="open($event, 0)" class="btn btn-default">
@@ -76,7 +76,7 @@
             </div>
             <div class="clearfix">
                <p class="pull-left">加油站</p>
-               <select ng-model="gasstation" ng-options="g.id as g.name for g in gasstations" class="pull-right">
+               <select ng-model="gasstation" ng-options="g.name for g in gasstations" class="pull-right">
                   <option value="">全部加油站</option>
                </select>
             </div>

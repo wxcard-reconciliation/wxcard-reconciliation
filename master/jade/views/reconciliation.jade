@@ -5,13 +5,13 @@ h3
     | 生成对账清单
   .pull-right.col-sm-6
     .col-sm-6
-      p.input-group
+      p.input-group.noprint
         input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="beginDate", is-open='openeds[1]', max-date="'2015-06-22'", ng-required='true', close-text='Close')
         span.input-group-btn
           button.btn.btn-default(type='button', ng-click='open($event, 1)')
             em.fa.fa-calendar  
     .col-sm-6
-      p.input-group
+      p.input-group.noprint
         input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="endDate", is-open='openeds[0]', max-date="'2015-06-22'", ng-required='true', close-text='Close')
         span.input-group-btn
           button.btn.btn-default(type='button', ng-click='open($event, 0)')
@@ -55,7 +55,7 @@ h3
             option(value="") 全部区县
         .clearfix
           p.pull-left 加油站
-          select.pull-right(ng-model="gasstation" ng-options="g.id as g.name for g in gasstations")
+          select.pull-right(ng-model="gasstation" ng-options="g.name for g in gasstations")
             option(value="") 全部加油站
       .col-lg-3.col-xs-6.br.pv
         .clearfix

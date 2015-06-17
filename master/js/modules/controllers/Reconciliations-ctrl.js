@@ -51,9 +51,9 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
     $scope.openeds[index] = true
     $scope.openeds[++index%2] = false
   };
+  $scope.reconciliateDate = moment().format('YYYY-MM-DD');
   
   $scope.try = function () {
-    $scope.reconciliateDate = moment().format('YYYY-MM-DD')
     var filter = {
       where:{use_time:{between: [
         moment($scope.beginDate).unix(), 
@@ -62,7 +62,7 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
       include: ['coupon', 'company', 'wxuser']
     };
     if($scope.gasstation) {
-      filter.where.company_id = $scope.gasstation;
+      filter.where.company_id = $scope.gasstation.id;
     } else if($scope.region.district || $scope.region.city) {
       var ids = []
       $scope.gasstations.forEach(function (gs) {
@@ -80,6 +80,7 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
   }
   
   $scope.$watch('region.district', function () {
+    console.log('regiion.district', $scope.region.district)
     if($scope.region.district) {
       Company.find({filter:{where:{
         city: {like: $scope.region.city.name+"%"}, 
@@ -88,16 +89,19 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
         $scope.gasstations = result;
       });
     } else {
+      $scope.gassstations = null;
       $scope.gassstation = null;
     }
   })
   
   $scope.$watch('region.city', function () {
+    console.log('regiion.city', $scope.region.city)
     if($scope.region.city) {
       Company.find({filter:{where:{city: {like: $scope.region.city.name+"%"}}}}, function (result) {
         $scope.gasstations = result;
       });
     } else {
+      $scope.gassstations = null;
       $scope.gassstation = null;
       $scope.region.district = null;
     }
