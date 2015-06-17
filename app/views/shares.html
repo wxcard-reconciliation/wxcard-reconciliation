@@ -1,0 +1,16 @@
+<h3>转发统计</h3>
+<div class="container-fluid">
+   <div class="panel panel-default">
+      <div class="table-responsive">
+         <table ng-table="tableParams" class="table table-bordered table-striped">
+            <tbody>
+               <tr ng-repeat="entity in $data" class="text-center">
+                  <td data-title="'网络链接地址'" class="text-left">{{entity.url}}</td>
+                  <td data-title="'转发数量'">{{entity.count}}</td>
+                  <td data-title="'时间'">{{ entity.time | moment_unix}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

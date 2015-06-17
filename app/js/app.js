@@ -433,6 +433,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'CouponRecordController'
     })
+    .state('app.shares', {
+        url: '/shares',
+        title: 'Share statistic',
+        templateUrl: helper.basepath('shares.html'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
+        controller: 'SharesController'
+    })
     .state('app.wechatusers', {
         url: '/wechatusers',
         title: 'Wechatusers List',
@@ -2050,7 +2057,6 @@ App.controller('DashboardController', ["$scope", "CouponRecord", function ($scop
   
   $scope.stat = function () {
     CouponRecord.count({}, function (result) {
-      console.log(result)
       $scope.statistic.applied = result.count;
     });
     
@@ -4633,6 +4639,29 @@ App.controller('ChartRickshawController', ['$scope', function($scope) {
 
 }]);
 
+/**=========================================================
+ * Module: shares-ctrl.js
+ * Shares Controller
+ =========================================================*/
+
+App.controller('SharesController', ["$scope", "Share", "ngTableParams", function ($scope, Share, ngTableParams) {
+  
+  $scope.filter = {text: ''}
+  $scope.tableParams = new ngTableParams({
+    count: 10,
+    filter: $scope.filter.text
+  }, {
+    getData: function($defer, params) {
+      var opt = {}
+      opt.limit = params.count()
+      opt.skip = (params.page()-1)*opt.limit
+      Share.stat({filter:opt}, function (result) {
+        $scope.tableParams.total(result.length);
+        $defer.resolve(result);
+      })
+    }
+  })   
+}])
 /**=========================================================
  * Module: sidebar-menu.js
  * Handle sidebar collapsible elements

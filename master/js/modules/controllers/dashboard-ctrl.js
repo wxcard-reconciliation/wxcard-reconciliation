@@ -13,7 +13,6 @@ App.controller('DashboardController', function ($scope, CouponRecord) {
   
   $scope.stat = function () {
     CouponRecord.count({}, function (result) {
-      console.log(result)
       $scope.statistic.applied = result.count;
     });
     

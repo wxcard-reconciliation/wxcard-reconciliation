@@ -29,6 +29,17 @@
     "translate": "sidebar.nav.COUPONRECORDS"
   },
   {
+    "text": "Promotion",
+    "heading": "true",
+    "translate": "sidebar.heading.PROMOTION"
+  },
+  {
+    "text": "Shares",
+    "icon": "icon-share",
+    "sref": "app.shares",
+    "translate": "sidebar.nav.SHARESTATISTIC"
+  },
+  {
     "text": "Base Information",
     "heading": "true",
     "translate": "sidebar.heading.BASEINFO"

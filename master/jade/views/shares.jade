@@ -1,0 +1,13 @@
+h3
+  | 转发统计
+    
+.container-fluid
+  
+  .panel.panel-default
+    .table-responsive
+      table.table.table-bordered.table-striped(ng-table='tableParams')
+        tbody
+          tr.text-center(ng-repeat='entity in $data')
+            td.text-left(data-title="'网络链接地址'") {{entity.url}}
+            td(data-title="'转发数量'") {{entity.count}}
+            td(data-title="'时间'") {{ entity.time | moment_unix}}

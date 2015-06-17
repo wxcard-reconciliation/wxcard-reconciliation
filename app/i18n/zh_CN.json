@@ -40,7 +40,7 @@
       "COUPON": "优惠券",
       "BASEINFO": "基础信息",
       "SYSTEM": "系统功能",
-      "COMPONENTS": "Components",
+      "PROMOTION": "促销活动",
       "MORE": "More"
     },
     "nav": {
@@ -48,6 +48,7 @@
       "RECONCILIATION": "核销对账",
       "RECONCILIATIONHISTORY": "对账历史",
       "COUPONRECORDS": "优惠卷记录",
+      "SHARESTATISTIC": "转发统计",
       "CLIENTS": "客户列表",
       "GASSTATIONS": "加油站列表",
       "MYACCOUNT": "我的账号",
