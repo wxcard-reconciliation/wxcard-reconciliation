@@ -14,10 +14,8 @@ h3
         tbody
           tr.text-center(ng-repeat='entity in $data')
             td(data-title="'加油站名称'") {{entity.name}}
-            td(data-title="'加油站简称'") {{entity.shortname}}
             td(data-title="'电话'") {{entity.tel}}
             td(data-title="'省份'") {{entity.province}} 
             td(data-title="'地市'") {{entity.city}}
             td(data-title="'区县'") {{entity.district}}
             td(data-title="'地址'") {{entity.address}}
-            td(data-title="'登记时间'") {{entity.add_time}}
