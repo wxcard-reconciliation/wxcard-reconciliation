@@ -60,6 +60,17 @@
                   </fieldset>
                   <fieldset>
                      <div class="form-group">
+                        <label class="col-sm-2 control-label">加油站</label>
+                        <div class="col-sm-6">
+                           <p class="form-control-static">{{entity.company && entity.company.name || '未隶属加油站'}}</p>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">不可修改</small>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
                         <label class="col-sm-2 control-label">密码</label>
                         <div class="col-sm-6">
                            <input type="text" name="password" ng-model="entity.password" class="form-control" />

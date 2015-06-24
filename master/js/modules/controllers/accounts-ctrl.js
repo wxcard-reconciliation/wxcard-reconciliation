@@ -26,9 +26,10 @@ App.controller('AccountsController', function ($scope, Account, ngTableParams) {
   })   
 })
 
-App.controller('AccountsAddController', function ($scope, Account, $state, toaster) {
+App.controller('AccountsAddController', function ($scope, Account, $state, toaster, Company, $q) {
 
   $scope.entity = {}
+  $scope.company = null
   
   $scope.submitted = false;
   $scope.validateInput = function(name, type) {
@@ -41,6 +42,7 @@ App.controller('AccountsAddController', function ($scope, Account, $state, toast
     $scope.submitted = true;
     if ($scope.formValidate.$valid) {
       $scope.entity.username = $scope.entity.email
+      $scope.entity.companyId = $scope.company.id
       Account.create($scope.entity, function (entity) {
         toaster.pop('success', '新增成功', '已经添加帐号 '+entity.name)
         setTimeout(function () {
@@ -54,12 +56,23 @@ App.controller('AccountsAddController', function ($scope, Account, $state, toast
     }
   };
   
+  $scope.fetchCompanies = function (val) {
+    var q = $q.defer()
+    $scope.loadingCompanies = true;
+    Company.find({filter:{where:{"name":{like: val}}}}, function (results) {
+      $scope.loadingCompanies = false;
+      q.resolve(results);
+    })
+    return q.promise
+  }
 })
 
 App.controller('AccountController', function ($scope, Account, $state, toaster) {
 
   var accountId = $state.params.accountId || $scope.user.id
-  $scope.entity = Account.findById({id: accountId})
+  Account.find({filter:{where:{id: accountId}, include:['company']}}, function (results) {
+    $scope.entity = results[0]
+  })
   
   $scope.submitted = false;
   $scope.validateInput = function(name, type) {
