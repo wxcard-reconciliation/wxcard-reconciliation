@@ -5,14 +5,14 @@ h3
     | 生成对账清单
   .pull-right.col-sm-6
     .col-sm-6
-      p.input-group.noprint
-        input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="beginDate", is-open='openeds[1]', max-date="'2015-06-22'", ng-required='true', close-text='Close')
+      p.input-group.hidden-print
+        input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="beginDate", is-open='openeds[1]', max-date="endDate", ng-required='true', close-text='Close')
         span.input-group-btn
           button.btn.btn-default(type='button', ng-click='open($event, 1)')
             em.fa.fa-calendar  
     .col-sm-6
-      p.input-group.noprint
-        input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="endDate", is-open='openeds[0]', max-date="'2015-06-22'", ng-required='true', close-text='Close')
+      p.input-group.hidden-print
+        input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="endDate", is-open='openeds[0]', max-date="endDate", ng-required='true', close-text='Close')
         span.input-group-btn
           button.btn.btn-default(type='button', ng-click='open($event, 0)')
             em.fa.fa-calendar
@@ -81,7 +81,7 @@ h3
         tbody
           tr(ng-repeat='entity in entities')
             td {{entity.cancel_code}}
-            td {{entity.coupon.title|| entity.card_id}}
+            td {{entity.coupon.title|| '匿名卡卷'}}
             td {{entity.wxuser.remark || entity.wxuser.nickname}}
             td {{entity.add_time | moment_unix}}
             td {{entity.use_time | moment_unix}}
@@ -90,19 +90,29 @@ h3
 
     .row
       .col-sm-offset-8.col-sm-4.pv
-        //- .clearfix
-        //-   p.pull-left Subtotal
-        //-   p.pull-right.mr $ 10300
-        //- .clearfix
-        //-   p.pull-left Tax (21%)
-        //-   p.pull-right.mr $ 2700
+        .clearfix
+          p.pull-left 小计
+          p.pull-right.mr ¥ {{discountAmount}}
+        .clearfix
+          p.pull-left 手工修正
+          //- p.pull-right.mr ¥ {{manualAmount}}
+          input.pull-right.text-right(type='number' ng-model="manualAmount")
         .clearfix
           p.pull-left.h3 总计
-          p.pull-right.mr.h3 ¥ {{discountAmount}}
-
+          p.pull-right.mr.h3 ¥ {{discountAmount + manualAmount}}
+    .row
+      //- .col-sm-8.pv
+      //-   .clearfix
+      //-     p.pull-left.h5 修正备注：
+      .col-sm-offset-8.col-sm-4.pv
+        .clearfix
+          p.pull-left.h5 对账人：
+      
     hr.hidden-print
     .clearfix
-      //- button(type="button").btn.btn-default.pull-left.mr 编辑
+      //- button(type="button").btn.btn-default.pull-left.mr
+      //-   em.fa.fa-edit.fa-fw.mr-sm
+      //-   | 编辑
       button(type="button", onclick="window.print();").btn.btn-info.pull-left 
         em.fa.fa-print.fa-fw.mr-sm
         | 打印

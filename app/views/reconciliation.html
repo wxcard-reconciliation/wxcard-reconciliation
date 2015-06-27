@@ -4,8 +4,8 @@
       <em class="fa fa-calculator fa-fw mr-sm"></em>生成对账清单</a>
    <div class="pull-right col-sm-6">
       <div class="col-sm-6">
-         <p class="input-group noprint">
-            <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="beginDate" is-open="openeds[1]" max-date="'2015-06-22'" ng-required="true" close-text="Close" class="form-control" />
+         <p class="input-group hidden-print">
+            <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="beginDate" is-open="openeds[1]" max-date="endDate" ng-required="true" close-text="Close" class="form-control" />
             <span class="input-group-btn">
                <button type="button" ng-click="open($event, 1)" class="btn btn-default">
                   <em class="fa fa-calendar"></em>
@@ -14,8 +14,8 @@
          </p>
       </div>
       <div class="col-sm-6">
-         <p class="input-group noprint">
-            <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="endDate" is-open="openeds[0]" max-date="'2015-06-22'" ng-required="true" close-text="Close" class="form-control" />
+         <p class="input-group hidden-print">
+            <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="endDate" is-open="openeds[0]" max-date="endDate" ng-required="true" close-text="Close" class="form-control" />
             <span class="input-group-btn">
                <button type="button" ng-click="open($event, 0)" class="btn btn-default">
                   <em class="fa fa-calendar"></em>
@@ -112,7 +112,7 @@
             <tbody>
                <tr ng-repeat="entity in entities">
                   <td>{{entity.cancel_code}}</td>
-                  <td>{{entity.coupon.title|| entity.card_id}}</td>
+                  <td>{{entity.coupon.title|| '匿名卡卷'}}</td>
                   <td>{{entity.wxuser.remark || entity.wxuser.nickname}}</td>
                   <td>{{entity.add_time | moment_unix}}</td>
                   <td>{{entity.use_time | moment_unix}}</td>
@@ -125,8 +125,23 @@
       <div class="row">
          <div class="col-sm-offset-8 col-sm-4 pv">
             <div class="clearfix">
+               <p class="pull-left">小计</p>
+               <p class="pull-right mr">¥ {{discountAmount}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">手工修正</p>
+               <input type="number" ng-model="manualAmount" class="pull-right text-right" />
+            </div>
+            <div class="clearfix">
                <p class="pull-left h3">总计</p>
-               <p class="pull-right mr h3">¥ {{discountAmount}}</p>
+               <p class="pull-right mr h3">¥ {{discountAmount + manualAmount}}</p>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-offset-8 col-sm-4 pv">
+            <div class="clearfix">
+               <p class="pull-left h5">对账人：</p>
             </div>
          </div>
       </div>

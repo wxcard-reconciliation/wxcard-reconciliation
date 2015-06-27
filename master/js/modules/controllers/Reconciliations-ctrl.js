@@ -30,6 +30,7 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
 
   $scope.entities = []
   $scope.discountAmount = 0
+  $scope.manualAmount = 0
   $scope.gasstation = null
   $scope.region = {city: null, district: null}
   ChinaRegion.provinces.some(function (province) {

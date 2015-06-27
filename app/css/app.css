@@ -10275,7 +10275,6 @@ body .jvectormap-zoomout {
    Component: print.less
  ========================================================================== */
 @media print {
-  .noprint,
   .sidebar,
   .topnavbar,
   .offsidebar,

@@ -42,7 +42,7 @@ App.controller('AccountsAddController', function ($scope, Account, $state, toast
     $scope.submitted = true;
     if ($scope.formValidate.$valid) {
       $scope.entity.username = $scope.entity.email
-      $scope.entity.companyId = $scope.company.id
+      $scope.entity.companyId = $scope.company && $scope.company.id || null
       Account.create($scope.entity, function (entity) {
         toaster.pop('success', '新增成功', '已经添加帐号 '+entity.name)
         setTimeout(function () {

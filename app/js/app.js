@@ -921,7 +921,7 @@ App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster
     $scope.submitted = true;
     if ($scope.formValidate.$valid) {
       $scope.entity.username = $scope.entity.email
-      $scope.entity.companyId = $scope.company.id
+      $scope.entity.companyId = $scope.company && $scope.company.id || null
       Account.create($scope.entity, function (entity) {
         toaster.pop('success', '新增成功', '已经添加帐号 '+entity.name)
         setTimeout(function () {
@@ -4475,6 +4475,7 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
 
   $scope.entities = []
   $scope.discountAmount = 0
+  $scope.manualAmount = 0
   $scope.gasstation = null
   $scope.region = {city: null, district: null}
   ChinaRegion.provinces.some(function (province) {
