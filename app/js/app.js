@@ -4727,7 +4727,11 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$http', 
           menuURL  = menuJson + '?v=' + (new Date().getTime()); // jumps cache
       $http.get(menuURL)
         .success(function(items) {
-           $scope.menuItems = items;
+           $scope.menuItems = [];
+           angular.forEach(items, function (value, key) {
+             if(value.role && !$rootScope.user.job.match(value.role)) return;
+             $scope.menuItems.push(value);
+           })
         })
         .error(function(data, status, headers, config) {
           alert('Failure loading menu');

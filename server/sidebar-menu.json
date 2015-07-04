@@ -71,6 +71,7 @@
     "text": "Accounts",
     "icon": "icon-users",
     "sref": "app.accounts",
+    "role": "管理员",
     "translate": "sidebar.nav.ACCOUNTS"
   },
   {
