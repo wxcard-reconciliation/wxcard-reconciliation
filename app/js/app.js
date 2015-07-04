@@ -938,7 +938,7 @@ App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster
   $scope.fetchCompanies = function (val) {
     var q = $q.defer()
     $scope.loadingCompanies = true;
-    Company.find({filter:{where:{"name":{like: val}}}}, function (results) {
+    Company.find({filter:{where:{"name":{like: '%'+val+'%'}}}}, function (results) {
       $scope.loadingCompanies = false;
       q.resolve(results);
     })
