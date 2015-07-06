@@ -39,8 +39,12 @@ h3 新开账户
               .form-group
                 label.col-sm-2.control-label 工作岗位
                 .col-sm-6
-                  input.form-control(type='text', name='job', required='', ng-model="entity.job")
-                  span.text-danger(ng-show="validateInput('job', 'required')") 工作岗位不能为空
+                  select.form-control(name='job', ng-model="entity.job")
+                    option 加油站长
+                    option 地市管理员
+                    option 省公司管理员
+                  //- input.form-control(type='text', name='job', required='', ng-model="entity.job")
+                  //- span.text-danger(ng-show="validateInput('job', 'required')") 工作岗位不能为空
                 .col-sm-4
                   small.text-muted 必填          
             fieldset

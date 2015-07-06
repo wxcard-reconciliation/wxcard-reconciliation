@@ -28,7 +28,7 @@ App.controller('AccountsController', function ($scope, Account, ngTableParams) {
 
 App.controller('AccountsAddController', function ($scope, Account, $state, toaster, Company, $q) {
 
-  $scope.entity = {}
+  $scope.entity = {job: '加油站长'}
   $scope.company = null
   
   $scope.submitted = false;
