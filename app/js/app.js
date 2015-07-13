@@ -949,8 +949,8 @@ App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster
 App.controller('AccountController', ["$scope", "Account", "$state", "toaster", function ($scope, Account, $state, toaster) {
 
   var accountId = $state.params.accountId || $scope.user.id
-  Account.find({filter:{where:{id: accountId}, include:['company']}}, function (results) {
-    $scope.entity = results[0]
+  Account.findById({id: accountId, filter:{include:['company']}}, function (result) {
+    $scope.entity = result
   })
   
   $scope.submitted = false;
