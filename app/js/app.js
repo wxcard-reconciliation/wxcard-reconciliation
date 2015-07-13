@@ -4505,7 +4505,8 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
         moment($scope.beginDate).unix(), 
         moment($scope.endDate+' 23:59:59').unix()
       ]}},
-      include: ['coupon', 'company', 'wxuser']
+      include: ['coupon', 'company', 'wxuser'],
+      order: 'use_time DESC'
     };
     if($scope.gasstation) {
       filter.where.company_id = $scope.gasstation.id;
