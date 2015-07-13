@@ -25,21 +25,6 @@
                   </fieldset>
                   <fieldset>
                      <div class="form-group">
-                        <label class="col-sm-2 control-label">工作岗位</label>
-                        <div class="col-sm-6">
-                           <select name="job" ng-model="entity.job" class="form-control">
-                              <option>加油站长</option>
-                              <option>地市管理员</option>
-                              <option>省公司管理员</option>
-                           </select>
-                        </div>
-                        <div class="col-sm-4">
-                           <small class="text-muted">必填</small>
-                        </div>
-                     </div>
-                  </fieldset>
-                  <fieldset>
-                     <div class="form-group">
                         <label class="col-sm-2 control-label">联系电话</label>
                         <div class="col-sm-6">
                            <input type="text" name="phone" required="" ng-model="entity.phone" class="form-control" />
@@ -55,6 +40,17 @@
                         <label class="col-sm-2 control-label">注册邮箱</label>
                         <div class="col-sm-6">
                            <p class="form-control-static">{{entity.email}}</p>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">不可修改</small>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">工作岗位</label>
+                        <div class="col-sm-6">
+                           <p class="form-control-static">{{entity.job}}</p>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">不可修改</small>
