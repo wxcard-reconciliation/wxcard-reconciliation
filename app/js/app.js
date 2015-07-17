@@ -4474,6 +4474,7 @@ App.controller('ReconciliationsController', ["$scope", "Reconciliation", "ngTabl
 App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", "toaster", "ChinaRegion", "Company", function ($scope, CouponRecord, $state, toaster, ChinaRegion, Company) {
 
   $scope.entities = []
+  $scope.giftAmount = 0
   $scope.discountAmount = 0
   $scope.manualAmount = 0
   $scope.gasstation = null
@@ -4505,8 +4506,7 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
         moment($scope.beginDate).unix(), 
         moment($scope.endDate+' 23:59:59').unix()
       ]}},
-      include: ['coupon', 'company', 'wxuser'],
-      order: 'use_time DESC'
+      include: ['coupon', 'company', 'wxuser']
     };
     if($scope.gasstation) {
       filter.where.company_id = $scope.gasstation.id;
@@ -4519,15 +4519,17 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
     }
     CouponRecord.find({filter: filter}, function (result) {
       $scope.entities = result
+      $scope.giftAmount = 0
       $scope.discountAmount = 0
       $scope.entities.forEach(function (entity) {
         $scope.discountAmount += entity.coupon && entity.coupon.reduce_cost || 0;
+        if(entity.coupon && entity.coupon.type === 2) $scope.giftAmount++;
       })
     })
   }
   
   $scope.$watch('region.district', function () {
-    console.log('regiion.district', $scope.region.district)
+    // console.log('regiion.district', $scope.region.district)
     if($scope.region.district) {
       Company.find({filter:{where:{
         city: {like: $scope.region.city.name+"%"}, 
@@ -4542,7 +4544,7 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
   })
   
   $scope.$watch('region.city', function () {
-    console.log('regiion.city', $scope.region.city)
+    // console.log('regiion.city', $scope.region.city)
     if($scope.region.city) {
       Company.find({filter:{where:{city: {like: $scope.region.city.name+"%"}}}}, function (result) {
         $scope.gasstations = result;
@@ -7722,6 +7724,20 @@ App.filter("language", function () {
     return languages[input];
   }
 });
+
+/**=========================================================
+ * Module: coupon-filter.js
+ * Filter for coupon of wechat 
+ =========================================================*/
+
+App.filter("coupon_type", function () {
+  var types = ['团购券','折扣券','礼品券', '代金券', '通用优惠券', 
+  '会员卡', '景点门票', '电影票', '飞机票', '会议门票', '汽车票'];
+  return function (input) {
+    return types[input];
+  }
+});
+
 
 /**=========================================================
  * Module: wechat-filter.js

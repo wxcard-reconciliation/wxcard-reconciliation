@@ -24,7 +24,7 @@ h3
     hr
 
     .row.mb-lg
-      .col-lg-3.col-xs-6.br.pv
+      .col-lg-4.col-xs-4.br.pv
         .row
           .col-md-2.text-center.visible-md.visible-lg
             em.fa.fa-bookmark-o.fa-4x.text-muted
@@ -33,18 +33,29 @@ h3
               | {{entities.length}} 
               small 张
             p 累计核销优惠卷  
-      .col-lg-3.col-xs-6.br.pv
+      .col-lg-4.col-xs-4.br.pv
+        .row
+          .col-md-2.text-center.visible-md.visible-lg
+            em.fa.fa-gift.fa-4x.text-muted
+          .col-md-10
+            h2 
+              | {{giftAmount}} 
+              small 件
+            p 累计核销礼品  
+      .col-lg-4.col-xs-4.br.pv
         .row
           .col-md-2.text-center.visible-md.visible-lg
             em.fa.fa-rmb.fa-4x.text-muted
           .col-md-10
             h2 
-              | {{discountAmount}} 
+              | {{discountAmount/100 | currency}} 
               small 元
             p 累计优惠金额
-      .clearfix.hidden-md.hidden-lg
-        hr
-      .col-lg-3.col-xs-6.br.pv
+      //- .clearfix.hidden-md.hidden-lg
+      //-   hr
+    hr
+    .row.mb-lg
+      .col-lg-6.col-xs-6.br.pv
         .clearfix
           p.pull-left 地市  
           select.pull-right(ng-model="region.city" ng-options="c.name for c in region.province.sub")  
@@ -57,7 +68,7 @@ h3
           p.pull-left 加油站
           select.pull-right(ng-model="gasstation" ng-options="g.name for g in gasstations")
             option(value="") 全部加油站
-      .col-lg-3.col-xs-6.br.pv
+      .col-lg-6.col-xs-6.br.pv
         .clearfix
           p.pull-left 对账日期
           p.pull-right.mr {{reconciliateDate}}
@@ -73,6 +84,7 @@ h3
           tr
             th 优惠卷编号
             th 优惠券名称
+            th 类型
             th 申领用户
             th 申领时间
             th 核销时间
@@ -81,25 +93,29 @@ h3
         tbody
           tr(ng-repeat='entity in entities')
             td {{entity.cancel_code}}
-            td {{entity.coupon.title|| '匿名卡卷'}}
+            td {{entity.coupon.title || '非正式卡卷'}}
+            td {{entity.coupon.type | coupon_type }}
             td {{entity.wxuser.remark || entity.wxuser.nickname}}
             td {{entity.add_time | moment_unix}}
             td {{entity.use_time | moment_unix}}
             td {{entity.company.name || '远程核销'}}
-            td.text-right {{entity.coupon.reduce_cost || 0}}
+            td.text-right {{(entity.coupon.reduce_cost || 0) /100 | currency}}
 
     .row
       .col-sm-offset-8.col-sm-4.pv
         .clearfix
           p.pull-left 小计
-          p.pull-right.mr ¥ {{discountAmount}}
+          p.pull-right.mr {{discountAmount/100 | currency}}
         .clearfix
           p.pull-left 手工修正
-          //- p.pull-right.mr ¥ {{manualAmount}}
+          //- p.pull-right.mr {{manualAmount | currency}}
           input.pull-right.text-right(type='number' ng-model="manualAmount")
         .clearfix
-          p.pull-left.h3 总计
-          p.pull-right.mr.h3 ¥ {{discountAmount + manualAmount}}
+          p.pull-left.h3 总计折扣
+          p.pull-right.mr.h3 {{(discountAmount + manualAmount)/100 | currency}}
+        .clearfix
+          p.pull-left.h3 总计礼品
+          p.pull-right.mr.h3 {{giftAmount}}
     .row
       //- .col-sm-8.pv
       //-   .clearfix

@@ -30,7 +30,7 @@
       <h3 class="mt0">对账单</h3>
       <hr/>
       <div class="row mb-lg">
-         <div class="col-lg-3 col-xs-6 br pv">
+         <div class="col-lg-4 col-xs-4 br pv">
             <div class="row">
                <div class="col-md-2 text-center visible-md visible-lg">
                   <em class="fa fa-bookmark-o fa-4x text-muted"></em>
@@ -44,24 +44,38 @@
                </div>
             </div>
          </div>
-         <div class="col-lg-3 col-xs-6 br pv">
+         <div class="col-lg-4 col-xs-4 br pv">
+            <div class="row">
+               <div class="col-md-2 text-center visible-md visible-lg">
+                  <em class="fa fa-gift fa-4x text-muted"></em>
+               </div>
+               <div class="col-md-10">
+                  <h2>
+                     {{giftAmount}}
+                     <small>件</small>
+                  </h2>
+                  <p>累计核销礼品</p>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-4 col-xs-4 br pv">
             <div class="row">
                <div class="col-md-2 text-center visible-md visible-lg">
                   <em class="fa fa-rmb fa-4x text-muted"></em>
                </div>
                <div class="col-md-10">
                   <h2>
-                     {{discountAmount}}
+                     {{discountAmount/100 | currency}}
                      <small>元</small>
                   </h2>
                   <p>累计优惠金额</p>
                </div>
             </div>
          </div>
-         <div class="clearfix hidden-md hidden-lg">
-            <hr/>
-         </div>
-         <div class="col-lg-3 col-xs-6 br pv">
+      </div>
+      <hr/>
+      <div class="row mb-lg">
+         <div class="col-lg-6 col-xs-6 br pv">
             <div class="clearfix">
                <p class="pull-left">地市</p>
                <select ng-model="region.city" ng-options="c.name for c in region.province.sub" class="pull-right">
@@ -81,7 +95,7 @@
                </select>
             </div>
          </div>
-         <div class="col-lg-3 col-xs-6 br pv">
+         <div class="col-lg-6 col-xs-6 br pv">
             <div class="clearfix">
                <p class="pull-left">对账日期</p>
                <p class="pull-right mr">{{reconciliateDate}}</p>
@@ -102,6 +116,7 @@
                <tr>
                   <th>优惠卷编号</th>
                   <th>优惠券名称</th>
+                  <th>类型</th>
                   <th>申领用户</th>
                   <th>申领时间</th>
                   <th>核销时间</th>
@@ -112,12 +127,13 @@
             <tbody>
                <tr ng-repeat="entity in entities">
                   <td>{{entity.cancel_code}}</td>
-                  <td>{{entity.coupon.title|| '匿名卡卷'}}</td>
+                  <td>{{entity.coupon.title || '非正式卡卷'}}</td>
+                  <td>{{entity.coupon.type | coupon_type }}</td>
                   <td>{{entity.wxuser.remark || entity.wxuser.nickname}}</td>
                   <td>{{entity.add_time | moment_unix}}</td>
                   <td>{{entity.use_time | moment_unix}}</td>
                   <td>{{entity.company.name || '远程核销'}}</td>
-                  <td class="text-right">{{entity.coupon.reduce_cost || 0}}</td>
+                  <td class="text-right">{{(entity.coupon.reduce_cost || 0) /100 | currency}}</td>
                </tr>
             </tbody>
          </table>
@@ -126,15 +142,19 @@
          <div class="col-sm-offset-8 col-sm-4 pv">
             <div class="clearfix">
                <p class="pull-left">小计</p>
-               <p class="pull-right mr">¥ {{discountAmount}}</p>
+               <p class="pull-right mr">{{discountAmount/100 | currency}}</p>
             </div>
             <div class="clearfix">
                <p class="pull-left">手工修正</p>
                <input type="number" ng-model="manualAmount" class="pull-right text-right" />
             </div>
             <div class="clearfix">
-               <p class="pull-left h3">总计</p>
-               <p class="pull-right mr h3">¥ {{discountAmount + manualAmount}}</p>
+               <p class="pull-left h3">总计折扣</p>
+               <p class="pull-right mr h3">{{(discountAmount + manualAmount)/100 | currency}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left h3">总计礼品</p>
+               <p class="pull-right mr h3">{{giftAmount}}</p>
             </div>
          </div>
       </div>
