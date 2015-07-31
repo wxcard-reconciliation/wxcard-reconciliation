@@ -347,7 +347,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/coupon-records',
         title: 'Coupon Records',
         templateUrl: helper.basepath('coupon-records.html'),
-        resolve: helper.resolveFor('ngTable', 'moment'),
+        resolve: helper.resolveFor('ngTable', 'moment', 'ngDialog'),
         controller: 'CouponRecordsController'
     })
     .state('app.coupon-record', {

@@ -22,6 +22,10 @@
                   <td data-title="'申领用户'">{{entity.wxuser.nickname}}</td>
                   <td data-title="'申领日期'">{{entity.add_time | moment_unix}}</td>
                   <td data-title="'状态'">{{entity.is_use ? '已核销' : '未核销'}}</td>
+                  <td data-title="'收据'" ng-click="showReceipt(entity.receipt_imageurl)">
+                     <em ng-show="entity.receiptLoading" class="fa fa-spinner fa-spin"></em>
+                     <img ng-src="{{entity.receipt_imageurl || 'app/img/dummy.png'}}" alt="" width="32" height="64" ng-if="!entity.receiptLoading" class="img-thumbnail" />
+                  </td>
                </tr>
             </tbody>
          </table>

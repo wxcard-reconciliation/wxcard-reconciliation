@@ -3,7 +3,7 @@
  * CouponRecords Controller
  =========================================================*/
 
-App.controller('CouponRecordsController', function ($scope, CouponRecord, ngTableParams) {
+App.controller('CouponRecordsController', function ($scope, CouponRecord, ngTableParams, ngDialog) {
   
   $scope.filter = {text: ''}
   $scope.tableParams = new ngTableParams({
@@ -20,10 +20,31 @@ App.controller('CouponRecordsController', function ($scope, CouponRecord, ngTabl
       }
       CouponRecord.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
-        CouponRecord.find({filter:opt}, $defer.resolve)
+        CouponRecord.find({filter:opt}, function (results) {
+          $defer.resolve(results);
+          results.forEach(function (item) {
+            if(item.receipt && item.receipt !== '') {
+              item.receiptLoading = true;
+              CouponRecord.receiptUrl({receipt: item.receipt}, function (result) {
+                item.receiptLoading = false;
+                item.receipt_imageurl = result.url;
+              })
+            }
+          })
+        })
       })
     }
-  })   
+  })
+  
+  $scope.showReceipt = function (imageurl) {
+    if(!imageurl) return;
+    ngDialog.open({
+      template: "<img src="+imageurl+" class='img-responsive'>",
+      plain: true,
+      className: 'ngdialog-theme-default'
+    });
+    
+  }   
 })
 
 App.controller('CouponRecordController', function ($scope, CouponRecord, $state, toaster) {
