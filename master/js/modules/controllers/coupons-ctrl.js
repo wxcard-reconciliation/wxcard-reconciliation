@@ -42,8 +42,7 @@ App.controller('CouponRecordsController', function ($scope, CouponRecord, ngTabl
       template: "<img src="+imageurl+" class='img-responsive'>",
       plain: true,
       className: 'ngdialog-theme-default'
-    });
-    
+    });    
   }   
 })
 

@@ -13,10 +13,30 @@
                   </fieldset>
                   <fieldset>
                      <div class="form-group">
-                        <label class="col-sm-2 control-label">注册邮箱</label>
+                        <label class="col-sm-2 control-label">头像</label>
                         <div class="col-sm-6">
-                           <input type="email" name="email" required="" ng-model="entity.email" class="form-control" />
-                           <span ng-show="validateInput('email', 'required')" class="text-danger">注册邮箱不能为空</span>
+                           <img ng-src="{{entity.picture || 'app/img/dummy.png'}}" width="64" height="64" class="img-thumbnail" />
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">微信</label>
+                        <div class="col-sm-6">
+                           <input type="text" name="wechatUser" ng-model="wechatUser" typeahead="wechatUser as wechatUser.nickname for wechatUser in fetchWechatUsers($viewValue)" typeahead-loading="loadingWechatUsers" required="" class="form-control" /><i ng-show="loadingWechatUsers" class="fa fa fa-spinner"></i>
+                           <span ng-show="validateInput('wechatUser', 'required')" class="text-danger">微信不能为空</span>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">必填</small>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">注册手机</label>
+                        <div class="col-sm-6">
+                           <input type="text" name="phone" required="" ng-model="entity.phone" class="form-control" />
+                           <span ng-show="validateInput('phone', 'required')" class="text-danger">注册手机不能为空</span>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">必填</small>
@@ -28,7 +48,7 @@
                         <label class="col-sm-2 control-label">密码</label>
                         <div class="col-sm-6">
                            <input type="text" name="password" required="" ng-model="entity.password" class="form-control" />
-                           <span ng-show="validateInput('email', 'required')" class="text-danger">密码不能为空</span>
+                           <span ng-show="validateInput('password', 'required')" class="text-danger">密码不能为空</span>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">必填</small>
@@ -56,18 +76,6 @@
                               <option>地市管理员</option>
                               <option>省公司管理员</option>
                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                           <small class="text-muted">必填</small>
-                        </div>
-                     </div>
-                  </fieldset>
-                  <fieldset>
-                     <div class="form-group">
-                        <label class="col-sm-2 control-label">联系电话</label>
-                        <div class="col-sm-6">
-                           <input type="text" name="phone" required="" ng-model="entity.phone" class="form-control" />
-                           <span ng-show="validateInput('phone', 'required')" class="text-danger">联系电话不能为空</span>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">必填</small>

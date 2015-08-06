@@ -13,10 +13,24 @@ h3 新开账户
               legend 帐号资料
             fieldset
               .form-group
-                label.col-sm-2.control-label 注册邮箱
+                label.col-sm-2.control-label 头像
                 .col-sm-6
-                  input.form-control(type='email', name='email', required='', ng-model="entity.email")
-                  span.text-danger(ng-show="validateInput('email', 'required')") 注册邮箱不能为空
+                  img.img-thumbnail(ng-src="{{entity.picture || 'app/img/dummy.png'}}", width="64", height="64",)
+            fieldset
+              .form-group
+                label.col-sm-2.control-label 微信
+                .col-sm-6
+                  input.form-control(type='text', name='wechatUser', ng-model="wechatUser" typeahead="wechatUser as wechatUser.nickname for wechatUser in fetchWechatUsers($viewValue)" typeahead-loading="loadingWechatUsers", required='')
+                  i.fa.fa.fa-spinner(ng-show="loadingWechatUsers")
+                  span.text-danger(ng-show="validateInput('wechatUser', 'required')") 微信不能为空
+                .col-sm-4
+                  small.text-muted 必填
+            fieldset
+              .form-group
+                label.col-sm-2.control-label 注册手机
+                .col-sm-6
+                  input.form-control(type='text', name='phone', required='', ng-model="entity.phone")
+                  span.text-danger(ng-show="validateInput('phone', 'required')") 注册手机不能为空
                 .col-sm-4
                   small.text-muted 必填
             fieldset
@@ -24,7 +38,7 @@ h3 新开账户
                 label.col-sm-2.control-label 密码
                 .col-sm-6
                   input.form-control(type='text', name='password', required='', ng-model="entity.password")
-                  span.text-danger(ng-show="validateInput('email', 'required')") 密码不能为空
+                  span.text-danger(ng-show="validateInput('password', 'required')") 密码不能为空
                 .col-sm-4
                   small.text-muted 必填       
             fieldset
@@ -43,18 +57,8 @@ h3 新开账户
                     option 加油站长
                     option 地市管理员
                     option 省公司管理员
-                  //- input.form-control(type='text', name='job', required='', ng-model="entity.job")
-                  //- span.text-danger(ng-show="validateInput('job', 'required')") 工作岗位不能为空
                 .col-sm-4
                   small.text-muted 必填          
-            fieldset
-              .form-group
-                label.col-sm-2.control-label 联系电话
-                .col-sm-6
-                  input.form-control(type='text', name='phone', required='', ng-model="entity.phone")
-                  span.text-danger(ng-show="validateInput('phone', 'required')") 联系电话不能为空
-                .col-sm-4
-                  small.text-muted 必填
             fieldset
               .form-group
                 label.col-sm-2.control-label 加油站

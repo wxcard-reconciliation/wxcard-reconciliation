@@ -13,6 +13,14 @@
                   </fieldset>
                   <fieldset>
                      <div class="form-group">
+                        <label class="col-sm-2 control-label">头像</label>
+                        <div class="col-sm-6">
+                           <img ng-src="{{entity.picture || 'app/img/dummy.png'}}" width="64" height="64" class="img-thumbnail" />
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
                         <label class="col-sm-2 control-label">帐号真名</label>
                         <div class="col-sm-6">
                            <input type="text" name="name" required="" ng-model="entity.name" class="form-control" />
@@ -37,9 +45,19 @@
                   </fieldset>
                   <fieldset>
                      <div class="form-group">
-                        <label class="col-sm-2 control-label">注册邮箱</label>
+                        <label class="col-sm-2 control-label">用户名</label>
                         <div class="col-sm-6">
-                           <p class="form-control-static">{{entity.email}}</p>
+                           <p class="form-control-static">{{entity.username}}</p>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">不可修改</small>
+                           <fieldset></fieldset>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">微信openId</label>
+                        <div class="col-sm-6">
+                           <p class="form-control-static">{{entity.openId}}</p>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">不可修改</small>

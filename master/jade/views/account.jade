@@ -13,6 +13,12 @@ h3 账户资料管理
               legend 帐号资料
             fieldset
               .form-group
+                label.col-sm-2.control-label 头像
+                .col-sm-6
+                  img.img-thumbnail(ng-src="{{entity.picture || 'app/img/dummy.png'}}", width="64", height="64",)
+            
+            fieldset
+              .form-group
                 label.col-sm-2.control-label 帐号真名
                 .col-sm-6
                   input.form-control(type='text', name='name', required='', ng-model="entity.name")
@@ -29,9 +35,16 @@ h3 账户资料管理
                   small.text-muted 必填
             fieldset
               .form-group
-                label.col-sm-2.control-label 注册邮箱
+                label.col-sm-2.control-label 用户名
                 .col-sm-6
-                  p.form-control-static {{entity.email}}
+                  p.form-control-static {{entity.username}}
+                .col-sm-4
+                  small.text-muted 不可修改
+                  fieldset
+              .form-group
+                label.col-sm-2.control-label 微信openId
+                .col-sm-6
+                  p.form-control-static {{entity.openId}}
                 .col-sm-4
                   small.text-muted 不可修改
             fieldset

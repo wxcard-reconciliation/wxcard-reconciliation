@@ -905,10 +905,19 @@ App.controller('AccountsController', ["$scope", "Account", "ngTableParams", func
   })   
 }])
 
-App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster", "Company", "$q", function ($scope, Account, $state, toaster, Company, $q) {
+App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster", "Company", "$q", "Wxuser", function ($scope, Account, $state, toaster, Company, $q, Wxuser) {
 
   $scope.entity = {job: '加油站长'}
   $scope.company = null
+  $scope.wechatUser = null
+  
+  $scope.$watch('wechatUser', function (newVal, oldVal) {
+    if(newVal instanceof Wxuser) {
+      $scope.entity.picture = newVal.headimgurl;
+      $scope.entity.name = newVal.remark || newVal.nickname;
+      $scope.entity.openId =  $scope.wechatUser.id
+    }
+  });
   
   $scope.submitted = false;
   $scope.validateInput = function(name, type) {
@@ -920,7 +929,8 @@ App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster
   $scope.submitForm = function() {
     $scope.submitted = true;
     if ($scope.formValidate.$valid) {
-      $scope.entity.username = $scope.entity.email
+      $scope.entity.email = $scope.entity.phone+"@petrojs.cn"
+      $scope.entity.username = $scope.entity.phone
       $scope.entity.companyId = $scope.company && $scope.company.id || null
       Account.create($scope.entity, function (entity) {
         toaster.pop('success', '新增成功', '已经添加帐号 '+entity.name)
@@ -936,14 +946,24 @@ App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster
   };
   
   $scope.fetchCompanies = function (val) {
-    var q = $q.defer()
+    var q = $q.defer();
     $scope.loadingCompanies = true;
     Company.find({filter:{where:{"name":{like: '%'+val+'%'}}}}, function (results) {
       $scope.loadingCompanies = false;
       q.resolve(results);
     })
-    return q.promise
-  }
+    return q.promise;
+  };
+
+  $scope.fetchWechatUsers = function (val) {
+    var q = $q.defer();
+    $scope.loadingWechatUsers = true;
+    Wxuser.find({filter:{where:{"nickname":{like: '%'+val+'%'}}}}, function (results) {
+      $scope.loadingWechatUsers = false;
+      q.resolve(results);
+    })
+    return q.promise;
+  };
 }])
 
 App.controller('AccountController', ["$scope", "Account", "$state", "toaster", function ($scope, Account, $state, toaster) {
@@ -1937,8 +1957,7 @@ App.controller('CouponRecordsController', ["$scope", "CouponRecord", "ngTablePar
       template: "<img src="+imageurl+" class='img-responsive'>",
       plain: true,
       className: 'ngdialog-theme-default'
-    });
-    
+    });    
   }   
 }])
 
