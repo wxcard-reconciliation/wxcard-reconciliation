@@ -8,10 +8,10 @@
       p.text-center.pv 登录系统
       form.form-validate(role='form', ng-submit="login()", name='loginForm', novalidate='').mb-lg
         .form-group.has-feedback
-          input#exampleInputEmail1.form-control(type='email', name="account_email" placeholder='输入电子邮件', autocomplete="off", ng-model="account.email", required='')
-          span.fa.fa-envelope.form-control-feedback.text-muted
-          span.text-danger(ng-show="loginForm.account_email.$dirty && loginForm.account_email.$error.required") 这项不能为空
-          span.text-danger(ng-show="loginForm.account_email.$dirty && loginForm.account_email.$error.email") 这项必须是合法的电子邮件地址
+          input#exampleInputEmail1.form-control(type='text', name="account_username" placeholder='输入手机号码／电子邮件', autocomplete="off", ng-model="account.username", required='')
+          span.fa.fa-user.form-control-feedback.text-muted
+          span.text-danger(ng-show="loginForm.account_username.$dirty && loginForm.account_username.$error.required") 这项不能为空
+          //- span.text-danger(ng-show="loginForm.account_email.$dirty && loginForm.account_email.$error.email") 这项必须是合法的电子邮件地址
         .form-group.has-feedback
           input#exampleInputPassword1.form-control(type='password', name="account_password" placeholder='输入密码', ng-model="account.password", required='')
           span.fa.fa-lock.form-control-feedback.text-muted

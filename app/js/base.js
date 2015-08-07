@@ -56028,7 +56028,6 @@ angular.module('tmh.dynamicLocale', []).config(['$provide', function ($provide) 
 
 (function(window, angular, undefined) {'use strict';
 
-// var urlBase = "http://0.0.0.0:3000/api";
 var urlBase = "http://120.26.66.200:3000/api";
 var authHeader = 'authorization';
 
@@ -58886,10 +58885,9 @@ module.factory(
          *   populated with the actual data once the response is returned
          *   from the server.
          *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `CouponRecord` object.)
-         * </em>
+         * Data properties:
+         *
+         *  - `url` – `{string=}` - 
          */
         "receiptUrl": {
           url: urlBase + "/couponRecords/receiptUrl",
