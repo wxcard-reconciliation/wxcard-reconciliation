@@ -117,7 +117,7 @@
                   <th>优惠卷编号</th>
                   <th>优惠券名称</th>
                   <th>类型</th>
-                  <th>申领用户</th>
+                  <th>申领客户</th>
                   <th>申领时间</th>
                   <th>核销时间</th>
                   <th>核销加油站</th>
@@ -129,7 +129,7 @@
                   <td>{{entity.cancel_code}}</td>
                   <td>{{entity.coupon.title || '非正式卡卷'}}</td>
                   <td>{{entity.coupon.type | coupon_type }}</td>
-                  <td>{{entity.wxuser.remark || entity.wxuser.nickname}}</td>
+                  <td>{{entity.wxuser.remark || entity.wxuser.nickname || "匿名客户"}}</td>
                   <td>{{entity.add_time | moment_unix}}</td>
                   <td>{{entity.use_time | moment_unix}}</td>
                   <td>{{entity.company.name || '远程核销'}}</td>

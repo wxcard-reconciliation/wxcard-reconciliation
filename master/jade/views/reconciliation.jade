@@ -85,7 +85,7 @@ h3
             th 优惠卷编号
             th 优惠券名称
             th 类型
-            th 申领用户
+            th 申领客户
             th 申领时间
             th 核销时间
             th 核销加油站
@@ -95,7 +95,7 @@ h3
             td {{entity.cancel_code}}
             td {{entity.coupon.title || '非正式卡卷'}}
             td {{entity.coupon.type | coupon_type }}
-            td {{entity.wxuser.remark || entity.wxuser.nickname}}
+            td {{entity.wxuser.remark || entity.wxuser.nickname || "匿名客户"}}
             td {{entity.add_time | moment_unix}}
             td {{entity.use_time | moment_unix}}
             td {{entity.company.name || '远程核销'}}

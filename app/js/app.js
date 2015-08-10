@@ -4528,6 +4528,7 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
     }
   })
   
+  $scope.reconciliateDate = moment().format('YYYY-MM-DD');
   $scope.endDate = moment().format('YYYY-MM-DD')
   $scope.beginDate = moment().subtract(30, 'days').format('YYYY-MM-DD')
   $scope.openeds = [false, false]
@@ -4538,17 +4539,18 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
     $scope.openeds[index] = true
     $scope.openeds[++index%2] = false
   };
-  $scope.reconciliateDate = moment().format('YYYY-MM-DD');
   
   $scope.try = function () {
     var filter = {
       where:{use_time:{between: [
         moment($scope.beginDate).unix(), 
-        moment($scope.endDate+' 23:59:59').unix()
+        moment($scope.endDate).endOf('day').unix()
       ]}},
       include: ['coupon', 'company', 'wxuser']
     };
-    if($scope.gasstation) {
+    if($scope.user.companyId) {
+      filter.where.company_id = $scope.user.companyId;
+    } else if($scope.gasstation) {
       filter.where.company_id = $scope.gasstation.id;
     } else if($scope.region.district || $scope.region.city) {
       var ids = []
