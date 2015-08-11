@@ -900,7 +900,7 @@ App.controller('AccountsController', ["$scope", "Account", "ngTableParams", func
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        opt.where.name = {like: $scope.filter.text}
+        opt.where.name = {like: '%'+$scope.filter.text+'%'}
       }
       Account.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
