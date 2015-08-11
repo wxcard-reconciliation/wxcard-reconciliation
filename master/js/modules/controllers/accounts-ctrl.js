@@ -28,7 +28,7 @@ App.controller('AccountsController', function ($scope, Account, ngTableParams) {
 
 App.controller('AccountsAddController', function ($scope, Account, $state, toaster, Company, $q, Wxuser) {
 
-  $scope.entity = {job: '加油站长'}
+  $scope.entity = {job: '加油站收银员'}
   $scope.company = null
   $scope.wechatUser = null
   
@@ -69,7 +69,7 @@ App.controller('AccountsAddController', function ($scope, Account, $state, toast
   $scope.fetchCompanies = function (val) {
     var q = $q.defer();
     $scope.loadingCompanies = true;
-    Company.find({filter:{where:{"name":{like: '%'+val+'%'}}}}, function (results) {
+    Company.find({filter:{where:{"shortname":{like: '%'+val+'%'}}}}, function (results) {
       $scope.loadingCompanies = false;
       q.resolve(results);
     })

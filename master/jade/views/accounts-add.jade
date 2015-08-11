@@ -54,7 +54,7 @@ h3 新开账户
                 label.col-sm-2.control-label 工作岗位
                 .col-sm-6
                   select.form-control(name='job', ng-model="entity.job")
-                    option 加油站长
+                    option 加油站收银员
                     option 地市管理员
                     option 省公司管理员
                 .col-sm-4
@@ -63,7 +63,7 @@ h3 新开账户
               .form-group
                 label.col-sm-2.control-label 加油站
                 .col-sm-6
-                  input.form-control(type='text', name='gasstation', ng-model="company" typeahead="company as company.name for company in fetchCompanies($viewValue)" typeahead-loading="loadingCompanies")
+                  input.form-control(type='text', name='gasstation', ng-model="company" typeahead="company as company.shortname for company in fetchCompanies($viewValue)" typeahead-loading="loadingCompanies")
                   i.fa.fa.fa-spinner(ng-show="loadingCompanies")
                 .col-sm-4
                   small.text-muted 可选

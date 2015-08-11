@@ -72,7 +72,7 @@
                         <label class="col-sm-2 control-label">工作岗位</label>
                         <div class="col-sm-6">
                            <select name="job" ng-model="entity.job" class="form-control">
-                              <option>加油站长</option>
+                              <option>加油站收银员</option>
                               <option>地市管理员</option>
                               <option>省公司管理员</option>
                            </select>
@@ -86,7 +86,7 @@
                      <div class="form-group">
                         <label class="col-sm-2 control-label">加油站</label>
                         <div class="col-sm-6">
-                           <input type="text" name="gasstation" ng-model="company" typeahead="company as company.name for company in fetchCompanies($viewValue)" typeahead-loading="loadingCompanies" class="form-control" /><i ng-show="loadingCompanies" class="fa fa fa-spinner"></i>
+                           <input type="text" name="gasstation" ng-model="company" typeahead="company as company.shortname for company in fetchCompanies($viewValue)" typeahead-loading="loadingCompanies" class="form-control" /><i ng-show="loadingCompanies" class="fa fa fa-spinner"></i>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">可选</small>
