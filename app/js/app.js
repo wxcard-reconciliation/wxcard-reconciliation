@@ -4551,7 +4551,6 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
   };
   
   $scope.try = function () {
-    console.log($scope.user);
     var filter = {
       where:{use_time:{between: [
         moment($scope.beginDate).unix(), 
