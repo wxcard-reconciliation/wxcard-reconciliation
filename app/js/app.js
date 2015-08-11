@@ -4524,8 +4524,11 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
   $scope.manualGiftAmount = 0
   $scope.discountAmount = 0
   $scope.manualAmount = 0
-  $scope.gasstation = $scope.user.company;
-  $scope.region = {city: $scope.gasstation.city, district: $scope.gasstation.district};
+  $scope.gasstation = $scope.user.company || {name: '全部加油站'};
+  $scope.region = {
+    city: $scope.gasstation && {name: $scope.gasstation.city} || {name: '全部地市'}, 
+    district: $scope.gasstation && {name: $scope.gasstation.district} || {name: '全部区县'}
+  };
   ChinaRegion.provinces.some(function (province) {
     if(province.name === '江苏') {
       $scope.region.province = province;
