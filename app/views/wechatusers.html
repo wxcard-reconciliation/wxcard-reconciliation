@@ -15,10 +15,11 @@
             <tbody>
                <tr ng-repeat="entity in $data" class="text-center">
                   <td data-title="'用户头像'">
-                     <img ng-src="{{entity.headimgurl}}" alt="" width="60" height="60" class="img-thumbnail img-circle" />
+                     <img ng-src="{{entity.headimgurl}}" alt="" width="44" height="44" class="img-thumbnail img-circle" />
                   </td>
                   <td data-title="'用户昵称'">{{entity.nickname}}</td>
                   <td data-title="'用户备注'">{{entity.remark}}</td>
+                  <td data-title="'OpenID'">{{entity.id}}</td>
                   <td data-title="'性别'">{{entity.sex | wechat_sex}}</td>
                   <td data-title="'省份'">{{entity.province}}</td>
                   <td data-title="'城市'">{{entity.city}}</td>

@@ -3,7 +3,7 @@
  * Demo for login api
  =========================================================*/
 
-App.controller('LoginFormController', ['$scope', 'Account', '$state', '$rootScope', function($scope, Account, $state, $rootScope) {
+App.controller('LoginFormController', ['$scope', 'Account', '$state', '$rootScope', 'Company', function($scope, Account, $state, $rootScope, Company) {
 
   // bind here all data from the form
   $scope.account = {remember: true};
@@ -17,6 +17,9 @@ App.controller('LoginFormController', ['$scope', 'Account', '$state', '$rootScop
 
       Account.login($scope.account, function (accessToken) {
         $rootScope.user = accessToken.user
+        Company.findById({id: $rootScope.user.companyId}, function (result) {
+          $rootScope.user.company = result;
+        });
         $state.go('app.dashboard');
       }, function (error) {
         $scope.authMsg = error.data.error.message

@@ -1,17 +1,17 @@
-h3 
-  | 核销对账清单
+h3.hidden-print 
+  | 核销对账单
   a(type='button' ng-click='try()').btn.btn-primary.pull-right.mr-sm
     em.fa.fa-calculator.fa-fw.mr-sm
     | 生成对账清单
   .pull-right.col-sm-6
     .col-sm-6
-      p.input-group.hidden-print
+      p.input-group
         input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="beginDate", is-open='openeds[1]', max-date="endDate", ng-required='true', close-text='Close')
         span.input-group-btn
           button.btn.btn-default(type='button', ng-click='open($event, 1)')
             em.fa.fa-calendar  
     .col-sm-6
-      p.input-group.hidden-print
+      p.input-group
         input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="endDate", is-open='openeds[0]', max-date="endDate", ng-required='true', close-text='Close')
         span.input-group-btn
           button.btn.btn-default(type='button', ng-click='open($event, 0)')
@@ -19,8 +19,15 @@ h3
 
 .panel
   .panel-body
-    //- button(type="button").pull-right.btn.btn-default.btn-sm Copy this invoice
-    h3.mt0 对账单  
+    //- .pull-right
+    //-   select.mr(ng-model="region.city" ng-options="c.name for c in region.province.sub")
+    //-     option(value="") 全部地市
+    //-   select.mr(ng-model="region.district" ng-options="d.name for d in region.city.sub")
+    //-     option(value="") 全部区县
+    //-   select.mr(ng-model="gasstation" ng-options="g.name for g in gasstations")
+    //-     option(value="") 全部加油站
+    //-   button(type="button").btn.btn-default.btn-sm Copy this invoice
+    h3.mt0 核销对账清单  
     hr
 
     .row.mb-lg
@@ -32,52 +39,67 @@ h3
             h2 
               | {{entities.length}} 
               small 张
-            p 累计核销优惠卷  
+            p 累计核卡卷  
       .col-lg-4.col-xs-4.br.pv
-        .row
-          .col-md-2.text-center.visible-md.visible-lg
-            em.fa.fa-gift.fa-4x.text-muted
-          .col-md-10
-            h2 
-              | {{giftAmount}} 
-              small 件
-            p 累计核销礼品  
-      .col-lg-4.col-xs-4.br.pv
-        .row
-          .col-md-2.text-center.visible-md.visible-lg
-            em.fa.fa-rmb.fa-4x.text-muted
-          .col-md-10
-            h2 
-              | {{discountAmount/100 | currency}} 
-              small 元
-            p 累计优惠金额
-      //- .clearfix.hidden-md.hidden-lg
-      //-   hr
-    hr
-    .row.mb-lg
-      .col-lg-6.col-xs-6.br.pv
         .clearfix
           p.pull-left 地市  
-          select.pull-right(ng-model="region.city" ng-options="c.name for c in region.province.sub")  
-            option(value="") 全部地市
+          p.pull-right.mr {{region.city}}
         .clearfix
           p.pull-left 区县
-          select.pull-right(ng-model="region.district" ng-options="d.name for d in region.city.sub")
-            option(value="") 全部区县
+          p.pull-right.mr {{region.district}}
         .clearfix
           p.pull-left 加油站
-          select.pull-right(ng-model="gasstation" ng-options="g.name for g in gasstations")
-            option(value="") 全部加油站
-      .col-lg-6.col-xs-6.br.pv
+          p.pull-right.mr {{gasstation.name}}
+        //- .row
+        //-   .col-md-2.text-center.visible-md.visible-lg
+        //-     em.fa.fa-gift.fa-4x.text-muted
+        //-   .col-md-10
+        //-     h2
+        //-       | {{giftAmount}}
+        //-       small 件
+        //-     p 累计核销礼品
+      .col-lg-4.col-xs-4.br.pv
         .clearfix
           p.pull-left 对账日期
-          p.pull-right.mr {{reconciliateDate}}
+          p.pull-right.mr {{reconciliateDate | date}}
         .clearfix
           p.pull-left 起始日期
-          p.pull-right.mr {{beginDate}}
+          p.pull-right.mr {{beginDate | date}}
         .clearfix
           p.pull-left 截至日期
-          p.pull-right.mr {{endDate}}
+          p.pull-right.mr {{endDate | date}}
+        //- .row
+        //-   .col-md-2.text-center.visible-md.visible-lg
+        //-     em.fa.fa-rmb.fa-4x.text-muted
+        //-   .col-md-10
+        //-     h2
+        //-       | {{discountAmount/100 | currency}}
+        //-       small 元
+        //-     p 累计优惠金额
+      //- .clearfix.hidden-md.hidden-lg
+      //-   hr
+    //- hr
+    //- .row.mb-lg
+    //-   .col-lg-6.col-xs-6.br.pv
+    //-     .clearfix
+    //-       p.pull-left 地市
+    //-       p.pull-right.mr {{region.city}}
+    //-     .clearfix
+    //-       p.pull-left 区县
+    //-       p.pull-right.mr {{region.district}}
+    //-     .clearfix
+    //-       p.pull-left 加油站
+    //-       p.pull-right.mr {{gasstation.name}}
+    //-   .col-lg-6.col-xs-6.br.pv
+    //-     .clearfix
+    //-       p.pull-left 对账日期
+    //-       p.pull-right.mr {{reconciliateDate | date}}
+    //-     .clearfix
+    //-       p.pull-left 起始日期
+    //-       p.pull-right.mr {{beginDate | date}}
+    //-     .clearfix
+    //-       p.pull-left 截至日期
+    //-       p.pull-right.mr {{endDate | date}}
     .table-responsive.table-bordered.mb-lg
       table.table
         thead
@@ -102,36 +124,67 @@ h3
             td.text-right {{(entity.coupon.reduce_cost || 0) /100 | currency}}
 
     .row
-      .col-sm-offset-8.col-sm-4.pv
+      .col-xs-6.pv
         .clearfix
-          p.pull-left 小计
+          p.pull-left 礼品小计
+          p.pull-right.mr {{giftAmount}}
+        .clearfix
+          p.pull-left 礼品修正
+          p.pull-right.mr {{manualGiftAmount}}
+        .clearfix
+          p.pull-left.h3 礼品总计
+          p.pull-right.mr.h3 {{giftAmount+manualGiftAmount}}
+      .col-xs-6.pv
+        .clearfix
+          p.pull-left 折扣小计
           p.pull-right.mr {{discountAmount/100 | currency}}
         .clearfix
-          p.pull-left 手工修正
-          //- p.pull-right.mr {{manualAmount | currency}}
-          input.pull-right.text-right(type='number' ng-model="manualAmount")
+          p.pull-left 折扣修正
+          p.pull-right.mr {{manualAmount/100 | currency}}
         .clearfix
-          p.pull-left.h3 总计折扣
+          p.pull-left.h3 折扣总计
           p.pull-right.mr.h3 {{(discountAmount + manualAmount)/100 | currency}}
-        .clearfix
-          p.pull-left.h3 总计礼品
-          p.pull-right.mr.h3 {{giftAmount}}
     .row
-      //- .col-sm-8.pv
-      //-   .clearfix
-      //-     p.pull-left.h5 修正备注：
-      .col-sm-offset-8.col-sm-4.pv
+      .col-sm-6.pv
         .clearfix
-          p.pull-left.h5 对账人：
+          p.pull-left.h3 备注：
+          p.mr {{memo}}
+      .col-sm-6.pv
+        .clearfix
+          p.pull-left.h3 对账人：
+    .clearfix
       
     hr.hidden-print
     .clearfix
-      //- button(type="button").btn.btn-default.pull-left.mr
-      //-   em.fa.fa-edit.fa-fw.mr-sm
-      //-   | 编辑
-      button(type="button", onclick="window.print();").btn.btn-info.pull-left 
+      button(type="button", ng-click="showEdit()").btn.btn-default.pull-left.mr
+        em.fa.fa-edit.fa-fw.mr-sm
+        | 编辑
+      button(type="button", onclick="window.print();").btn.btn-info.pull-right.mr
         em.fa.fa-print.fa-fw.mr-sm
         | 打印
-      button(type="button").btn.btn-success.pull-right 
-        em.fa.icon-share-alt.fa-fw.mr-sm
-        | 发送
+      //- button(type="button").btn.btn-success.pull-right
+      //-   em.fa.icon-share-alt.fa-fw.mr-sm
+      //-   | 编辑
+        
+      script(type="text/ng-template", id="adjustDiscountAmountModalId")
+        .ngdialog-message
+          form
+            legend 编辑对账单
+            .form-group
+              label 折扣修正
+              .input-group
+                span.input-group-addon ¥
+                input.form-control.text-right(type='number' placeholder="加负号减少折扣额" ng-model="data.amount")
+                span.input-group-addon .00
+          
+            .form-group
+              label 礼品修正
+              input.form-control.text-right(type='number', placeholder="加负号减少数量", ng-model="data.gifts")
+            .form-group
+              label 备注
+              textarea.form-control(rows='3', ng-model="data.memo")
+              
+            .pull-right
+              button.btn.btn-primary.mr(type='button', ng-click='confirm(data)') 确定
+              button.btn.btn-default.mr(type='button', ng-click="closeThisDialog('button')") 取消  
+            .clearfix

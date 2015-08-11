@@ -1,10 +1,10 @@
-<h3>
-   核销对账清单
+<h3 class="hidden-print">
+   核销对账单
    <a type="button" ng-click="try()" class="btn btn-primary pull-right mr-sm">
       <em class="fa fa-calculator fa-fw mr-sm"></em>生成对账清单</a>
    <div class="pull-right col-sm-6">
       <div class="col-sm-6">
-         <p class="input-group hidden-print">
+         <p class="input-group">
             <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="beginDate" is-open="openeds[1]" max-date="endDate" ng-required="true" close-text="Close" class="form-control" />
             <span class="input-group-btn">
                <button type="button" ng-click="open($event, 1)" class="btn btn-default">
@@ -14,7 +14,7 @@
          </p>
       </div>
       <div class="col-sm-6">
-         <p class="input-group hidden-print">
+         <p class="input-group">
             <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="endDate" is-open="openeds[0]" max-date="endDate" ng-required="true" close-text="Close" class="form-control" />
             <span class="input-group-btn">
                <button type="button" ng-click="open($event, 0)" class="btn btn-default">
@@ -27,7 +27,7 @@
 </h3>
 <div class="panel">
    <div class="panel-body">
-      <h3 class="mt0">对账单</h3>
+      <h3 class="mt0">核销对账清单</h3>
       <hr/>
       <div class="row mb-lg">
          <div class="col-lg-4 col-xs-4 br pv">
@@ -40,73 +40,36 @@
                      {{entities.length}}
                      <small>张</small>
                   </h2>
-                  <p>累计核销优惠卷</p>
+                  <p>累计核卡卷</p>
                </div>
             </div>
          </div>
          <div class="col-lg-4 col-xs-4 br pv">
-            <div class="row">
-               <div class="col-md-2 text-center visible-md visible-lg">
-                  <em class="fa fa-gift fa-4x text-muted"></em>
-               </div>
-               <div class="col-md-10">
-                  <h2>
-                     {{giftAmount}}
-                     <small>件</small>
-                  </h2>
-                  <p>累计核销礼品</p>
-               </div>
-            </div>
-         </div>
-         <div class="col-lg-4 col-xs-4 br pv">
-            <div class="row">
-               <div class="col-md-2 text-center visible-md visible-lg">
-                  <em class="fa fa-rmb fa-4x text-muted"></em>
-               </div>
-               <div class="col-md-10">
-                  <h2>
-                     {{discountAmount/100 | currency}}
-                     <small>元</small>
-                  </h2>
-                  <p>累计优惠金额</p>
-               </div>
-            </div>
-         </div>
-      </div>
-      <hr/>
-      <div class="row mb-lg">
-         <div class="col-lg-6 col-xs-6 br pv">
             <div class="clearfix">
                <p class="pull-left">地市</p>
-               <select ng-model="region.city" ng-options="c.name for c in region.province.sub" class="pull-right">
-                  <option value="">全部地市</option>
-               </select>
+               <p class="pull-right mr">{{region.city}}</p>
             </div>
             <div class="clearfix">
                <p class="pull-left">区县</p>
-               <select ng-model="region.district" ng-options="d.name for d in region.city.sub" class="pull-right">
-                  <option value="">全部区县</option>
-               </select>
+               <p class="pull-right mr">{{region.district}}</p>
             </div>
             <div class="clearfix">
                <p class="pull-left">加油站</p>
-               <select ng-model="gasstation" ng-options="g.name for g in gasstations" class="pull-right">
-                  <option value="">全部加油站</option>
-               </select>
+               <p class="pull-right mr">{{gasstation.name}}</p>
             </div>
          </div>
-         <div class="col-lg-6 col-xs-6 br pv">
+         <div class="col-lg-4 col-xs-4 br pv">
             <div class="clearfix">
                <p class="pull-left">对账日期</p>
-               <p class="pull-right mr">{{reconciliateDate}}</p>
+               <p class="pull-right mr">{{reconciliateDate | date}}</p>
             </div>
             <div class="clearfix">
                <p class="pull-left">起始日期</p>
-               <p class="pull-right mr">{{beginDate}}</p>
+               <p class="pull-right mr">{{beginDate | date}}</p>
             </div>
             <div class="clearfix">
                <p class="pull-left">截至日期</p>
-               <p class="pull-right mr">{{endDate}}</p>
+               <p class="pull-right mr">{{endDate | date}}</p>
             </div>
          </div>
       </div>
@@ -139,38 +102,58 @@
          </table>
       </div>
       <div class="row">
-         <div class="col-sm-offset-8 col-sm-4 pv">
+         <div class="col-xs-6 pv">
             <div class="clearfix">
-               <p class="pull-left">小计</p>
+               <p class="pull-left">礼品小计</p>
+               <p class="pull-right mr">{{giftAmount}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">礼品修正</p>
+               <p class="pull-right mr">{{manualGiftAmount}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left h3">礼品总计</p>
+               <p class="pull-right mr h3">{{giftAmount+manualGiftAmount}}</p>
+            </div>
+         </div>
+         <div class="col-xs-6 pv">
+            <div class="clearfix">
+               <p class="pull-left">折扣小计</p>
                <p class="pull-right mr">{{discountAmount/100 | currency}}</p>
             </div>
             <div class="clearfix">
-               <p class="pull-left">手工修正</p>
-               <input type="number" ng-model="manualAmount" class="pull-right text-right" />
+               <p class="pull-left">折扣修正</p>
+               <p class="pull-right mr">{{manualAmount/100 | currency}}</p>
             </div>
             <div class="clearfix">
-               <p class="pull-left h3">总计折扣</p>
+               <p class="pull-left h3">折扣总计</p>
                <p class="pull-right mr h3">{{(discountAmount + manualAmount)/100 | currency}}</p>
-            </div>
-            <div class="clearfix">
-               <p class="pull-left h3">总计礼品</p>
-               <p class="pull-right mr h3">{{giftAmount}}</p>
             </div>
          </div>
       </div>
       <div class="row">
-         <div class="col-sm-offset-8 col-sm-4 pv">
+         <div class="col-sm-6 pv">
             <div class="clearfix">
-               <p class="pull-left h5">对账人：</p>
+               <p class="pull-left h3">备注：</p>
+               <p class="mr">{{memo}}</p>
+            </div>
+         </div>
+         <div class="col-sm-6 pv">
+            <div class="clearfix">
+               <p class="pull-left h3">对账人：</p>
             </div>
          </div>
       </div>
+      <div class="clearfix"></div>
       <hr class="hidden-print" />
       <div class="clearfix">
-         <button type="button" onclick="window.print();" class="btn btn-info pull-left">
+         <button type="button" ng-click="showEdit()" class="btn btn-default pull-left mr">
+            <em class="fa fa-edit fa-fw mr-sm"></em>编辑</button>
+         <button type="button" onclick="window.print();" class="btn btn-info pull-right mr">
             <em class="fa fa-print fa-fw mr-sm"></em>打印</button>
-         <button type="button" class="btn btn-success pull-right">
-            <em class="fa icon-share-alt fa-fw mr-sm"></em>发送</button>
+         <script type="text/ng-template" id="adjustDiscountAmountModalId">
+            <div class="ngdialog-message"><form><legend>编辑对账单</legend><div class="form-group"><label>折扣修正</label><div class="input-group"><span class="input-group-addon">¥</span><input type="number" placeholder="加负号减少折扣额" ng-model="data.amount" class="form-control text-right"/><span class="input-group-addon">.00</span></div></div><div class="form-group"><label>礼品修正</label><input type="number" placeholder="加负号减少数量" ng-model="data.gifts" class="form-control text-right"/></div><div class="form-group"><label>备注</label><textarea rows="3" ng-model="data.memo" class="form-control"></textarea></div><div class="pull-right"><button type="button" ng-click="confirm(data)" class="btn btn-primary mr">确定</button><button type="button" ng-click="closeThisDialog('button')" class="btn btn-default mr">取消  </button></div><div class="clearfix"></div></form></div>
+         </script>
       </div>
    </div>
 </div>

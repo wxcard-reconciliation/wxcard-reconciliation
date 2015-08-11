@@ -26,14 +26,15 @@ App.controller('ReconciliationsController', function ($scope, Reconciliation, ng
   })   
 })
 
-App.controller('ReconciliationController', function ($scope, CouponRecord, $state, toaster, ChinaRegion, Company) {
+App.controller('ReconciliationController', function ($scope, CouponRecord, $state, toaster, ChinaRegion, Company, ngDialog) {
 
   $scope.entities = []
   $scope.giftAmount = 0
+  $scope.manualGiftAmount = 0
   $scope.discountAmount = 0
   $scope.manualAmount = 0
-  $scope.gasstation = null
-  $scope.region = {city: null, district: null}
+  $scope.gasstation = $scope.user.company;
+  $scope.region = {city: $scope.gasstation.city, district: $scope.gasstation.district};
   ChinaRegion.provinces.some(function (province) {
     if(province.name === '江苏') {
       $scope.region.province = province;
@@ -56,6 +57,7 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
   };
   
   $scope.try = function () {
+    console.log($scope.user);
     var filter = {
       where:{use_time:{between: [
         moment($scope.beginDate).unix(), 
@@ -83,6 +85,19 @@ App.controller('ReconciliationController', function ($scope, CouponRecord, $stat
         if(entity.coupon && entity.coupon.type === 2) $scope.giftAmount++;
       })
     })
+  }
+  
+  $scope.showEdit = function () {
+    ngDialog.openConfirm({
+      template: "adjustDiscountAmountModalId",
+      className: 'ngdialog-theme-default'
+    }).then(function (value) {
+      $scope.manualAmount = (value.amount || 0)*100
+      $scope.manualGiftAmount = value.gifts || 0
+      $scope.memo = value.memo
+    }, function (reason) {
+    });    
+    
   }
   
   $scope.$watch('region.district', function () {

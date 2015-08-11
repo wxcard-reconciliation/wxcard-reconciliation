@@ -340,7 +340,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/reconciliations/:reconciliationId',
         title: 'Reconciliation Statement',
         templateUrl: helper.basepath('reconciliation.html'),
-        resolve: helper.resolveFor('angularjs-region', 'moment'),
+        resolve: helper.resolveFor('angularjs-region', 'moment', 'ngDialog'),
         controller: 'ReconciliationController'
     })
     .state('app.coupon-records', {

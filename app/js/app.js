@@ -69,8 +69,10 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
     picture:  'app/img/user/02.jpg'
   };
   if(Account.isAuthenticated()) {
-    $rootScope.user = Account.getCurrent()
-  }
+    Account.findById({id: Account.getCurrentId(), filter:{include:['company']}}, function (result) {
+      $rootScope.user = result
+    })
+  };
 
 }]);
 
@@ -416,7 +418,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/reconciliations/:reconciliationId',
         title: 'Reconciliation Statement',
         templateUrl: helper.basepath('reconciliation.html'),
-        resolve: helper.resolveFor('angularjs-region', 'moment'),
+        resolve: helper.resolveFor('angularjs-region', 'moment', 'ngDialog'),
         controller: 'ReconciliationController'
     })
     .state('app.coupon-records', {
@@ -807,7 +809,7 @@ App
  * Demo for login api
  =========================================================*/
 
-App.controller('LoginFormController', ['$scope', 'Account', '$state', '$rootScope', function($scope, Account, $state, $rootScope) {
+App.controller('LoginFormController', ['$scope', 'Account', '$state', '$rootScope', 'Company', function($scope, Account, $state, $rootScope, Company) {
 
   // bind here all data from the form
   $scope.account = {remember: true};
@@ -821,6 +823,9 @@ App.controller('LoginFormController', ['$scope', 'Account', '$state', '$rootScop
 
       Account.login($scope.account, function (accessToken) {
         $rootScope.user = accessToken.user
+        Company.findById({id: $rootScope.user.companyId}, function (result) {
+          $rootScope.user.company = result;
+        });
         $state.go('app.dashboard');
       }, function (error) {
         $scope.authMsg = error.data.error.message
@@ -3362,7 +3367,7 @@ App.controller('GasstationsController', ["$scope", "Company", "ngTableParams", f
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        opt.where.name = {like: $scope.filter.text}
+        opt.where.name = {like: '%'+$scope.filter.text+'%'}
       }
       Company.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
@@ -4511,14 +4516,15 @@ App.controller('ReconciliationsController', ["$scope", "Reconciliation", "ngTabl
   })   
 }])
 
-App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", "toaster", "ChinaRegion", "Company", function ($scope, CouponRecord, $state, toaster, ChinaRegion, Company) {
+App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", "toaster", "ChinaRegion", "Company", "ngDialog", function ($scope, CouponRecord, $state, toaster, ChinaRegion, Company, ngDialog) {
 
   $scope.entities = []
   $scope.giftAmount = 0
+  $scope.manualGiftAmount = 0
   $scope.discountAmount = 0
   $scope.manualAmount = 0
-  $scope.gasstation = null
-  $scope.region = {city: null, district: null}
+  $scope.gasstation = $scope.user.company;
+  $scope.region = {city: $scope.gasstation.city, district: $scope.gasstation.district};
   ChinaRegion.provinces.some(function (province) {
     if(province.name === '江苏') {
       $scope.region.province = province;
@@ -4541,6 +4547,7 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
   };
   
   $scope.try = function () {
+    console.log($scope.user);
     var filter = {
       where:{use_time:{between: [
         moment($scope.beginDate).unix(), 
@@ -4568,6 +4575,19 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
         if(entity.coupon && entity.coupon.type === 2) $scope.giftAmount++;
       })
     })
+  }
+  
+  $scope.showEdit = function () {
+    ngDialog.openConfirm({
+      template: "adjustDiscountAmountModalId",
+      className: 'ngdialog-theme-default'
+    }).then(function (value) {
+      $scope.manualAmount = (value.amount || 0)*100
+      $scope.manualGiftAmount = value.gifts || 0
+      $scope.memo = value.memo
+    }, function (reason) {
+    });    
+    
   }
   
   $scope.$watch('region.district', function () {
@@ -5729,7 +5749,8 @@ App.controller('WechatusersController', ["$scope", "Wxuser", "ngTableParams", fu
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        opt.where.name = {like: $scope.filter.text}
+        var qs = {like: '%'+$scope.filter.text+'%'}
+        opt.where.or = [{nickname:qs}, {remark:qs}];
       }
       Wxuser.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
