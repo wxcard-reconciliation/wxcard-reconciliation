@@ -1936,7 +1936,7 @@ App.controller('CouponRecordsController', ["$scope", "CouponRecord", "ngTablePar
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        opt.where.name = {like: $scope.filter.text}
+        opt.where.cancel_code = {like: '%'+$scope.filter.text+'%'}
       }
       CouponRecord.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
