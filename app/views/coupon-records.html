@@ -19,7 +19,7 @@
                   <td data-title="'卡卷名称'">{{entity.coupon.title || '非正式卡卷'}}</td>
                   <td data-title="'类型'">{{entity.coupon.type | coupon_type }}</td>
                   <td data-title="'卡卷编号'">{{entity.card_id}}</td>
-                  <td data-title="'申领用户'">{{entity.wxuser.nickname}}</td>
+                  <td data-title="'申领用户'">{{entity.wxuser && entity.wxuser.nickname || '匿名客户'}}</td>
                   <td data-title="'申领日期'">{{entity.add_time | moment_unix}}</td>
                   <td data-title="'状态'">{{entity.is_use ? '已核销' : '未核销'}}</td>
                   <td data-title="'收据'" ng-click="showReceipt(entity.receipt_imageurl)">
