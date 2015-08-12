@@ -17,7 +17,8 @@ App.controller('GasstationsController', function ($scope, Company, ngTableParams
       opt.where = {}
       if($scope.filter.text != '') {
         var qs = {like: '%'+$scope.filter.text+'%'};
-        opt.where.or = [{name:qs}, {shortname: qs}] 
+        opt.where.or = [{name:qs}, {shortname: qs}];
+        opt.skip = 0;
       }
       Company.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)

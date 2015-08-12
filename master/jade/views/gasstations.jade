@@ -13,6 +13,7 @@ h3
       table.table.table-bordered.table-striped(ng-table='tableParams')
         tbody
           tr.text-center(ng-repeat='entity in $data')
+            td(data-title="'编号'") {{entity.id}}
             td(data-title="'加油站'") {{entity.shortname}}
             td(data-title="'电话'") {{entity.tel}}
             td(data-title="'省份'") {{entity.province}} 

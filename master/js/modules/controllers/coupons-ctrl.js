@@ -17,6 +17,7 @@ App.controller('CouponRecordsController', function ($scope, CouponRecord, ngTabl
       opt.where = {}
       if($scope.filter.text != '') {
         opt.where.cancel_code = {like: '%'+$scope.filter.text+'%'}
+        opt.skip = 0;
       }
       CouponRecord.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)

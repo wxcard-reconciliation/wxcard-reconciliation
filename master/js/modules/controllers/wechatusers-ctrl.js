@@ -18,6 +18,7 @@ App.controller('WechatusersController', function ($scope, Wxuser, ngTableParams)
       if($scope.filter.text != '') {
         var qs = {like: '%'+$scope.filter.text+'%'}
         opt.where.or = [{nickname:qs}, {remark:qs}];
+        opt.skip = 0;
       }
       Wxuser.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)

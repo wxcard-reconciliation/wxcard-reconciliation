@@ -17,6 +17,7 @@ App.controller('AccountsController', function ($scope, Account, ngTableParams) {
       opt.where = {}
       if($scope.filter.text != '') {
         opt.where.name = {like: '%'+$scope.filter.text+'%'}
+        opt.skip = 0;
       }
       Account.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
