@@ -49,15 +49,7 @@ h3.hidden-print
           p.pull-right.mr {{region.district.name}}
         .clearfix
           p.pull-left 加油站
-          p.pull-right.mr {{gasstation.name}}
-        //- .row
-        //-   .col-md-2.text-center.visible-md.visible-lg
-        //-     em.fa.fa-gift.fa-4x.text-muted
-        //-   .col-md-10
-        //-     h2
-        //-       | {{giftAmount}}
-        //-       small 件
-        //-     p 累计核销礼品
+          p.pull-right.mr {{gasstation.shortname}}
       .col-lg-4.col-xs-4.br.pv
         .clearfix
           p.pull-left 对账日期
@@ -68,38 +60,8 @@ h3.hidden-print
         .clearfix
           p.pull-left 截至日期
           p.pull-right.mr {{endDate | date}}
-        //- .row
-        //-   .col-md-2.text-center.visible-md.visible-lg
-        //-     em.fa.fa-rmb.fa-4x.text-muted
-        //-   .col-md-10
-        //-     h2
-        //-       | {{discountAmount/100 | currency}}
-        //-       small 元
-        //-     p 累计优惠金额
-      //- .clearfix.hidden-md.hidden-lg
-      //-   hr
-    //- hr
-    //- .row.mb-lg
-    //-   .col-lg-6.col-xs-6.br.pv
-    //-     .clearfix
-    //-       p.pull-left 地市
-    //-       p.pull-right.mr {{region.city}}
-    //-     .clearfix
-    //-       p.pull-left 区县
-    //-       p.pull-right.mr {{region.district}}
-    //-     .clearfix
-    //-       p.pull-left 加油站
-    //-       p.pull-right.mr {{gasstation.name}}
-    //-   .col-lg-6.col-xs-6.br.pv
-    //-     .clearfix
-    //-       p.pull-left 对账日期
-    //-       p.pull-right.mr {{reconciliateDate | date}}
-    //-     .clearfix
-    //-       p.pull-left 起始日期
-    //-       p.pull-right.mr {{beginDate | date}}
-    //-     .clearfix
-    //-       p.pull-left 截至日期
-    //-       p.pull-right.mr {{endDate | date}}
+      .clearfix.hidden-md.hidden-lg
+    hr
     .table-responsive.table-bordered.mb-lg
       table.table
         thead
@@ -110,7 +72,7 @@ h3.hidden-print
             th 申领客户
             th 申领时间
             th 核销时间
-            th 核销加油站
+            th(ng-if="!user.companyId") 核销加油站
             th.text-right 折扣金额
         tbody
           tr(ng-repeat='entity in entities')
@@ -120,7 +82,7 @@ h3.hidden-print
             td {{entity.wxuser.remark || entity.wxuser.nickname || "匿名客户"}}
             td {{entity.add_time | moment_unix}}
             td {{entity.use_time | moment_unix}}
-            td {{entity.company.name || '远程核销'}}
+            td(ng-if="!user.companyId") {{entity.company.shortname || '远程核销'}}
             td.text-right {{(entity.coupon.reduce_cost || 0) /100 | currency}}
 
     .row
@@ -144,27 +106,16 @@ h3.hidden-print
         .clearfix
           p.pull-left.h3 折扣总计
           p.pull-right.mr.h3 {{(discountAmount + manualAmount)/100 | currency}}
-    .row
-      .col-sm-6.pv
-        .clearfix
-          p.pull-left.h3 备注：
-          p.mr {{memo}}
-      .col-sm-6.pv
-        .clearfix
-          p.pull-left.h3 对账人：
     .clearfix
       
     hr.hidden-print
     .clearfix
-      button(type="button", ng-click="showEdit()").btn.btn-default.pull-left.mr
-        em.fa.fa-edit.fa-fw.mr-sm
-        | 编辑
+      //- button(type="button", ng-click="showEdit()").btn.btn-default.pull-left.mr
+      //-   em.fa.fa-edit.fa-fw.mr-sm
+      //-   | 编辑
       button(type="button", onclick="window.print();").btn.btn-info.pull-right.mr
         em.fa.fa-print.fa-fw.mr-sm
         | 打印
-      //- button(type="button").btn.btn-success.pull-right
-      //-   em.fa.icon-share-alt.fa-fw.mr-sm
-      //-   | 编辑
         
       script(type="text/ng-template", id="adjustDiscountAmountModalId")
         .ngdialog-message

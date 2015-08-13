@@ -4542,8 +4542,8 @@ App.controller('ReconciliationController', ["$scope", "CouponRecord", "$state", 
   })
   
   $scope.reconciliateDate = moment().format('YYYY-MM-DD');
-  $scope.endDate = moment().format('YYYY-MM-DD')
-  $scope.beginDate = moment().subtract(30, 'days').format('YYYY-MM-DD')
+  $scope.endDate = moment().format('YYYY-MM-DD');
+  $scope.beginDate = moment().format('YYYY-MM-DD');
   $scope.openeds = [false, false]
   $scope.open = function($event, index) {
     $event.preventDefault();
