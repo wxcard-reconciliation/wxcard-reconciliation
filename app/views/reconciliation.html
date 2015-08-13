@@ -106,27 +106,11 @@
       <div class="row">
          <div class="col-xs-6 pv">
             <div class="clearfix">
-               <p class="pull-left">礼品小计</p>
-               <p class="pull-right mr">{{giftAmount}}</p>
-            </div>
-            <div class="clearfix">
-               <p class="pull-left">礼品修正</p>
-               <p class="pull-right mr">{{manualGiftAmount}}</p>
-            </div>
-            <div class="clearfix">
                <p class="pull-left h3">礼品总计</p>
                <p class="pull-right mr h3">{{giftAmount+manualGiftAmount}}</p>
             </div>
          </div>
          <div class="col-xs-6 pv">
-            <div class="clearfix">
-               <p class="pull-left">折扣小计</p>
-               <p class="pull-right mr">{{discountAmount/100 | currency}}</p>
-            </div>
-            <div class="clearfix">
-               <p class="pull-left">折扣修正</p>
-               <p class="pull-right mr">{{manualAmount/100 | currency}}</p>
-            </div>
             <div class="clearfix">
                <p class="pull-left h3">折扣总计</p>
                <p class="pull-right mr h3">{{(discountAmount + manualAmount)/100 | currency}}</p>

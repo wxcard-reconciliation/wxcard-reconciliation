@@ -87,22 +87,22 @@ h3.hidden-print
 
     .row
       .col-xs-6.pv
-        .clearfix
-          p.pull-left 礼品小计
-          p.pull-right.mr {{giftAmount}}
-        .clearfix
-          p.pull-left 礼品修正
-          p.pull-right.mr {{manualGiftAmount}}
+        //- .clearfix
+        //-   p.pull-left 礼品小计
+        //-   p.pull-right.mr {{giftAmount}}
+        //- .clearfix
+        //-   p.pull-left 礼品修正
+        //-   p.pull-right.mr {{manualGiftAmount}}
         .clearfix
           p.pull-left.h3 礼品总计
           p.pull-right.mr.h3 {{giftAmount+manualGiftAmount}}
       .col-xs-6.pv
-        .clearfix
-          p.pull-left 折扣小计
-          p.pull-right.mr {{discountAmount/100 | currency}}
-        .clearfix
-          p.pull-left 折扣修正
-          p.pull-right.mr {{manualAmount/100 | currency}}
+        //- .clearfix
+        //-   p.pull-left 折扣小计
+        //-   p.pull-right.mr {{discountAmount/100 | currency}}
+        //- .clearfix
+        //-   p.pull-left 折扣修正
+        //-   p.pull-right.mr {{manualAmount/100 | currency}}
         .clearfix
           p.pull-left.h3 折扣总计
           p.pull-right.mr.h3 {{(discountAmount + manualAmount)/100 | currency}}
