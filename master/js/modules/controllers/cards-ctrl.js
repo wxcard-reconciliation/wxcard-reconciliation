@@ -16,7 +16,7 @@ App.controller('CardsController', function ($scope, Card, ngTableParams) {
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        opt.where.name = {like: '%'+$scope.filter.text+'%'}
+        opt.where.title = {like: '%'+$scope.filter.text+'%'}
         opt.skip = 0;
       }
       Card.count({where: opt.where}, function (result) {

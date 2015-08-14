@@ -1,9 +1,5 @@
 h3
   | 卡卷列表
-  a.pull-right.btn.btn-sm.btn-labeled.btn-info(ng-click="Card.sync()") 
-    span.btn-label
-      i.icon-refresh
-    | 同步
   from.pull-right.col-sm-3
     .input-group
       span.input-group-addon
@@ -17,9 +13,10 @@ h3
       table.table.table-bordered.table-striped(ng-table='tableParams')
         tbody
           tr.text-center(ng-repeat='entity in $data' ui-sref='app.account({accountId: entity.id})')
-            td(data-title="'卡卷标题'") {{entity.title}}
+            td.text-left(data-title="'类型'") {{entity.card_type| uppercase | card_type}}
+            td.text-left(data-title="'标题'") {{entity.title}}
             td(data-title="'编号'") {{entity.id}}
-            td(data-title="'类型'") {{entity.card_type}}
-            td(data-title="'状态'") {{entity.status}}
-            td(data-title="'库存'") {{entity.sku.quantity}}
-            td(data-title="'创建日期'") {{entity.created | moment}}
+            td(data-title="'有效期'") {{entity.date_info | card_date_info}}
+            td(data-title="'状态'") {{entity.status | card_status}}
+            td.text-right(data-title="'库存'") {{entity.sku.quantity}}
+            td.text-right(data-title="'创建日期'") {{entity.create_time | moment_unix}}
