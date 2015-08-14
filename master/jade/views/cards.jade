@@ -1,0 +1,25 @@
+h3
+  | 卡卷列表
+  a.pull-right.btn.btn-sm.btn-labeled.btn-info(ng-click="Card.sync()") 
+    span.btn-label
+      i.icon-refresh
+    | 同步
+  from.pull-right.col-sm-3
+    .input-group
+      span.input-group-addon
+        .icon-magnifier
+      input.form-control(type='text', placeholder="输入卡卷标题", ng-model="filter.text", ui-keypress="{13:'tableParams.reload()'}")
+  
+.container-fluid
+  
+  .panel.panel-default
+    .table-responsive
+      table.table.table-bordered.table-striped(ng-table='tableParams')
+        tbody
+          tr.text-center(ng-repeat='entity in $data' ui-sref='app.account({accountId: entity.id})')
+            td(data-title="'卡卷标题'") {{entity.title}}
+            td(data-title="'编号'") {{entity.id}}
+            td(data-title="'类型'") {{entity.card_type}}
+            td(data-title="'状态'") {{entity.status}}
+            td(data-title="'库存'") {{entity.sku.quantity}}
+            td(data-title="'创建日期'") {{entity.created | moment}}

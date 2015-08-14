@@ -1,0 +1,31 @@
+<h3>卡卷列表
+   <a ng-click="Card.sync()" class="pull-right btn btn-sm btn-labeled btn-info">
+      <span class="btn-label"><i class="icon-refresh"></i>
+      </span>同步</a>
+   <from class="pull-right col-sm-3">
+      <div class="input-group">
+         <span class="input-group-addon">
+            <div class="icon-magnifier"></div>
+         </span>
+         <input type="text" placeholder="输入卡卷标题" ng-model="filter.text" ui-keypress="{13:'tableParams.reload()'}" class="form-control" />
+      </div>
+   </from>
+</h3>
+<div class="container-fluid">
+   <div class="panel panel-default">
+      <div class="table-responsive">
+         <table ng-table="tableParams" class="table table-bordered table-striped">
+            <tbody>
+               <tr ng-repeat="entity in $data" ui-sref="app.account({accountId: entity.id})" class="text-center">
+                  <td data-title="'卡卷标题'">{{entity.title}}</td>
+                  <td data-title="'编号'">{{entity.id}}</td>
+                  <td data-title="'类型'">{{entity.card_type}}</td>
+                  <td data-title="'状态'">{{entity.status}}</td>
+                  <td data-title="'库存'">{{entity.sku.quantity}}</td>
+                  <td data-title="'创建日期'">{{entity.created | moment}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

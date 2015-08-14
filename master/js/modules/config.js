@@ -357,6 +357,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'CouponRecordController'
     })
+    .state('app.cards', {
+        url: '/cards',
+        title: 'Cards',
+        templateUrl: helper.basepath('cards.html'),
+        resolve: helper.resolveFor('ngTable', 'moment', 'ngDialog'),
+        controller: 'CardsController'
+    })
     .state('app.shares', {
         url: '/shares',
         title: 'Share statistic',

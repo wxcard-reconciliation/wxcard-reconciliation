@@ -435,6 +435,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('ngTable', 'moment'),
         controller: 'CouponRecordController'
     })
+    .state('app.cards', {
+        url: '/cards',
+        title: 'Cards',
+        templateUrl: helper.basepath('cards.html'),
+        resolve: helper.resolveFor('ngTable', 'moment', 'ngDialog'),
+        controller: 'CardsController'
+    })
     .state('app.shares', {
         url: '/shares',
         title: 'Share statistic',
@@ -1266,6 +1273,35 @@ App.controller('CalendarController', ['$scope', function($scope) {
   });
 
 }]);
+/**=========================================================
+ * Module: cards-ctrl.js
+ * Cards Controller
+ =========================================================*/
+
+App.controller('CardsController', ["$scope", "Card", "ngTableParams", function ($scope, Card, ngTableParams) {
+  
+  $scope.filter = {text: ''}
+  $scope.tableParams = new ngTableParams({
+    count: 10,
+    filter: $scope.filter.text
+  }, {
+    getData: function($defer, params) {
+      var opt = {order: 'create_time DESC'}
+      opt.limit = params.count()
+      opt.skip = (params.page()-1)*opt.limit
+      opt.where = {}
+      if($scope.filter.text != '') {
+        opt.where.name = {like: '%'+$scope.filter.text+'%'}
+        opt.skip = 0;
+      }
+      Card.count({where: opt.where}, function (result) {
+        $scope.tableParams.total(result.count)
+        Card.find({filter:opt}, $defer.resolve)
+      })
+    }
+  })   
+}])
+
 App.controller('AngularCarouselController', ["$scope", function($scope) {
 
   $scope.colors = ["#fc0003", "#f70008", "#f2000d", "#ed0012", "#e80017", "#e3001c", "#de0021", "#d90026", "#d4002b", "#cf0030", "#c90036", "#c4003b", "#bf0040", "#ba0045", "#b5004a", "#b0004f", "#ab0054", "#a60059", "#a1005e", "#9c0063", "#960069", "#91006e", "#8c0073", "#870078", "#82007d", "#7d0082", "#780087", "#73008c", "#6e0091", "#690096", "#63009c", "#5e00a1", "#5900a6", "#5400ab", "#4f00b0", "#4a00b5", "#4500ba", "#4000bf", "#3b00c4", "#3600c9", "#3000cf", "#2b00d4", "#2600d9", "#2100de", "#1c00e3", "#1700e8", "#1200ed", "#0d00f2", "#0800f7", "#0300fc"];

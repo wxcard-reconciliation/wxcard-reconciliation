@@ -29,6 +29,12 @@
     "translate": "sidebar.nav.COUPONRECORDS"
   },
   {
+    "text": "Cards",
+    "icon": "fa fa-ticket",
+    "sref": "app.cards",
+    "translate": "sidebar.nav.CARDS"
+  },
+  {
     "text": "Promotion",
     "heading": "true",
     "translate": "sidebar.heading.PROMOTION"
