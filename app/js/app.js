@@ -5791,7 +5791,9 @@ App.controller('WechatusersController', ["$scope", "Wxclient", "ngTableParams", 
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        var qs = {like: '%'+$scope.filter.text+'%'}
+        console.log($scope.filter.text);
+        // var qs = {like: '%'+$scope.filter.text+'%'};
+        var qs = {regex: $scope.filter.text};
         opt.where.or = [{nickname:qs}, {remark:qs}];
         opt.skip = 0;
       }
