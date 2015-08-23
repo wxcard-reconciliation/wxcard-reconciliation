@@ -13,11 +13,10 @@ h3
       table.table.table-bordered.table-striped(ng-table='tableParams')
         tbody
           tr.text-center(ng-repeat='entity in $data')
-            td(data-title="'用户头像'") 
-              img.img-thumbnail.img-circle(ng-src="{{entity.headimgurl}}", alt="", width="44", height="44")
-            td(data-title="'用户昵称'") {{entity.nickname}}
-            td(data-title="'用户备注'") {{entity.remark}}
-            td(data-title="'微信OpenID'") {{entity.id}}
+            td(data-title="'头像'") 
+              img.img-thumbnail.img-circle(ng-src="{{entity.headimgurl||'app/img/dummy.png'}}", alt="", width="44", height="44")
+            td(data-title="'昵称备注'") {{entity.nickname+" "+entity.remark}}
             td(data-title="'性别'") {{entity.sex | wechat_sex}}
             td(data-title="'省份'") {{entity.province}} 
             td(data-title="'城市'") {{entity.city}}
+            td(data-title="'关注时间'") {{entity.subscribe_time | moment_unix}}

@@ -3,7 +3,7 @@
  * Wechatusers Controller
  =========================================================*/
 
-App.controller('WechatusersController', function ($scope, Wxuser, ngTableParams) {
+App.controller('WechatusersController', function ($scope, Wxclient, ngTableParams) {
   
   $scope.filter = {text: ''}
   $scope.tableParams = new ngTableParams({
@@ -11,7 +11,7 @@ App.controller('WechatusersController', function ($scope, Wxuser, ngTableParams)
     filter: $scope.filter.text
   }, {
     getData: function($defer, params) {
-      var opt = {order: 'id DESC'}
+      var opt = {order: 'subscribe_time DESC'}
       opt.limit = params.count()
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
@@ -20,9 +20,9 @@ App.controller('WechatusersController', function ($scope, Wxuser, ngTableParams)
         opt.where.or = [{nickname:qs}, {remark:qs}];
         opt.skip = 0;
       }
-      Wxuser.count({where: opt.where}, function (result) {
+      Wxclient.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
-        Wxuser.find({filter:opt}, $defer.resolve)
+        Wxclient.find({filter:opt}, $defer.resolve)
       })
     }
   })   
