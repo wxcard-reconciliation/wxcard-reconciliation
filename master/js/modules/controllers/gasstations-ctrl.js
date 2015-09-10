@@ -3,7 +3,7 @@
  * Gasstations Controller
  =========================================================*/
 
-App.controller('GasstationsController', function ($scope, Company, ngTableParams) {
+App.controller('GasstationsController', function ($scope, Poi, ngTableParams) {
   
   $scope.filter = {text: ''}
   $scope.tableParams = new ngTableParams({
@@ -11,18 +11,18 @@ App.controller('GasstationsController', function ($scope, Company, ngTableParams
     filter: $scope.filter.text
   }, {
     getData: function($defer, params) {
-      var opt = {order: 'add_time DESC'}
+      var opt = {}
       opt.limit = params.count()
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
         var qs = {like: '%'+$scope.filter.text+'%'};
-        opt.where.or = [{name:qs}, {shortname: qs}];
+        opt.where = {branch_name:qs};
         opt.skip = 0;
       }
-      Company.count({where: opt.where}, function (result) {
+      Poi.count({where: opt.where}, function (result) {
         $scope.tableParams.total(result.count)
-        Company.find({filter:opt}, $defer.resolve)
+        Poi.find({filter:opt}, $defer.resolve)
       })
     }
   })   
