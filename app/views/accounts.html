@@ -17,11 +17,12 @@
          <table ng-table="tableParams" class="table table-bordered table-striped">
             <tbody>
                <tr ng-repeat="entity in $data" ui-sref="app.account({accountId: entity.id})" class="text-center">
-                  <td data-title="'用户名'">{{entity.email}}</td>
+                  <td data-title="'用户名'">{{entity.username}}</td>
                   <td data-title="'用户真名'">{{entity.name}}</td>
                   <td data-title="'工作岗位'">{{entity.job}}</td>
                   <td data-title="'联系电话'">{{entity.phone}}</td>
                   <td data-title="'电子邮件'">{{entity.email}}</td>
+                  <td data-title="'隶属单位'">{{entity.poi && entity.poi.branch_name || '未知部门'}}</td>
                   <td data-title="'注册日期'">{{entity.created | moment}}</td>
                </tr>
             </tbody>
