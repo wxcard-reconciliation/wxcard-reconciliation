@@ -1,0 +1,34 @@
+<h3>卡卷记录
+   <from class="pull-right col-sm-3">
+      <div class="input-group">
+         <span class="input-group-addon">
+            <div class="icon-magnifier"></div>
+         </span>
+         <input type="text" placeholder="输入优惠卷编号" ng-model="filter.text" ui-keypress="{13:'tableParams.reload()'}" class="form-control" />
+      </div>
+   </from>
+</h3>
+<div class="container-fluid">
+   <div class="panel panel-default">
+      <div class="table-responsive">
+         <table ng-table="tableParams" class="table table-bordered table-striped">
+            <tbody>
+               <tr ng-repeat="entity in $data" class="text-center">
+                  <td data-title="'序号'">{{$index+1}}</td>
+                  <td data-title="'核销码'">{{entity.id}}</td>
+                  <td data-title="'卡卷名称'">{{entity.card.title || '非正式卡卷'}}</td>
+                  <td data-title="'类型'">{{entity.card.card_type | card_type }}</td>
+                  <td data-title="'卡卷编号'">{{entity.card.id}}</td>
+                  <td data-title="'申领用户'">{{entity.wxclient && entity.wxclient.nickname || '匿名客户'}}</td>
+                  <td data-title="'申领日期'">{{entity.CreateTime | moment_unix}}</td>
+                  <td data-title="'状态'">{{entity.status | code_status}}</td>
+                  <td data-title="'收据'" ng-click="showReceipt(entity.receipt_imageurl)">
+                     <em ng-show="entity.receiptLoading" class="fa fa-spinner fa-spin"></em>
+                     <img ng-src="{{entity.receipt_imageurl || 'app/img/dummy.png'}}" alt="" width="32" height="64" ng-if="!entity.receiptLoading" class="img-thumbnail" />
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

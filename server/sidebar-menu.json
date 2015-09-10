@@ -23,9 +23,9 @@
     "translate": "sidebar.nav.RECONCILIATIONS"
   },
   {
-    "text": "Coupon Records",
+    "text": "Card Records",
     "icon": "icon-list",
-    "sref": "app.coupon-records",
+    "sref": "app.card-events",
     "translate": "sidebar.nav.COUPONRECORDS"
   },
   {

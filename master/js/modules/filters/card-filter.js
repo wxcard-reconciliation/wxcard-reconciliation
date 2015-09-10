@@ -31,7 +31,7 @@ App.filter("card_status", function () {
     CARD_STATUS_DISPATCH: '已投放'
   };
   return function (input) {
-    return card_status[input];
+    return card_status[input.toUpperCase()];
   };
 });
 
@@ -49,4 +49,16 @@ App.filter("card_date_info", function () {
     }
   };
 });
+
+App.filter("code_status", function () {
+  var code_status = {
+    got: '未核销',
+    consumed: '已核销',
+    deleted: '已删除',
+    outdated: '已过期'
+  };
+  return function (input) {
+    return code_status[input];
+  };
+})
 

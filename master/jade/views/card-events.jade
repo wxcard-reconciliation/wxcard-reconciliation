@@ -1,0 +1,26 @@
+h3
+  | 卡卷记录
+  from.pull-right.col-sm-3
+    .input-group
+      span.input-group-addon
+        .icon-magnifier
+      input.form-control(type='text', placeholder="输入优惠卷编号", ng-model="filter.text", ui-keypress="{13:'tableParams.reload()'}")
+  
+.container-fluid
+  
+  .panel.panel-default
+    .table-responsive
+      table.table.table-bordered.table-striped(ng-table='tableParams')
+        tbody
+          tr.text-center(ng-repeat='entity in $data')
+            td(data-title="'序号'") {{$index+1}}
+            td(data-title="'核销码'") {{entity.id}}
+            td(data-title="'卡卷名称'") {{entity.card.title || '非正式卡卷'}}
+            td(data-title="'类型'") {{entity.card.card_type | card_type }}
+            td(data-title="'卡卷编号'") {{entity.card.id}}
+            td(data-title="'申领用户'") {{entity.wxclient && entity.wxclient.nickname || '匿名客户'}}
+            td(data-title="'申领日期'") {{entity.CreateTime | moment_unix}}
+            td(data-title="'状态'") {{entity.status | code_status}}
+            td(data-title="'收据'", ng-click="showReceipt(entity.receipt_imageurl)") 
+              em.fa.fa-spinner.fa-spin(ng-show='entity.receiptLoading')
+              img.img-thumbnail(ng-src="{{entity.receipt_imageurl || 'app/img/dummy.png'}}", alt="", width="32", height="64", ng-if='!entity.receiptLoading')

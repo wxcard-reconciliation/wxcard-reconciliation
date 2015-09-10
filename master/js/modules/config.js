@@ -350,6 +350,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('angularjs-region', 'moment', 'ngDialog'),
         controller: 'ReconciliationController'
     })
+    .state('app.card-events', {
+        url: '/card-events',
+        title: 'Card Events',
+        templateUrl: helper.basepath('card-events.html'),
+        resolve: helper.resolveFor('ngTable', 'moment', 'ngDialog'),
+        controller: 'CardeventsController'
+    })
     .state('app.coupon-records', {
         url: '/coupon-records',
         title: 'Coupon Records',

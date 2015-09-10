@@ -428,6 +428,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('angularjs-region', 'moment', 'ngDialog'),
         controller: 'ReconciliationController'
     })
+    .state('app.card-events', {
+        url: '/card-events',
+        title: 'Card Events',
+        templateUrl: helper.basepath('card-events.html'),
+        resolve: helper.resolveFor('ngTable', 'moment', 'ngDialog'),
+        controller: 'CardeventsController'
+    })
     .state('app.coupon-records', {
         url: '/coupon-records',
         title: 'Coupon Records',
@@ -1304,6 +1311,50 @@ App.controller('CardsController', ["$scope", "Card", "ngTableParams", function (
       })
     }
   })   
+}])
+
+App.controller('CardeventsController', ["$scope", "Cardevent", "ngTableParams", "ngDialog", function ($scope, Cardevent, ngTableParams, ngDialog) {
+  
+  $scope.filter = {text: ''}
+  $scope.tableParams = new ngTableParams({
+    count: 10,
+    filter: $scope.filter.text
+  }, {
+    getData: function($defer, params) {
+      var opt = {order: 'CreateTime DESC'}
+      opt.limit = params.count()
+      opt.skip = (params.page()-1)*opt.limit
+      opt.where = {}
+      if($scope.filter.text != '') {
+        opt.where.id = {like: '%'+$scope.filter.text+'%'}
+        opt.skip = 0;
+      }
+      Cardevent.count({where: opt.where}, function (result) {
+        $scope.tableParams.total(result.count)
+        Cardevent.find({filter:opt}, function (results) {
+          $defer.resolve(results);
+          results.forEach(function (item) {
+            if(item.receipt && item.receipt !== '') {
+              item.receiptLoading = true;
+              Cardevent.receiptUrl({receipt: item.receipt}, function (result) {
+                item.receiptLoading = false;
+                item.receipt_imageurl = result.url;
+              })
+            }
+          })
+        })
+      })
+    }
+  })
+  
+  $scope.showReceipt = function (imageurl) {
+    if(!imageurl) return;
+    ngDialog.open({
+      template: "<img src="+imageurl+" class='img-responsive'>",
+      plain: true,
+      className: 'ngdialog-theme-default'
+    });    
+  }   
 }])
 
 App.controller('AngularCarouselController', ["$scope", function($scope) {
@@ -7893,7 +7944,7 @@ App.filter("card_status", function () {
     CARD_STATUS_DISPATCH: '已投放'
   };
   return function (input) {
-    return card_status[input];
+    return card_status[input.toUpperCase()];
   };
 });
 
@@ -7911,6 +7962,18 @@ App.filter("card_date_info", function () {
     }
   };
 });
+
+App.filter("code_status", function () {
+  var code_status = {
+    got: '未核销',
+    consumed: '已核销',
+    deleted: '已删除',
+    outdated: '已过期'
+  };
+  return function (input) {
+    return code_status[input];
+  };
+})
 
 
 /**=========================================================
