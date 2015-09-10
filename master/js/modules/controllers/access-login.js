@@ -17,9 +17,6 @@ App.controller('LoginFormController', ['$scope', 'Account', '$state', '$rootScop
 
       Account.login($scope.account, function (accessToken) {
         $rootScope.user = accessToken.user
-        Company.findById({id: $rootScope.user.companyId}, function (result) {
-          $rootScope.user.company = result;
-        });
         $state.go('app.dashboard');
       }, function (error) {
         $scope.authMsg = error.data.error.message
