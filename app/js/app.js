@@ -918,7 +918,9 @@ App.controller('AccountsController', ["$scope", "Account", "ngTableParams", func
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        opt.where.name = {like: '%'+$scope.filter.text+'%'}
+        // opt.where.name = {like: '%'+$scope.filter.text+'%'}
+        var qs = {regex: $scope.filter.text};
+        opt.where = {'name': qs};
         opt.skip = 0;
       }
       Account.count({where: opt.where}, function (result) {
@@ -3460,7 +3462,8 @@ App.controller('GasstationsController', ["$scope", "Poi", "ngTableParams", funct
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        var qs = {like: '%'+$scope.filter.text+'%'};
+        // var qs = {like: '%'+$scope.filter.text+'%'};
+        var qs = {regex: $scope.filter.text};
         opt.where = {branch_name:qs};
         opt.skip = 0;
       }

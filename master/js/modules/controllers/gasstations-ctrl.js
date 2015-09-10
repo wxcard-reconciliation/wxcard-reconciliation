@@ -16,7 +16,8 @@ App.controller('GasstationsController', function ($scope, Poi, ngTableParams) {
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        var qs = {like: '%'+$scope.filter.text+'%'};
+        // var qs = {like: '%'+$scope.filter.text+'%'};
+        var qs = {regex: $scope.filter.text};
         opt.where = {branch_name:qs};
         opt.skip = 0;
       }
