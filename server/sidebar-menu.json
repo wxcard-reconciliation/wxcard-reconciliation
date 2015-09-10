@@ -17,10 +17,10 @@
     "translate": "sidebar.heading.COUPON"
   },
   {
-    "text": "Reconciliation",
+    "text": "Reconciliations",
     "icon": "fa fa-columns",
-    "sref": "app.reconciliation",
-    "translate": "sidebar.nav.RECONCILIATION"
+    "sref": "app.reconciliations",
+    "translate": "sidebar.nav.RECONCILIATIONS"
   },
   {
     "text": "Coupon Records",

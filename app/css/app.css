@@ -7547,6 +7547,9 @@ x:-o-prefocus,
   font-size: inherit !important;
   line-height: inherit !important;
 }
+.ngdialog.ngdialog-theme-large .ngdialog-content {
+  width: 80% !important;
+}
 /* ========================================================================
    Component: nestable.less
  ========================================================================== */

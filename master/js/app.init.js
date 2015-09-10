@@ -69,7 +69,7 @@ App.run(["$rootScope", "$state", "$stateParams",  '$window', '$templateCache', '
     picture:  'app/img/user/02.jpg'
   };
   if(Account.isAuthenticated()) {
-    Account.findById({id: Account.getCurrentId(), filter:{include:['company']}}, function (result) {
+    Account.findById({id: Account.getCurrentId()}, function (result) {
       $rootScope.user = result
     })
   };

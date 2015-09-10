@@ -18,7 +18,7 @@ App.filter("card_type", function () {
     BUS_TICKET: '汽车票'
   };
   return function (input) {
-    return card_type[input];
+    return card_type[input.toUpperCase()];
   };
 });
 

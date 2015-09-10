@@ -1,0 +1,136 @@
+h3.hidden-print 
+  | 核销对账
+  a(type='button' ng-click='try()').btn.btn-primary.pull-right.mr-sm
+    em.fa.fa-calculator.fa-fw.mr-sm
+    | 对账
+  .pull-right.col-sm-6
+    .col-sm-6
+      p.input-group
+        input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="beginDate", is-open='openeds[1]', max-date="endDate", ng-required='true', close-text='Close')
+        span.input-group-btn
+          button.btn.btn-default(type='button', ng-click='open($event, 1)')
+            em.fa.fa-calendar  
+    .col-sm-6
+      p.input-group
+        input.form-control(type='text', datepicker-popup='yyyy-MM-dd', ng-model="endDate", is-open='openeds[0]', max-date="endDate", ng-required='true', close-text='Close')
+        span.input-group-btn
+          button.btn.btn-default(type='button', ng-click='open($event, 0)')
+            em.fa.fa-calendar
+
+.panel
+  .panel-body
+    //- .pull-right
+    //-   select.mr(ng-model="region.city" ng-options="c.name for c in region.province.sub")
+    //-     option(value="") 全部地市
+    //-   select.mr(ng-model="region.district" ng-options="d.name for d in region.city.sub")
+    //-     option(value="") 全部区县
+    //-   select.mr(ng-model="gasstation" ng-options="g.name for g in gasstations")
+    //-     option(value="") 全部加油站
+    //-   button(type="button").btn.btn-default.btn-sm Copy this invoice
+    h3.mt0 核销对账清单  
+    hr
+
+    .row.mb-lg
+      .col-lg-4.col-xs-4.br.pv
+        .row
+          .col-md-2.text-center.visible-md.visible-lg
+            em.fa.fa-bookmark-o.fa-4x.text-muted
+          .col-md-10
+            h2 
+              | {{total_count}} 
+              small 张
+            p 累计核卡卷  
+      .col-lg-4.col-xs-4.br.pv
+        .clearfix
+          p.pull-left 地市  
+          p.pull-right.mr {{region.city.name}}
+        .clearfix
+          p.pull-left 区县
+          p.pull-right.mr {{region.district.name}}
+        .clearfix
+          p.pull-left 加油站
+          p.pull-right.mr {{gasstation.shortname}}
+      .col-lg-4.col-xs-4.br.pv
+        .clearfix
+          p.pull-left 对账日期
+          p.pull-right.mr {{reconciliateDate | date}}
+        .clearfix
+          p.pull-left 起始日期
+          p.pull-right.mr {{beginDate | date}}
+        .clearfix
+          p.pull-left 截至日期
+          p.pull-right.mr {{endDate | date}}
+      .clearfix.hidden-md.hidden-lg
+    hr
+    .table-responsive.table-bordered.mb-lg
+      table.table
+        thead
+          tr
+            th 开始时间
+            th 结束时间
+            th 对账人
+            th 核销卡卷
+            th 关联销售
+            th 礼品
+            th.text-right 折扣金额
+        tbody
+          tr(ng-repeat='entity in entities' ng-click='showDetail(entity)')
+            td {{entity.beginTime | moment_unix}}
+            td {{entity.endTime | moment_unix}}
+            td {{entity.staff.name || entity.staff.username }}
+            td {{entity.subtotal_count}}
+            td {{entity.subtotal_related_sale/100 | currency}}
+            td {{entity.subtotal_gifts}}
+            td.text-right {{entity.subtotal_cost /100 | currency}}
+
+    .row
+      .col-xs-6.pv
+        .clearfix
+          p.pull-left.h3 礼品总计
+          p.pull-right.mr.h3 {{total_gifts}}
+      .col-xs-6.pv
+        .clearfix
+          p.pull-left.h3 折扣总计
+          p.pull-right.mr.h3 {{total_cost/100 | currency}}
+    .clearfix
+      
+    hr.hidden-print
+    .clearfix
+      //- button(type="button", ng-click="showEdit()").btn.btn-default.pull-left.mr
+      //-   em.fa.fa-edit.fa-fw.mr-sm
+      //-   | 编辑
+      button(type="button", onclick="window.print();").btn.btn-info.pull-right.mr
+        em.fa.fa-print.fa-fw.mr-sm
+        | 打印
+        
+      script(type="text/ng-template", id="reconciliationDetailId")
+        .ngdialog-message
+          .table-responsive.table-bordered.mb-lg
+            table.table
+              thead
+                tr
+                  th 核销时间
+                  th 卡卷名称
+                  th 卡卷类型
+                  th 客户
+                  th 门店
+                  th 核销人
+                  th 礼品
+                  th.text-right 折扣金额
+              tbody
+                tr(ng-repeat='entity in reconciliation.entities')
+                  td {{entity.cancelTime | moment_unix}}
+                  td {{entity.card.title || '非正式卡卷'}}
+                  td {{entity.card.card_type | card_type }}
+                  td {{entity.wxclient.remark ||entity.wxclient.nickname }}
+                  td {{entity.cancelBy.poi.branch_name}}
+                  td {{entity.cancelBy.name || entity.cancelBy.username}}
+                  td {{entity.card.card_type === 'gift'? 1 : 0}}
+                  td.text-right {{(entity.card.reduce_cost || 0) /100 | currency}}
+          .row
+            .col-xs-6.pv
+                p.pull-left.h3 礼品小计
+                p.pull-right.mr.h3 {{reconciliation.subtotal_gifts}}
+            .col-xs-6.pv
+                p.pull-left.h3 折扣小计
+                p.pull-right.mr.h3 {{reconciliation.subtotal_cost/100 | currency}}

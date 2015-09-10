@@ -336,6 +336,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         templateUrl: helper.basepath('documentation.html'),
         resolve: helper.resolveFor('flatdoc')
     })
+    .state('app.reconciliations', {
+        url: '/reconciliations',
+        title: 'Reconciliations',
+        templateUrl: helper.basepath('reconciliations.html'),
+        resolve: helper.resolveFor('angularjs-region', 'moment', 'ngDialog'),
+        controller: 'ReconciliationsController'
+    })
     .state('app.reconciliation', {
         url: '/reconciliations/:reconciliationId',
         title: 'Reconciliation Statement',

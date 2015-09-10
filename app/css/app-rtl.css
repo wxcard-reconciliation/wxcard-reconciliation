@@ -8898,6 +8898,10 @@ x:-o-prefocus,
   line-height: inherit !important;
 }
 
+.ngdialog.ngdialog-theme-large .ngdialog-content {
+  width: 80% !important;
+}
+
 /* ========================================================================
    Component: nestable.less
  ========================================================================== */

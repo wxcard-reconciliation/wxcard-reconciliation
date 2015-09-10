@@ -1,0 +1,128 @@
+<h3 class="hidden-print">
+   核销对账
+   <a type="button" ng-click="try()" class="btn btn-primary pull-right mr-sm">
+      <em class="fa fa-calculator fa-fw mr-sm"></em>对账</a>
+   <div class="pull-right col-sm-6">
+      <div class="col-sm-6">
+         <p class="input-group">
+            <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="beginDate" is-open="openeds[1]" max-date="endDate" ng-required="true" close-text="Close" class="form-control" />
+            <span class="input-group-btn">
+               <button type="button" ng-click="open($event, 1)" class="btn btn-default">
+                  <em class="fa fa-calendar"></em>
+               </button>
+            </span>
+         </p>
+      </div>
+      <div class="col-sm-6">
+         <p class="input-group">
+            <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="endDate" is-open="openeds[0]" max-date="endDate" ng-required="true" close-text="Close" class="form-control" />
+            <span class="input-group-btn">
+               <button type="button" ng-click="open($event, 0)" class="btn btn-default">
+                  <em class="fa fa-calendar"></em>
+               </button>
+            </span>
+         </p>
+      </div>
+   </div>
+</h3>
+<div class="panel">
+   <div class="panel-body">
+      <h3 class="mt0">核销对账清单</h3>
+      <hr/>
+      <div class="row mb-lg">
+         <div class="col-lg-4 col-xs-4 br pv">
+            <div class="row">
+               <div class="col-md-2 text-center visible-md visible-lg">
+                  <em class="fa fa-bookmark-o fa-4x text-muted"></em>
+               </div>
+               <div class="col-md-10">
+                  <h2>
+                     {{total_count}}
+                     <small>张</small>
+                  </h2>
+                  <p>累计核卡卷</p>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-4 col-xs-4 br pv">
+            <div class="clearfix">
+               <p class="pull-left">地市</p>
+               <p class="pull-right mr">{{region.city.name}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">区县</p>
+               <p class="pull-right mr">{{region.district.name}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">加油站</p>
+               <p class="pull-right mr">{{gasstation.shortname}}</p>
+            </div>
+         </div>
+         <div class="col-lg-4 col-xs-4 br pv">
+            <div class="clearfix">
+               <p class="pull-left">对账日期</p>
+               <p class="pull-right mr">{{reconciliateDate | date}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">起始日期</p>
+               <p class="pull-right mr">{{beginDate | date}}</p>
+            </div>
+            <div class="clearfix">
+               <p class="pull-left">截至日期</p>
+               <p class="pull-right mr">{{endDate | date}}</p>
+            </div>
+         </div>
+         <div class="clearfix hidden-md hidden-lg"></div>
+      </div>
+      <hr/>
+      <div class="table-responsive table-bordered mb-lg">
+         <table class="table">
+            <thead>
+               <tr>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
+                  <th>对账人</th>
+                  <th>核销卡卷</th>
+                  <th>关联销售</th>
+                  <th>礼品</th>
+                  <th class="text-right">折扣金额</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="entity in entities" ng-click="showDetail(entity)">
+                  <td>{{entity.beginTime | moment_unix}}</td>
+                  <td>{{entity.endTime | moment_unix}}</td>
+                  <td>{{entity.staff.name || entity.staff.username }}</td>
+                  <td>{{entity.subtotal_count}}</td>
+                  <td>{{entity.subtotal_related_sale/100 | currency}}</td>
+                  <td>{{entity.subtotal_gifts}}</td>
+                  <td class="text-right">{{entity.subtotal_cost /100 | currency}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div class="row">
+         <div class="col-xs-6 pv">
+            <div class="clearfix">
+               <p class="pull-left h3">礼品总计</p>
+               <p class="pull-right mr h3">{{total_gifts}}</p>
+            </div>
+         </div>
+         <div class="col-xs-6 pv">
+            <div class="clearfix">
+               <p class="pull-left h3">折扣总计</p>
+               <p class="pull-right mr h3">{{total_cost/100 | currency}}</p>
+            </div>
+         </div>
+      </div>
+      <div class="clearfix"></div>
+      <hr class="hidden-print" />
+      <div class="clearfix">
+         <button type="button" onclick="window.print();" class="btn btn-info pull-right mr">
+            <em class="fa fa-print fa-fw mr-sm"></em>打印</button>
+         <script type="text/ng-template" id="reconciliationDetailId">
+            <div class="ngdialog-message"><div class="table-responsive table-bordered mb-lg"><table class="table"><thead><tr><th>核销时间</th><th>卡卷名称</th><th>卡卷类型</th><th>客户</th><th>门店</th><th>核销人</th><th>礼品</th><th class="text-right">折扣金额</th></tr></thead><tbody><tr ng-repeat="entity in reconciliation.entities"><td>{{entity.cancelTime | moment_unix}}</td><td>{{entity.card.title || '非正式卡卷'}}</td><td>{{entity.card.card_type | card_type }}</td><td>{{entity.wxclient.remark ||entity.wxclient.nickname }}</td><td>{{entity.cancelBy.poi.branch_name}}</td><td>{{entity.cancelBy.name || entity.cancelBy.username}}</td><td>{{entity.card.card_type === 'gift'? 1 : 0}}</td><td class="text-right">{{(entity.card.reduce_cost || 0) /100 | currency}}</td></tr></tbody></table></div><div class="row"><div class="col-xs-6 pv"><p class="pull-left h3">礼品小计</p><p class="pull-right mr h3">{{reconciliation.subtotal_gifts}}</p></div><div class="col-xs-6 pv"><p class="pull-left h3">折扣小计</p><p class="pull-right mr h3">{{reconciliation.subtotal_cost/100 | currency}}</p></div></div></div>
+         </script>
+      </div>
+   </div>
+</div>

@@ -56028,7 +56028,8 @@ angular.module('tmh.dynamicLocale', []).config(['$provide', function ($provide) 
 
 (function(window, angular, undefined) {'use strict';
 
-var urlBase = "http://120.26.66.200:3000/api";
+var urlBase = "http://0.0.0.0:3000/api";
+// var urlBase = "http://120.26.66.200:3000/api";
 var authHeader = 'authorization';
 
 /**
@@ -56710,6 +56711,43 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name lbServices.Account#createChangeStream
+         * @methodOf lbServices.Account
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/accounts/change-stream",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
          * @name lbServices.Account#login
          * @methodOf lbServices.Account
          *
@@ -56771,7 +56809,7 @@ module.factory(
          *
          * @description
          *
-         * Logout a user with access token
+         * Logout a user with access token.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -56813,7 +56851,7 @@ module.factory(
          *
          * @description
          *
-         * Confirm a user registration with email verification token
+         * Confirm a user registration with email verification token.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -56847,7 +56885,7 @@ module.factory(
          *
          * @description
          *
-         * Reset password for a user with email
+         * Reset password for a user with email.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -57539,6 +57577,43 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name lbServices.Company#createChangeStream
+         * @methodOf lbServices.Company
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/companies/change-stream",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
          * @name lbServices.Company#sync
          * @methodOf lbServices.Company
          *
@@ -58133,6 +58208,43 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/coupons/:id",
           method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Coupon#createChangeStream
+         * @methodOf lbServices.Coupon
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/coupons/change-stream",
+          method: "POST"
         },
 
         /**
@@ -58823,6 +58935,43 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/couponRecords/:id",
           method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.CouponRecord#createChangeStream
+         * @methodOf lbServices.CouponRecord
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/couponRecords/change-stream",
+          method: "POST"
         },
 
         /**
@@ -59522,8 +59671,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *   This method does not accept any parameters.
-         *   Supply an empty object or omit this argument altogether.
+         *  - `id` – `{*}` - PersistedModel id
          *
          * @param {Object} postData Request data.
          *
@@ -59547,6 +59695,83 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/reconciliations/:id",
           method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Reconciliation#createChangeStream
+         * @methodOf lbServices.Reconciliation
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/reconciliations/change-stream",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Reconciliation#try
+         * @methodOf lbServices.Reconciliation
+         *
+         * @description
+         *
+         * reconciliate code canceled by logined account
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `beginTime` – `{number=}` - 
+         *
+         *  - `endTime` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Reconciliation` object.)
+         * </em>
+         */
+        "try": {
+          url: urlBase + "/reconciliations/try",
+          method: "POST"
         },
       }
     );
@@ -60093,6 +60318,43 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/shares/:id",
           method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Share#createChangeStream
+         * @methodOf lbServices.Share
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/shares/change-stream",
+          method: "POST"
         },
 
         /**
@@ -60651,8 +60913,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *   This method does not accept any parameters.
-         *   Supply an empty object or omit this argument altogether.
+         *  - `id` – `{*}` - PersistedModel id
          *
          * @param {Object} postData Request data.
          *
@@ -60676,6 +60937,43 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/wxusers/:id",
           method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Wxuser#createChangeStream
+         * @methodOf lbServices.Wxuser
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/wxusers/change-stream",
+          method: "POST"
         },
 
         // INTERNAL. Use CouponRecord.wxuser() instead.
@@ -61204,8 +61502,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *   This method does not accept any parameters.
-         *   Supply an empty object or omit this argument altogether.
+         *  - `id` – `{*}` - PersistedModel id
          *
          * @param {Object} postData Request data.
          *
@@ -61229,6 +61526,83 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/pois/:id",
           method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Poi#createChangeStream
+         * @methodOf lbServices.Poi
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/pois/change-stream",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Poi#sync
+         * @methodOf lbServices.Poi
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Poi` object.)
+         * </em>
+         */
+        "sync": {
+          url: urlBase + "/pois/sync",
+          method: "POST"
         },
       }
     );
@@ -61779,6 +62153,43 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name lbServices.Card#createChangeStream
+         * @methodOf lbServices.Card
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/cards/change-stream",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
          * @name lbServices.Card#sync
          * @methodOf lbServices.Card
          *
@@ -61854,6 +62265,46 @@ module.factory(
          */
         "cancel": {
           url: urlBase + "/cards/cancel",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Card#check
+         * @methodOf lbServices.Card
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Card` object.)
+         * </em>
+         */
+        "check": {
+          url: urlBase + "/cards/check",
           method: "POST"
         },
       }
@@ -62377,8 +62828,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *   This method does not accept any parameters.
-         *   Supply an empty object or omit this argument altogether.
+         *  - `id` – `{*}` - PersistedModel id
          *
          * @param {Object} postData Request data.
          *
@@ -62402,6 +62852,43 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/cardevents/:id",
           method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Cardevent#createChangeStream
+         * @methodOf lbServices.Cardevent
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/cardevents/change-stream",
+          method: "POST"
         },
       }
     );
@@ -63073,6 +63560,43 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/wxclients/:id",
           method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Wxclient#createChangeStream
+         * @methodOf lbServices.Wxclient
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/wxclients/change-stream",
+          method: "POST"
         },
 
         /**
