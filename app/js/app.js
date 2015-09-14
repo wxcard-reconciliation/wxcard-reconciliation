@@ -1304,7 +1304,9 @@ App.controller('CardsController', ["$scope", "Card", "ngTableParams", function (
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        opt.where.title = {like: '%'+$scope.filter.text+'%'}
+        // opt.where.title = {like: '%'+$scope.filter.text+'%'}
+        var qs = {regex: $scope.filter.text};
+        opt.where = {title: qs};
         opt.skip = 0;
       }
       Card.count({where: opt.where}, function (result) {
@@ -1328,7 +1330,9 @@ App.controller('CardeventsController', ["$scope", "Cardevent", "ngTableParams", 
       opt.skip = (params.page()-1)*opt.limit
       opt.where = {}
       if($scope.filter.text != '') {
-        opt.where.id = {like: '%'+$scope.filter.text+'%'}
+        // opt.where.id = {like: '%'+$scope.filter.text+'%'}
+        var qs = {regex: $scope.filter.text};
+        opt.where = {id: qs};
         opt.skip = 0;
       }
       Cardevent.count({where: opt.where}, function (result) {
