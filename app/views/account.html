@@ -55,9 +55,9 @@
                         </div>
                      </div>
                      <div class="form-group">
-                        <label class="col-sm-2 control-label">微信openId</label>
+                        <label class="col-sm-2 control-label">微信OPENID</label>
                         <div class="col-sm-6">
-                           <p class="form-control-static">{{entity.openId}}</p>
+                           <p class="form-control-static">{{entity.wxclient && entity.wxclient.id}}</p>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">不可修改</small>
@@ -79,7 +79,7 @@
                      <div class="form-group">
                         <label class="col-sm-2 control-label">加油站</label>
                         <div class="col-sm-6">
-                           <p class="form-control-static">{{entity.company && entity.company.shortname || '未隶属加油站'}}</p>
+                           <p class="form-control-static">{{entity.poi && entity.poi.branch_name || '未隶属加油站'}}</p>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">不可修改</small>

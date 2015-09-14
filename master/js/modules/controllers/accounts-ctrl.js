@@ -29,17 +29,15 @@ App.controller('AccountsController', function ($scope, Account, ngTableParams) {
   })   
 })
 
-App.controller('AccountsAddController', function ($scope, Account, $state, toaster, Company, $q, Wxuser) {
+App.controller('AccountsAddController', function ($scope, Account, $state, toaster, Poi, $q, Wxclient) {
 
   $scope.entity = {job: '加油站收银员'}
-  $scope.company = null
-  $scope.wechatUser = null
   
-  $scope.$watch('wechatUser', function (newVal, oldVal) {
-    if(newVal instanceof Wxuser) {
+  $scope.$watch('entity.wxclient', function (newVal, oldVal) {
+    console.log();
+    if(newVal instanceof Wxclient) {
       $scope.entity.picture = newVal.headimgurl;
       $scope.entity.name = newVal.remark || newVal.nickname;
-      $scope.entity.openId =  $scope.wechatUser.id
     }
   });
   
@@ -55,7 +53,6 @@ App.controller('AccountsAddController', function ($scope, Account, $state, toast
     if ($scope.formValidate.$valid) {
       $scope.entity.email = $scope.entity.phone+"@petrojs.cn"
       $scope.entity.username = $scope.entity.phone
-      $scope.entity.companyId = $scope.company && $scope.company.id || null
       Account.create($scope.entity, function (entity) {
         toaster.pop('success', '新增成功', '已经添加帐号 '+entity.name)
         setTimeout(function () {
@@ -69,11 +66,11 @@ App.controller('AccountsAddController', function ($scope, Account, $state, toast
     }
   };
   
-  $scope.fetchCompanies = function (val) {
+  $scope.fetchPois = function (val) {
     var q = $q.defer();
-    $scope.loadingCompanies = true;
-    Company.find({filter:{where:{"shortname":{like: '%'+val+'%'}}}}, function (results) {
-      $scope.loadingCompanies = false;
+    $scope.loadingPois = true;
+    Poi.find({filter:{where:{"branch_name":{regex: val}}}}, function (results) {
+      $scope.loadingPois = false;
       q.resolve(results);
     })
     return q.promise;
@@ -82,7 +79,7 @@ App.controller('AccountsAddController', function ($scope, Account, $state, toast
   $scope.fetchWechatUsers = function (val) {
     var q = $q.defer();
     $scope.loadingWechatUsers = true;
-    Wxuser.find({filter:{where:{"nickname":{like: '%'+val+'%'}}}}, function (results) {
+    Wxclient.find({filter:{where:{"nickname":{regex: val}}}}, function (results) {
       $scope.loadingWechatUsers = false;
       q.resolve(results);
     })

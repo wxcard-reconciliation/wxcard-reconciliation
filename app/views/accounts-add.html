@@ -23,7 +23,8 @@
                      <div class="form-group">
                         <label class="col-sm-2 control-label">微信</label>
                         <div class="col-sm-6">
-                           <input type="text" name="wechatUser" ng-model="wechatUser" typeahead="wechatUser as wechatUser.nickname for wechatUser in fetchWechatUsers($viewValue)" typeahead-loading="loadingWechatUsers" required="" class="form-control" /><i ng-show="loadingWechatUsers" class="fa fa fa-spinner"></i>
+                           <input type="text" name="wechatUser" ng-model="entity.wxclient" typeahead="wechatUser as wechatUser.nickname for wechatUser in fetchWechatUsers($viewValue)" typeahead-loading="loadingWechatUsers" required="" class="form-control"
+                           /><i ng-show="loadingWechatUsers" class="fa fa fa-spinner"></i>
                            <span ng-show="validateInput('wechatUser', 'required')" class="text-danger">微信不能为空</span>
                         </div>
                         <div class="col-sm-4">
@@ -86,10 +87,11 @@
                      <div class="form-group">
                         <label class="col-sm-2 control-label">加油站</label>
                         <div class="col-sm-6">
-                           <input type="text" name="gasstation" ng-model="company" typeahead="company as company.shortname for company in fetchCompanies($viewValue)" typeahead-loading="loadingCompanies" class="form-control" /><i ng-show="loadingCompanies" class="fa fa fa-spinner"></i>
+                           <input type="text" name="gasstation" required="" ng-model="entity.poi" typeahead="poi as poi.branch_name for poi in fetchPois($viewValue)" typeahead-loading="loadingPois" class="form-control" /><i ng-show="loadingPois" class="fa fa fa-spinner"></i>
+                           <span ng-show="validateInput('gasstation', 'required')" class="text-danger">加油站不能为空</span>
                         </div>
                         <div class="col-sm-4">
-                           <small class="text-muted">可选</small>
+                           <small class="text-muted">必填</small>
                         </div>
                      </div>
                   </fieldset>

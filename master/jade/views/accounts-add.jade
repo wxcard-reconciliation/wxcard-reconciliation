@@ -20,7 +20,7 @@ h3 新开账户
               .form-group
                 label.col-sm-2.control-label 微信
                 .col-sm-6
-                  input.form-control(type='text', name='wechatUser', ng-model="wechatUser" typeahead="wechatUser as wechatUser.nickname for wechatUser in fetchWechatUsers($viewValue)" typeahead-loading="loadingWechatUsers", required='')
+                  input.form-control(type='text', name='wechatUser', ng-model="entity.wxclient" typeahead="wechatUser as wechatUser.nickname for wechatUser in fetchWechatUsers($viewValue)" typeahead-loading="loadingWechatUsers", required='')
                   i.fa.fa.fa-spinner(ng-show="loadingWechatUsers")
                   span.text-danger(ng-show="validateInput('wechatUser', 'required')") 微信不能为空
                 .col-sm-4
@@ -63,10 +63,11 @@ h3 新开账户
               .form-group
                 label.col-sm-2.control-label 加油站
                 .col-sm-6
-                  input.form-control(type='text', name='gasstation', ng-model="company" typeahead="company as company.shortname for company in fetchCompanies($viewValue)" typeahead-loading="loadingCompanies")
-                  i.fa.fa.fa-spinner(ng-show="loadingCompanies")
+                  input.form-control(type='text', name='gasstation', required='', ng-model="entity.poi" typeahead="poi as poi.branch_name for poi in fetchPois($viewValue)" typeahead-loading="loadingPois")
+                  i.fa.fa.fa-spinner(ng-show="loadingPois")
+                  span.text-danger(ng-show="validateInput('gasstation', 'required')") 加油站不能为空
                 .col-sm-4
-                  small.text-muted 可选
+                  small.text-muted 必填
           .panel-footer.text-center
             button.mb-sm.btn.btn-lg.btn-info(type='submit') 提交   
             button.mb-sm.btn.btn-lg.btn-default(ui-sref="app.accounts()") 取消
