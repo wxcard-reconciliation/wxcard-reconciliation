@@ -20,10 +20,8 @@ App.controller('ReconciliationsController', function ($scope, Reconciliation, ng
   $scope.try = function () {
     var opt = {order: 'endTime DESC'}
     opt.where = {
-      or: [
-        {beginTime: {gt: moment($scope.beginDate).unix()}},
-        {endTime: {lte: moment($scope.endDate).endOf('day').unix()}}
-      ]
+      endTime: {gt: moment($scope.beginDate).unix()},
+      beginTime: {lte: moment($scope.endDate).endOf('day').unix()}
     };
     Reconciliation.find({filter:opt}, function (reconciliations) {
       
