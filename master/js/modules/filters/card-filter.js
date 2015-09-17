@@ -53,6 +53,7 @@ App.filter("card_date_info", function () {
 App.filter("code_status", function () {
   var code_status = {
     got: '未核销',
+    donated: '已转赠',
     consumed: '已核销',
     deleted: '已删除',
     outdated: '已过期'
