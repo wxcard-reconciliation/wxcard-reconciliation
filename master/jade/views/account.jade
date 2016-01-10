@@ -63,10 +63,13 @@ h3 账户资料管理
             fieldset
               .form-group
                 label.col-sm-2.control-label 加油站
-                .col-sm-6
+                .col-sm-6(ng-if="isAdmin")
+                  input.form-control(type='text', name='gasstation', ng-model="entity.poi", typeahead="poi as poi.branch_name for poi in fetchPois($viewValue)", typeahead-loading="loadingPois")
+                  i.fa.fa.fa-spinner(ng-show="loadingPois")
+                .col-sm-6(ng-if="!isAdmin")
                   p.form-control-static {{entity.poi && entity.poi.branch_name || '未隶属加油站'}}
                 .col-sm-4
-                  small.text-muted 不可修改      
+                  small.text-muted {{isAdmin? '可选填' : '不可修改'}}     
             fieldset
               .form-group
                 label.col-sm-2.control-label 密码

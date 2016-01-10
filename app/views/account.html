@@ -78,11 +78,14 @@
                   <fieldset>
                      <div class="form-group">
                         <label class="col-sm-2 control-label">加油站</label>
-                        <div class="col-sm-6">
+                        <div ng-if="isAdmin" class="col-sm-6">
+                           <input type="text" name="gasstation" ng-model="entity.poi" typeahead="poi as poi.branch_name for poi in fetchPois($viewValue)" typeahead-loading="loadingPois" class="form-control" /><i ng-show="loadingPois" class="fa fa fa-spinner"></i>
+                        </div>
+                        <div ng-if="!isAdmin" class="col-sm-6">
                            <p class="form-control-static">{{entity.poi && entity.poi.branch_name || '未隶属加油站'}}</p>
                         </div>
                         <div class="col-sm-4">
-                           <small class="text-muted">不可修改</small>
+                           <small class="text-muted">{{isAdmin? '可选填' : '不可修改'}}</small>
                         </div>
                      </div>
                   </fieldset>

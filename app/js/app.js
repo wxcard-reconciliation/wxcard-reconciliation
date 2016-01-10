@@ -989,11 +989,12 @@ App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster
   };
 }])
 
-App.controller('AccountController', ["$scope", "Account", "$state", "toaster", function ($scope, Account, $state, toaster) {
+App.controller('AccountController', ["$scope", "Account", "$state", "toaster", "Poi", "$q", function ($scope, Account, $state, toaster, Poi, $q) {
 
   var accountId = $state.params.accountId || $scope.user.id
   Account.findById({id: accountId, filter:{include:['company']}}, function (result) {
-    $scope.entity = result
+    $scope.entity = result;
+    $scope.isAdmin = $scope.user.job.match('管理员');
   })
   
   $scope.submitted = false;
@@ -1019,6 +1020,16 @@ App.controller('AccountController', ["$scope", "Account", "$state", "toaster", f
     }
   };
   
+  $scope.fetchPois = function (val) {
+    var q = $q.defer();
+    $scope.loadingPois = true;
+    Poi.find({filter:{where:{"branch_name":{regex: val}}}}, function (results) {
+      $scope.loadingPois = false;
+      q.resolve(results);
+    })
+    return q.promise;
+  };
+
 }])
 /**=========================================================
  * Module: calendar-ui.js
