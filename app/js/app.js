@@ -107,7 +107,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/dashboard',
         title: 'Dashboard',
         templateUrl: helper.basepath('dashboard.html'),
-        resolve: helper.resolveFor('flot-chart','flot-chart-plugins'),
+        resolve: helper.resolveFor('flot-chart','flot-chart-plugins', 'moment'),
         controller: 'DashboardController'
     })
     .state('app.dashboard_v2', {
@@ -2107,7 +2107,7 @@ App.controller('CouponRecordController', ["$scope", "CouponRecord", "$state", "t
  * Dashboard Controller
  =========================================================*/
 
-App.controller('DashboardController', ["$scope", "CouponRecord", function ($scope, CouponRecord) {
+App.controller('DashboardController', ["$scope", "Cardevent", function ($scope, Cardevent) {
   
   $scope.statistic = {
     applied: 0,
@@ -2116,15 +2116,16 @@ App.controller('DashboardController', ["$scope", "CouponRecord", function ($scop
   }
   
   $scope.stat = function () {
-    CouponRecord.count({}, function (result) {
+    var duration = {between: [moment().startOf('day').unix(), moment().endOf('day').unix()]}
+    Cardevent.count({where:{"status": "got", CreateTime: duration}}, function (result) {
       $scope.statistic.applied = result.count;
     });
     
-    CouponRecord.count({where:{is_use: 1}}, function (result) {
+    Cardevent.count({where:{"status": "consumed", cancelTime: duration}}, function (result) {
       $scope.statistic.cliped = result.count;
     });
     
-    CouponRecord.countUser({}, function (result) {
+    Cardevent.count({where:{or:[{CreateTime: duration}, {cancelTime: duration}]}}, function (result) {
       $scope.statistic.activeClient = result.count;
     })
   }

@@ -29,7 +29,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/dashboard',
         title: 'Dashboard',
         templateUrl: helper.basepath('dashboard.html'),
-        resolve: helper.resolveFor('flot-chart','flot-chart-plugins'),
+        resolve: helper.resolveFor('flot-chart','flot-chart-plugins', 'moment'),
         controller: 'DashboardController'
     })
     .state('app.dashboard_v2', {

@@ -20,7 +20,8 @@ h3
             td(data-title="'卡卷编号'") {{entity.card.id}}
             td(data-title="'申领用户'") {{entity.wxclient && entity.wxclient.nickname || '匿名客户'}}
             td(data-title="'申领日期'") {{entity.CreateTime | moment_unix}}
+            td(data-title="'地区'") {{entity.wxclient && entity.wxclient.province+entity.wxclient.city}}
             td(data-title="'状态'") {{entity.status | code_status}}
-            td(data-title="'收据'", ng-click="showReceipt(entity.receipt_imageurl)") 
+            //- td(data-title="'收据'", ng-click="showReceipt(entity.receipt_imageurl)") 
               em.fa.fa-spinner.fa-spin(ng-show='entity.receiptLoading')
               img.img-thumbnail(ng-src="{{entity.receipt_imageurl || 'app/img/dummy.png'}}", alt="", width="32", height="64", ng-if='!entity.receiptLoading')
