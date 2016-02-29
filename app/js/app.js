@@ -653,8 +653,11 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
     $tooltipProvider.options({appendToBody: true});
 
 }])
-.config(["LoopBackResourceProvider", function(LoopBackResourceProvider) {
-    LoopBackResourceProvider.setAuthHeader('X-Access-Token');
+// .constant('urlBase', "http://0.0.0.0:3000/api")
+.constant('urlBase', "http://120.26.66.200:3000/api")
+.config(["LoopBackResourceProvider", "urlBase", function(LoopBackResourceProvider, urlBase) {
+    // LoopBackResourceProvider.setAuthHeader('X-Access-Token');
+    LoopBackResourceProvider.setUrlBase(urlBase);
 }])
 .config(["$httpProvider", function ($httpProvider) {
   $httpProvider.interceptors.push(["$q", "$location", "LoopBackAuth", function($q, $location, LoopBackAuth) {
@@ -1369,6 +1372,10 @@ App.controller('CardeventsController', ["$scope", "Cardevent", "ngTableParams", 
       className: 'ngdialog-theme-default'
     });    
   }   
+}])
+
+App.controller('CardeventStatistic', ["$scope", "Cardevent", "ngTableParams", function ($scope, Cardevent, ngTableParams) {
+  
 }])
 
 App.controller('AngularCarouselController', ["$scope", function($scope) {
