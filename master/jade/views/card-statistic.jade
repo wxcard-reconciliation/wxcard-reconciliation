@@ -1,0 +1,35 @@
+h3
+  | 卡卷统计
+  
+.container-fluid
+  
+  .panel.panel-default
+    .table-responsive
+      table.table.table-bordered.table-striped(ng-table='tableParams')
+        tbody
+          tr.text-center(ng-repeat='entity in $data')
+            td(data-title="'序号'") {{$index+1}}
+            td(data-title="'地市'") {{entity._id || "其他"}}
+            td(data-title="'一等奖核销'") {{entity.consumed_card0 || 0}}
+            td(data-title="'一等奖转赠'") {{entity.donated_card0 || 0 }}
+            td(data-title="'一等奖参与'") {{entity.count_card0 || 0}}
+            td(data-title="'二等奖核销'") {{entity.consumed_card1 || 0}}
+            td(data-title="'二等奖转赠'") {{entity.donated_card1 || 0 }}
+            td(data-title="'二等奖参与'") {{entity.count_card1 || 0}}
+            td(data-title="'三等奖核销'") {{entity.consumed_card2 || 0}}
+            td(data-title="'三等奖转赠'") {{entity.donated_card2 || 0 }}
+            td(data-title="'三等奖参与'") {{entity.count_card2d || 0}}
+            td(data-title="'总计参与'") {{entity.count || 0}}
+          tr.text-center.text-primary
+            td 总计
+            td 
+            td {{summary.consumed_card0}}
+            td {{summary.donated_card0}}
+            td {{summary.count_card0}}
+            td {{summary.consumed_card1}}
+            td {{summary.donated_card1}}
+            td {{summary.count_card1}}
+            td {{summary.consumed_card2}}
+            td {{summary.donated_card2}}
+            td {{summary.count_card2}}
+            td {{summary.count}}

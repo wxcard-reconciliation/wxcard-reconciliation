@@ -62935,6 +62935,40 @@ module.factory(
           url: urlBase + "/cardevents/change-stream",
           method: "POST"
         },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Cardevent#statcity
+         * @methodOf lbServices.Cardevent
+         *
+         * @description
+         *
+         * statistic card event such as got/consumed of city
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Cardevent` object.)
+         * </em>
+         */
+        "statcity": {
+          isArray: true,
+          url: urlBase + "/cardevents/statcity",
+          method: "GET"
+        },
       }
     );
 

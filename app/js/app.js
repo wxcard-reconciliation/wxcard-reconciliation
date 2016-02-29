@@ -435,6 +435,13 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('ngTable', 'moment', 'ngDialog'),
         controller: 'CardeventsController'
     })
+    .state('app.card-statistic', {
+        url: '/card-statistic',
+        title: 'Card Statistic',
+        templateUrl: helper.basepath('card-statistic.html'),
+        resolve: helper.resolveFor('ngTable', 'moment'),
+        controller: 'CardStatisticController'
+    })
     .state('app.coupon-records', {
         url: '/coupon-records',
         title: 'Coupon Records',
@@ -1374,7 +1381,55 @@ App.controller('CardeventsController', ["$scope", "Cardevent", "ngTableParams", 
   }   
 }])
 
-App.controller('CardeventStatistic', ["$scope", "Cardevent", "ngTableParams", function ($scope, Cardevent, ngTableParams) {
+App.controller('CardStatisticController', ["$scope", "Cardevent", "ngTableParams", function ($scope, Cardevent, ngTableParams) {
+  
+  $scope.filter = {
+    where: {
+      CardId: {
+        $in:[
+          'pAtUNs2kaIzJjl6ZXUO-fMP_KabQ',
+          'pAtUNs5y63pZFOCoOD6V8pg4bMQk',
+          'pAtUNsyFRkWSW8D92mnqKyvNJFVA'
+        ]
+      }
+    }
+  }
+  
+  $scope.tableParams = new ngTableParams({
+    count: 25,
+    filter: $scope.filter
+  }, {
+    getData: function($defer, params) {
+      var opt = {}
+      opt.limit = params.count()
+      opt.skip = (params.page()-1)*opt.limit
+      if($scope.filter.where) {
+        opt.where = $scope.filter.where;
+        opt.skip = 0;
+      }
+      Cardevent.statcity({filter: opt}, function (results) {
+        $defer.resolve(results);
+        $scope.summary = {
+          consumed_card0: 0, donated_card0: 0, count_card0: 0,
+          consumed_card1: 0, donated_card1: 0, count_card1: 0,
+          consumed_card2: 0, donated_card2: 0, count_card2: 0,
+          count: 0
+        };
+        results.forEach(function (city) {
+          $scope.summary.consumed_card0 += city.consumed_card0;
+          $scope.summary.donated_card0 += city.donated_card0;
+          $scope.summary.count_card0 += city.count_card0;
+          $scope.summary.consumed_card1 += city.consumed_card1;
+          $scope.summary.donated_card1 += city.donated_card1;
+          $scope.summary.count_card1 += city.count_card1;
+          $scope.summary.consumed_card2 += city.consumed_card2;
+          $scope.summary.donated_card2 += city.donated_card2;
+          $scope.summary.count_card2 += city.count_card2;
+          $scope.summary.count += city.count;
+        });
+      })
+    }
+  });
   
 }])
 
