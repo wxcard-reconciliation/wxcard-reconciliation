@@ -1,8 +1,9 @@
-<h3>卡卷统计</h3>
+<h3>卡卷统计<a ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="city.csv" class="pull-right btn btn-sm btn-info">导出</a>
+</h3>
 <div class="container-fluid">
    <div class="panel panel-default">
       <div class="table-responsive">
-         <table ng-table="tableParams" class="table table-bordered table-striped">
+         <table ng-table="tableParams" export-csv="csv" class="table table-bordered table-striped">
             <tbody>
                <tr ng-repeat="entity in $data" class="text-center">
                   <td data-title="'序号'">{{$index+1}}</td>

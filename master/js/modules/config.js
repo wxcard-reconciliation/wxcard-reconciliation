@@ -361,7 +361,7 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         url: '/card-statistic',
         title: 'Card Statistic',
         templateUrl: helper.basepath('card-statistic.html'),
-        resolve: helper.resolveFor('ngTable', 'moment'),
+        resolve: helper.resolveFor('ngTable', 'moment', 'ngTableExport'),
         controller: 'CardStatisticController'
     })
     .state('app.coupon-records', {
