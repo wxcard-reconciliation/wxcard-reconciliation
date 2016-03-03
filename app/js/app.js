@@ -1427,7 +1427,37 @@ App.controller('CardStatisticController', ["$scope", "Cardevent", "ngTableParams
           $scope.summary.count_card2 += city.count_card2;
           $scope.summary.count += city.count;
         });
-      })
+      });
+    }
+  });
+  
+  $scope.tablePoi = new ngTableParams({
+    count: 50,
+    filter: $scope.filter
+  }, {
+    getData: function ($defer, params) {
+      var opt = {}
+      opt.limit = params.count()
+      opt.skip = (params.page()-1)*opt.limit
+      if($scope.filter.where) {
+        opt.where = $scope.filter.where;
+        opt.skip = 0;
+      }
+      Cardevent.statpoi({filter: opt}, function (results) {
+        $defer.resolve(results);
+        $scope.summaryPoi = {
+          count_card0: 0,
+          count_card1: 0,
+          count_card2: 0,
+          count: 0
+        };
+        results.forEach(function (poi) {
+          $scope.summaryPoi.count_card0 += poi.count_card0;
+          $scope.summaryPoi.count_card1 += poi.count_card1;
+          $scope.summaryPoi.count_card2 += poi.count_card2;
+          $scope.summaryPoi.count += poi.count;
+        });
+      });
     }
   });
   

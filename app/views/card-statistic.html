@@ -1,7 +1,9 @@
-<h3>卡卷统计<a ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="city.csv" class="pull-right btn btn-sm btn-info">导出</a>
-</h3>
+<h3>卡卷统计</h3>
 <div class="container-fluid">
    <div class="panel panel-default">
+      <div class="panel-heading"><a ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="city.csv" class="pull-right btn btn-sm btn-info">导出</a>
+         <div class="panel-title">地市汇总</div>
+      </div>
       <div class="table-responsive">
          <table ng-table="tableParams" export-csv="csv" class="table table-bordered table-striped">
             <tbody>
@@ -32,6 +34,36 @@
                   <td>{{summary.donated_card2}}</td>
                   <td>{{summary.count_card2}}</td>
                   <td>{{summary.count}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <!-- statistic poi-->
+   <div class="panel panel-default">
+      <div class="panel-heading"><a ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="poi.csv" class="pull-right btn btn-sm btn-info">导出</a>
+         <div class="panel-title">油站核销汇总</div>
+      </div>
+      <div class="table-responsive">
+         <table ng-table="tablePoi" export-csv="csv" class="table table-bordered table-striped">
+            <tbody>
+               <tr ng-repeat="entity in $data" class="text-center">
+                  <td data-title="'序号'">{{$index+1}}</td>
+                  <td data-title="'地市'">{{entity._id && entity._id.city || "其他"}}</td>
+                  <td data-title="'加油站'" class="text-left">{{entity._id && entity._id.name || "其他"}}</td>
+                  <td data-title="'一等奖核销'">{{entity.count_card0 || 0}}</td>
+                  <td data-title="'二等奖核销'">{{entity.count_card1 || 0}}</td>
+                  <td data-title="'三等奖核销'">{{entity.count_card2 || 0}}</td>
+                  <td data-title="'总计核销'">{{entity.count || 0}}</td>
+               </tr>
+               <tr class="text-center text-primary">
+                  <td>总计</td>
+                  <td></td>
+                  <td></td>
+                  <td>{{summaryPoi.count_card0}}</td>
+                  <td>{{summaryPoi.count_card1}}</td>
+                  <td>{{summaryPoi.count_card2}}</td>
+                  <td>{{summaryPoi.count}}</td>
                </tr>
             </tbody>
          </table>
