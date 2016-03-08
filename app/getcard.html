@@ -61,6 +61,20 @@
     });
     
     wx.ready(function () {
+      // $.ajax({
+      //   url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getoauthaccesstoken",
+      //   data: {
+      //     code: getUrlVars().code
+      //   },
+      //   crossDomain: true,
+      //   success: function (data) {
+      //     console.log(data);
+      //     var openid = data.openid || 'oAtUNs_WhBwy3QiftzLuk6aihKlU';
+      //   },
+      //   error: function (res) {
+      //     console.log(arguments);
+      //   }
+      // });
     });
     
     wx.error(function (res) {
@@ -68,9 +82,37 @@
     });
       
       $('#btnGetCard').on('click', function () {
-        $.alert('Get Card');
+        var card_id = 'pAtUNszgOkzyobBItkpo3aSSbSKM';
+        $.ajax({
+          url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getcardext",
+          data: {
+            param: {
+              card_id: card_id
+            }
+          },
+          crossDomain: true,
+          success: function (data) {
+            console.log(data); 
+            wx.addCard({
+              cardList:[{
+                cardId: card_id,
+                // cardExt: data
+                cardExt: JSON.stringify(data)
+              }],
+              success: function (res) {
+                var cardList = res.cardList;
+                console.log(res);
+              }
+            });
+          },
+          error: function (res) {
+            console.log(arguments);
+          }
+        });
+        // $.alert('ok!!!')
       });
-      $('#mylog').html('Code:'+getUrlVars().code);
+      $('#mylog').html("abc");
+      // $('#mylog').html('Code:'+getUrlVars().code);
     </script>
   </body>
 </html>
