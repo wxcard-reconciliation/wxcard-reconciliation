@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+      <title>领取卡卷</title>
+      <!-- <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/0.4.0/weui.min.css"/> -->
+      <link rel="stylesheet" href="../node_modules/jquery-weui/dist/lib/weui.min.css"/>
+      <link rel="stylesheet" href="../node_modules/jquery-weui/dist/css/jquery-weui.css"/>
+  </head>
+  <body ontouchstart>
+    <div class="weui_msg">
+      <div class="weui_icon_area"><i class="weui_icon_success weui_icon_msg"></i></div>
+      <div class="weui_text_area">
+        <h2 class="weui_msg_title">抽到卡卷</h2>
+        <p class="weui_msg_desc">500元油卡充值抵用券</p>
+      </div>
+      <div class="weui_opr_area">
+        <p class="weui_btn_area">
+          <a href="javascript:;" id="btnGetCard" class="weui_btn weui_btn_primary">领取</a>
+        </p>
+      </div>
+      <div id="mylog">
+        
+      </div>
+    </div>
+    
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+    <!-- // <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script> -->
+    <script src="../node_modules/jquery-weui/dist/lib/jquery-2.1.4.js"></script>
+    <script src="../node_modules/jquery-weui/dist/js/jquery-weui.js"></script>
+    <script type="text/javascript">
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+    $.ajax({
+      url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getjsconfig",
+      data: {
+        param: {
+          debug: true,
+          jsApiList: ['addCard'],
+          url: window.location.href
+        }
+      },
+      crossDomain: true,
+      success: function( data ) {
+        wx.config(data);
+      },
+      error: function (res) {
+        console.log(res);
+      }
+    });
+    
+    wx.ready(function () {
+    });
+    
+    wx.error(function (res) {
+      console.log(res);
+    });
+      
+      $('#btnGetCard').on('click', function () {
+        $.alert('Get Card');
+      });
+      $('#mylog').html('Code:'+getUrlVars().code);
+    </script>
+  </body>
+</html>
