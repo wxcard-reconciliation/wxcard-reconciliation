@@ -3,8 +3,13 @@
 //! authors : guanbo2002@gmail.com
 //! license : MIT
 
-$(function (undefined) {
+(function (undefined) {
   
+  var   wxjssdk,
+        // the global-scope this is NOT the global object in Node.js
+        globalScope = (typeof global !== 'undefined' && (typeof window === 'undefined' || window === global.window)) ? global : this,
+        // check for nodeJS
+        hasModule = (typeof module !== 'undefined' && module && module.exports)
   function getUrlVars()
   {
       var vars = [], hash;
@@ -17,23 +22,26 @@ $(function (undefined) {
       }
       return vars;
   }
-  $.ajax({
-    url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getjsconfig",
-    data: {
-      param: {
-        // debug: true,
-        jsApiList: ['addCard'],
-        url: window.location.href
-      }
-    },
-    crossDomain: true,
-    success: function( data ) {
-      wx.config(data);
-    },
-    error: function (res) {
-      console.log(res);
+  
+  wxjssdk = {
+    config: function (param, success, error) {
+      param = param || {/*debug: true*/};
+      param.url = window.location.href;
+      $.ajax({
+        url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getjsconfig",
+        data: {
+          param: param
+        },
+        crossDomain: true,
+        success: success || function( data ) {
+          wx.config(data);
+        },
+        error: error || function (res) {
+          console.log(res);
+        }
+      });
     }
-  });
+  }
   
   // wx.ready(function () {
   //   $.ajax({
@@ -55,4 +63,14 @@ $(function (undefined) {
   // wx.error(function (res) {
   //   console.log(res);
   // });
-});
+  
+  if (hasModule) {
+    module.exports = wxjssdk;
+  } else if (typeof define === 'function' && define.amd) {
+    define(function (require, exports) {
+      return wxjssdk;
+    });
+  } else {
+    globalScope.wxjssdk = wxjssdk;
+  }
+}).call(this);

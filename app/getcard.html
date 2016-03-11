@@ -50,6 +50,8 @@
         $('#btnGetCard').removeClass('weui_btn_disabled');
       }, 2000);
     }
+    
+    wxjssdk.config({jsApiList: ['addCard']});
 
     wx.ready(function () {
     });
