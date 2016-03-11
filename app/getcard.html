@@ -17,7 +17,7 @@
       </div>
       <div class="weui_opr_area">
         <p class="weui_btn_area">
-          <a href="javascript:;" id="btnGetCard" class="weui_btn weui_btn_primary">领取</a>
+          <a href="javascript:;" id="btnGetCard" class="weui_btn weui_btn_primary weui_btn_disabled">领取</a>
         </p>
       </div>
     </div>
@@ -37,10 +37,19 @@
     var index = Math.floor(Math.random() * cards.length);
     var card = cards[index];
 
-    setTimeout(function () {
-      $('#iconTop').toggleClass('weui_icon_waiting weui_icon_success');
-      $('#cardTitle').html("恭喜抢到："+card.title);
-    }, 2000);
+    if(Date.now() < 146142720000) {
+      $.alert('活动还没有开始，请耐心等待！');
+      $('#iconTop').toggleClass('weui_icon_waiting weui_icon_safe_warn');
+      $('#cardTitle').html("活动还没有开始....");
+    } else {
+      $.showLoading("正在抢卡卷");
+      setTimeout(function () {
+        $.hideLoading();
+        $('#iconTop').toggleClass('weui_icon_waiting weui_icon_success');
+        $('#cardTitle').html("恭喜抢到："+card.title);
+        $('#btnGetCard').removeClass('weui_btn_disabled');
+      }, 2000);
+    }
 
     wx.ready(function () {
     });
