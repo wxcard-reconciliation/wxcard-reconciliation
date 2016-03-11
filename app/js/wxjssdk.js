@@ -57,10 +57,6 @@
       });
     }
   }
-    
-  // wx.error(function (res) {
-  //   console.log(res);
-  // });
   
   if (hasModule) {
     module.exports = wxjssdk;
