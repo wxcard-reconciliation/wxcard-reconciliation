@@ -40,26 +40,24 @@
           console.log(res);
         }
       });
+    },
+    getUser: function (success, error) {
+      $.ajax({
+        url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getuserbycode",
+        data: {
+          code: getUrlVars().code
+        },
+        crossDomain: true,
+        success: success || function (data) {
+          var openid = data.openid || 'oAtUNs_WhBwy3QiftzLuk6aihKlU';
+        },
+        error: error || function (res) {
+          console.log(arguments);
+        }
+      });
     }
   }
-  
-  // wx.ready(function () {
-  //   $.ajax({
-  //     url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getoauthaccesstoken",
-  //     data: {
-  //       code: getUrlVars().code
-  //     },
-  //     crossDomain: true,
-  //     success: function (data) {
-  //       console.log(data);
-  //       var openid = data.openid || 'oAtUNs_WhBwy3QiftzLuk6aihKlU';
-  //     },
-  //     error: function (res) {
-  //       console.log(arguments);
-  //     }
-  //   });
-  // });
-  
+    
   // wx.error(function (res) {
   //   console.log(res);
   // });

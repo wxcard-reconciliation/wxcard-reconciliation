@@ -10,36 +10,90 @@
   </head>
   <body ontouchstart>
     <div class="weui_panel weui_panel_access">
-      <div class="weui_panel_hd">图文组合列表</div>
       <div class="weui_panel_bd">
         <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
           <div class="weui_media_hd">
-            <img class="weui_media_appmsg_thumb" src="" alt="">
+            <img id="avatar" class="weui_media_appmsg_thumb" src="" alt="">
           </div>
           <div class="weui_media_bd">
-            <h4 class="weui_media_title">标题一</h4>
-            <p class="weui_media_desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
-          </div>
-        </a>
-        <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
-          <div class="weui_media_hd">
-            <img class="weui_media_appmsg_thumb" src="" alt="">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">标题二</h4>
-            <p class="weui_media_desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+            <h4 id="nickname" class="weui_media_title">微信昵称</h4>
+            <p id="wxuserProfile" class="weui_media_desc"></p>
           </div>
         </a>
       </div>
-      <a class="weui_panel_ft" href="javascript:void(0);">查看更多</a>
     </div>
-    
+    <div class="weui_cells weui_cells_form">
+      <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label">手机</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+          <input class="weui_input" type="tel" placeholder="请输入手机号作为登录账号">
+        </div>
+      </div>
+      <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+          <input class="weui_input" type="password" placeholder="请输入6位密码">
+        </div>
+      </div>
+    </div>
+    <div class="weui_cells weui_cells_form">
+      <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label">微信号</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+          <input class="weui_input" type="tel" placeholder="请输入微信号">
+        </div>
+      </div>
+      <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+          <input class="weui_input" type="string" placeholder="请输入真实姓名">
+        </div>
+      </div>
+    </div>
+    <div class="weui_cells weui_cells_access">
+      <a class="weui_cell" href="javascript:;">
+        <div class="weui_cell_bd weui_cell_primary">
+          <p>加油站</p>
+        </div>
+        <div class="weui_cell_ft">请选择</div>
+      </a>
+    </div>    
+    <div class="weui_cells weui_cells_form">
+      <div class="weui_cell weui_cell_select">
+        <div class="weui_cell_bd weui_cell_primary">
+          <select class="weui_select" name="select1">
+            <option value="">选择</option>
+            <option value="核销员">核销员</option>
+            <option value="收银员">收银员</option>
+            <option selected="" value="充值员">充值员</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="weui_opr_area">
+      <p class="weui_btn_area">
+        <a href="javascript:;" class="weui_btn weui_btn_disabled weui_btn_primary">注册</a>
+      </p>
+    </div>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
     <!-- // <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script> -->
     <script src="../node_modules/jquery-weui/dist/lib/jquery-2.1.4.js"></script>
     <script src="../node_modules/jquery-weui/dist/js/jquery-weui.js"></script>
     <script src="./js/wxjssdk.js"></script>
-    <script type="text/javascript">      
+    <script type="text/javascript">  
+      var data = {};
+      wxjssdk.config({jsApiList: ['hideOptionMenu']});
+      wx.ready(function () {
+        wx.hideOptionMenu();
+        wxjssdk.getUser(function (user) {
+          data.wxclient = user;
+          data.picture = user.headimgurl;
+          $('#nickname').html(user.nickname);
+          $('#avatar').attr("src", user.headimgurl);
+          $('#wxuserProfile').html(user.province+" "+user.city);
+        });
+      });
+      
     </script>
   </body>
 </html>
