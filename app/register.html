@@ -26,13 +26,13 @@
       <div class="weui_cell">
         <div class="weui_cell_hd"><label class="weui_label">手机</label></div>
         <div class="weui_cell_bd weui_cell_primary">
-          <input class="weui_input" type="tel" placeholder="请输入手机号作为登录账号">
+          <input name="phone" class="weui_input" type="tel" placeholder="请输入手机号" maxlength="11" pattern=".{11}" required="">
         </div>
       </div>
       <div class="weui_cell">
         <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
         <div class="weui_cell_bd weui_cell_primary">
-          <input class="weui_input" type="password" placeholder="请输入6位密码">
+          <input name="password" class="weui_input" type="password" placeholder="请输入6位密码" maxlength="6" pattern=".{6}" required="">
         </div>
       </div>
     </div>
@@ -40,29 +40,28 @@
       <div class="weui_cell">
         <div class="weui_cell_hd"><label class="weui_label">微信号</label></div>
         <div class="weui_cell_bd weui_cell_primary">
-          <input class="weui_input" type="string" placeholder="请输入微信号">
+          <input name="username" class="weui_input" type="string" placeholder="请输入微信号" required="">
         </div>
       </div>
       <div class="weui_cell">
         <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
         <div class="weui_cell_bd weui_cell_primary">
-          <input class="weui_input" type="string" placeholder="请输入真实姓名">
+          <input name="name" class="weui_input" type="string" placeholder="请输入真实姓名" required="">
         </div>
       </div>
     </div>
     <div class="weui_cells weui_cells_access">
-      <a class="weui_cell" href="javascript:;">
+      <a class="weui_cell" href="./pois.html">
         <div class="weui_cell_bd weui_cell_primary">
           <p>加油站</p>
         </div>
-        <div class="weui_cell_ft">请选择</div>
+        <div id="poi" class="weui_cell_ft">请选择</div>
       </a>
     </div>    
     <div class="weui_cells weui_cells_form">
       <div class="weui_cell weui_cell_select">
         <div class="weui_cell_bd weui_cell_primary">
-          <select class="weui_select" name="select1">
-            <option value="">选择</option>
+          <select class="weui_select" name="job">
             <option value="核销员">核销员</option>
             <option value="收银员">收银员</option>
             <option selected="" value="充值员">充值员</option>
@@ -72,7 +71,7 @@
     </div>
     <div class="weui_opr_area">
       <p class="weui_btn_area">
-        <a href="javascript:;" class="weui_btn weui_btn_disabled weui_btn_primary">注册</a>
+        <a id="btnRegister" href="javascript:;" class="weui_btn weui_btn_primary">注册</a>
       </p>
     </div>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
@@ -81,7 +80,7 @@
     <script src="../node_modules/jquery-weui/dist/js/jquery-weui.js"></script>
     <script src="./js/wxjssdk.js"></script>
     <script type="text/javascript">  
-      var data = {};
+      var data = {job: '充值员'};
       wxjssdk.config({jsApiList: ['hideOptionMenu']});
       wx.ready(function () {
         wx.hideOptionMenu();
@@ -92,6 +91,52 @@
           $('#avatar').attr("src", user.headimgurl);
           $('#wxuserProfile').html(user.province+" "+user.city);
         });
+      });
+      
+      var strPoi = wxjssdk.getCookie("selectedPoi");
+      if(strPoi) {
+        data.poi = JSON.parse(strPoi);
+        $('#poi').html(data.poi.city+" "+data.poi.branch_name);
+      }
+      
+      $('select').change(function (e) {
+        data.job = this.value;      
+      });
+      
+      function validate() {
+        var valid = true;
+        $('input').each(function (index, dom) {
+          if(valid) valid = dom.validity.valid;
+          var inputSelector = $('input[name='+dom.name+']');
+          if(!dom.validity.valid) {
+            inputSelector.parent().parent().addClass('weui_cell_warn');
+          } else {
+            inputSelector.parent().parent().removeClass('weui_cell_warn');
+            data[dom.name] = dom.value;
+          }
+        });
+        if(valid) valid = !!data.wxclient;
+        console.log(data);
+        return valid;
+      }
+      $('#btnRegister').click(function () {
+        if(validate()) {
+          data.wxclient.username = data.username;
+          data.username = data.phone;
+          data.email = data.phone+"@petrojs.com";
+          $.ajax({
+            url: "http://zsydz.aceweet.com:3000/api/accounts",
+            method: "POST",
+            data: data,
+            crossDomain: true,
+            success: function (data) {
+              console.log(arguments);
+            },
+            error: function (res) {
+              console.log(arguments);
+            }
+          });
+        }
       });
       
     </script>

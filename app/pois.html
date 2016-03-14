@@ -23,7 +23,7 @@
       </form>
       <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
     </div>
-    <div class="weui_cells weui_cells_radio" id="poiList">
+    <div class="weui_cells weui_cells_access" id="poiList">
     </div>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
     <!-- // <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script> -->
@@ -34,7 +34,8 @@
       
       function fetchPois(branch) {
         var filter = {limit: 10};
-        if(branch && branch != '') param.branch_name = branch;
+        if(branch && branch != '') filter.where = {branch_name:{regex: branch}};
+        $('#poiList').empty();
         $.showLoading();
         $.ajax({
           url: "http://zsydz.aceweet.com:3000/api/pois",
@@ -43,16 +44,20 @@
           },
           crossDomain: true,
           success: function( data ) {
-            console.log(arguments);
             $.hideLoading();
             data.forEach(function (poi) {
-              var dom = '<label class="weui_cell weui_check_label" for="'+poi.poi_id+'"> \
+              var dom = '<div class="weui_cell" id="'+poi.poi_id+'"> \
                           <div class="weui_cell_bd weui_cell_primary"> \
                             <p>'+poi.branch_name+'</p> \
                           </div> \
-                          <div class="weui_cell_ft">'+poi.city+'</div> \
-                        </label>';
+                          <div class="weui_cell_ft"> '+poi.city+'\
+                          </div> \
+                        </div>';
               $('#poiList').append(dom);
+              $('#'+poi.poi_id).click(function (e) {
+                wxjssdk.setCookie('selectedPoi', JSON.stringify(poi));
+                history.back();
+              });
             });
           },
           error: function (res) {
@@ -64,6 +69,20 @@
       
       fetchPois();
       
+      $('#search_input').on('input', function (e) {
+        fetchPois(e.target.value);
+      });
+      
+      $('#search_cancel').on("touchend", function () {
+        fetchPois();
+        $('#search_input').val('');
+      });
+      
+      $('#search_clear').on("touchend", function () {
+        fetchPois();
+        $('#search_input').val('');
+      });
+            
       var data = {};
       wxjssdk.config({jsApiList: ['hideOptionMenu']});
       wx.ready(function () {
