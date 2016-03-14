@@ -42,10 +42,12 @@
       });
     },
     getUser: function (success, error) {
+      var code = getUrlVars().code;
+      if(!code) return console.log('no code');
       $.ajax({
         url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getuserbycode",
         data: {
-          code: getUrlVars().code
+          code: code
         },
         crossDomain: true,
         success: success || function (data) {

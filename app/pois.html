@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+      <title>加油站</title>
+      <!-- <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/0.4.0/weui.min.css"/> -->
+      <link rel="stylesheet" href="../node_modules/jquery-weui/dist/lib/weui.min.css"/>
+      <link rel="stylesheet" href="../node_modules/jquery-weui/dist/css/jquery-weui.css"/>
+  </head>
+  <body ontouchstart>
+    <div class="weui_search_bar" id="search_bar">
+      <form class="weui_search_outer">
+        <div class="weui_search_inner">
+          <i class="weui_icon_search"></i>
+          <input type="search" class="weui_search_input" id="search_input" placeholder="加油站名称" required/>
+          <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+        </div>
+        <label for="search_input" class="weui_search_text" id="search_text">
+          <i class="weui_icon_search"></i>
+          <span>搜索加油站</span>
+        </label>
+      </form>
+      <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
+    </div>
+    <div class="weui_cells weui_cells_radio" id="poiList">
+    </div>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+    <!-- // <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script> -->
+    <script src="../node_modules/jquery-weui/dist/lib/jquery-2.1.4.js"></script>
+    <script src="../node_modules/jquery-weui/dist/js/jquery-weui.js"></script>
+    <script src="./js/wxjssdk.js"></script>
+    <script type="text/javascript">
+      
+      function fetchPois(branch) {
+        var filter = {limit: 10};
+        if(branch && branch != '') param.branch_name = branch;
+        $.showLoading();
+        $.ajax({
+          url: "http://zsydz.aceweet.com:3000/api/pois",
+          data: {
+            filter: filter
+          },
+          crossDomain: true,
+          success: function( data ) {
+            console.log(arguments);
+            $.hideLoading();
+            data.forEach(function (poi) {
+              var dom = '<label class="weui_cell weui_check_label" for="'+poi.poi_id+'"> \
+                          <div class="weui_cell_bd weui_cell_primary"> \
+                            <p>'+poi.branch_name+'</p> \
+                          </div> \
+                          <div class="weui_cell_ft">'+poi.city+'</div> \
+                        </label>';
+              $('#poiList').append(dom);
+            });
+          },
+          error: function (res) {
+            $.hideLoading();
+            console.log(res);
+          }
+        });
+      }
+      
+      fetchPois();
+      
+      var data = {};
+      wxjssdk.config({jsApiList: ['hideOptionMenu']});
+      wx.ready(function () {
+        wx.hideOptionMenu();
+      });
+      
+    </script>
+  </body>
+</html>
