@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+      <title>领取卡卷</title>
+      <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/0.4.0/weui.min.css"/>
+  </head>
+  <body ontouchstart>
+    <div class="weui_msg">
+      <div class="weui_icon_area"><i id="iconTop" class="weui_icon_waiting weui_icon_msg"></i></div>
+      <div class="weui_text_area">
+        <h2 id="cardTitle" class="weui_msg_title">正在抢卡卷...</h2>
+        <p class="weui_msg_desc">您可以领取后，在活动站点内充值抵用。</p>
+      </div>
+      <div class="weui_opr_area">
+        <p class="weui_btn_area">
+          <a href="javascript:;" id="btnGetCard" class="weui_btn weui_btn_primary weui_btn_disabled">领取</a>
+        </p>
+      </div>
+    </div>
+    
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script src="./js/page/getcard.bundle.js"></script>
+  </body>
+</html>
