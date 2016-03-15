@@ -85,6 +85,7 @@
       wx.ready(function () {
         wx.hideOptionMenu();
         wxjssdk.getUser(function (user) {
+          wxjssdk.setCookie('wxuser', JSON.stringify(user));
           data.wxclient = user;
           data.picture = user.headimgurl;
           $('#nickname').html(user.nickname);

@@ -42,20 +42,27 @@
       });
     },
     getUser: function (success, error) {
+      success = success || function (user) {
+        wxjssdk.setCookie('wxuser', JSON.stringify(user));
+      };
+      error = error || function (res) {
+        var cachedUser = wxjssdk.getCookie('wxuser');
+        if(cachedUser) return success(JSON.parse(cachedUser));
+        console.log(arguments);
+      };
       var code = getUrlVars().code;
-      if(!code) return console.log('no code');
+      if(!code) {
+        return error('no code');
+      }
+
       $.ajax({
         url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getuserbycode",
         data: {
           code: code
         },
         crossDomain: true,
-        success: success || function (data) {
-          var openid = data.openid || 'oAtUNs_WhBwy3QiftzLuk6aihKlU';
-        },
-        error: error || function (res) {
-          console.log(arguments);
-        }
+        success: success,
+        error: error
       });
     },
     setCookie: function (name, value) {
