@@ -1,4 +1,5 @@
 var path = require('path');
+var CommonsChunkPlugin = require('webpack').optimize.CommonsChunkPlugin;
 
 module.exports = {
     entry: {
@@ -19,5 +20,5 @@ module.exports = {
     },
     resolve:{
         extensions:['','.js','.json', 'css']
-    },
+    }
 };

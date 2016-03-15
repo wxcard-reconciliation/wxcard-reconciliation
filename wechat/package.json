@@ -4,7 +4,7 @@
   "description": "petrojs wechat",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/webpack --display-error-details",
+    "start": "node_modules/.bin/webpack -p",
     "test": "node_modules/.bin/webpack --watch"
   },
   "author": "",
