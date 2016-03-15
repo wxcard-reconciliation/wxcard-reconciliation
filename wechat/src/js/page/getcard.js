@@ -33,6 +33,7 @@ wx.error(function (res) {
 });
   
 $('#btnGetCard').on('click', function () {
+  $.showLoading("正在领取奖券");
   $.ajax({
     url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getcardext",
     data: {
@@ -42,18 +43,19 @@ $('#btnGetCard').on('click', function () {
     },
     crossDomain: true,
     success: function (data) {
+      $.hideLoading();
       wx.addCard({
         cardList:[{
           cardId: card.id,
           cardExt: JSON.stringify(data)
         }],
         success: function (res) {
-          var cardList = res.cardList;
-          console.log(res);
+          $('#btnGetCard').addClass('weui_btn_disabled');
         }
       });
     },
     error: function (res) {
+      $.hideLoading();
       console.log(arguments);
     }
   });
