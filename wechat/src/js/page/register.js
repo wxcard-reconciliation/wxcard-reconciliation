@@ -1,7 +1,7 @@
 var wxjssdk = require('../wxjssdk');
 
 var data = {job: '充值员'};
-wxjssdk.config({jsApiList: ['hideOptionMenu']});
+wxjssdk.config({jsApiList: ['hideOptionMenu', 'closeWindow']});
 wx.ready(function () {
   wx.hideOptionMenu();
   wxjssdk.getUser(function (user) {
@@ -37,9 +37,9 @@ function validate() {
     }
   });
   if(valid) valid = !!data.wxclient;
-  console.log(data);
   return valid;
 }
+
 $('#btnRegister').click(function () {
   if(validate()) {
     data.wxclient.username = data.username;
@@ -51,10 +51,18 @@ $('#btnRegister').click(function () {
       data: data,
       crossDomain: true,
       success: function (data) {
-        console.log(arguments);
+        $.alert("您已经成功注册", "成功", function () {
+          wx.closeWindow();
+        });
       },
       error: function (res) {
-        console.log(arguments);
+        var text = res.responseText;
+        var msg = "注册失败";
+        if(/User already exists/.test(text)) {
+          msg = "手机号已经注册过账号！";
+        }
+        $.alert(msg, "失败");
+        console.log(res);
       }
     });
   }
