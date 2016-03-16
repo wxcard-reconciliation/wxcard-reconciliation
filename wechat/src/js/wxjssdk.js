@@ -44,7 +44,7 @@ var wxjssdk = {
     error = error || function (res) {
       var cachedUser = wxjssdk.getCookie('wxuser');
       if(cachedUser) return success(JSON.parse(cachedUser));
-      console.log(arguments);
+      console.log(res);
     };
     var code = getUrlVars().code;
     if(!code) {
