@@ -18,7 +18,7 @@ if(Date.now() < 146142720000) {
   setTimeout(function () {
     $.hideLoading();
     $('#iconTop').toggleClass('weui_icon_waiting weui_icon_success');
-    $('#cardTitle').html("恭喜抢到："+card.title);
+    $('#cardTitle').html("有机会领取："+card.title);
     $('#btnGetCard').removeClass('weui_btn_disabled');
   }, 2000);
 }
