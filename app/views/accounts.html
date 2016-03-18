@@ -23,6 +23,7 @@
                   <td data-title="'联系电话'">{{entity.phone}}</td>
                   <td data-title="'电子邮件'">{{entity.email}}</td>
                   <td data-title="'隶属单位'">{{entity.poi && entity.poi.branch_name || '未知部门'}}</td>
+                  <td data-title="'城市'">{{entity.poi && entity.poi.city || '未知'}}</td>
                   <td data-title="'注册日期'">{{entity.created | moment}}</td>
                </tr>
             </tbody>

@@ -40,11 +40,16 @@ h3 账户资料管理
                   p.form-control-static {{entity.username}}
                 .col-sm-4
                   small.text-muted 不可修改
-                  fieldset
               .form-group
                 label.col-sm-2.control-label 微信OPENID
                 .col-sm-6
                   p.form-control-static {{entity.wxclient && entity.wxclient.id}}
+                .col-sm-4
+                  small.text-muted 不可修改
+              .form-group
+                label.col-sm-2.control-label 微信号
+                .col-sm-6
+                  p.form-control-static {{entity.wxclient && entity.wxclient.username || "未设置"}}
                 .col-sm-4
                   small.text-muted 不可修改
             fieldset
@@ -70,6 +75,12 @@ h3 账户资料管理
                   p.form-control-static {{entity.poi && entity.poi.branch_name || '未隶属加油站'}}
                 .col-sm-4
                   small.text-muted {{isAdmin? '可选填' : '不可修改'}}     
+              .form-group
+                label.col-sm-2.control-label 加油站地址
+                .col-sm-6
+                  p.form-control-static {{entity.poi && entity.poi.city+entity.poi.address || ''}}
+                .col-sm-4
+                  small.text-muted 不可修改
             fieldset
               .form-group
                 label.col-sm-2.control-label 密码

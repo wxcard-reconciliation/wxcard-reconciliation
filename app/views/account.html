@@ -51,13 +51,21 @@
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">不可修改</small>
-                           <fieldset></fieldset>
                         </div>
                      </div>
                      <div class="form-group">
                         <label class="col-sm-2 control-label">微信OPENID</label>
                         <div class="col-sm-6">
                            <p class="form-control-static">{{entity.wxclient && entity.wxclient.id}}</p>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">不可修改</small>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">微信号</label>
+                        <div class="col-sm-6">
+                           <p class="form-control-static">{{entity.wxclient && entity.wxclient.username || "未设置"}}</p>
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">不可修改</small>
@@ -86,6 +94,15 @@
                         </div>
                         <div class="col-sm-4">
                            <small class="text-muted">{{isAdmin? '可选填' : '不可修改'}}</small>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">加油站地址</label>
+                        <div class="col-sm-6">
+                           <p class="form-control-static">{{entity.poi && entity.poi.city+entity.poi.address || ''}}</p>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">不可修改</small>
                         </div>
                      </div>
                   </fieldset>

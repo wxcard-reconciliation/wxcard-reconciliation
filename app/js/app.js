@@ -946,7 +946,6 @@ App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster
   $scope.entity = {job: '加油站收银员'}
   
   $scope.$watch('entity.wxclient', function (newVal, oldVal) {
-    console.log();
     if(newVal instanceof Wxclient) {
       $scope.entity.picture = newVal.headimgurl;
       $scope.entity.name = newVal.remark || newVal.nickname;
@@ -1002,7 +1001,7 @@ App.controller('AccountsAddController', ["$scope", "Account", "$state", "toaster
 App.controller('AccountController', ["$scope", "Account", "$state", "toaster", "Poi", "$q", function ($scope, Account, $state, toaster, Poi, $q) {
 
   var accountId = $state.params.accountId || $scope.user.id
-  Account.findById({id: accountId, filter:{include:['company']}}, function (result) {
+  Account.findById({id: accountId}, function (result) {
     $scope.entity = result;
     $scope.isAdmin = $scope.user.job.match('管理员');
   })
