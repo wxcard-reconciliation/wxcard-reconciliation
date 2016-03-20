@@ -1,0 +1,30 @@
+<h3>营销活动列表
+   <a ui-sref="app.campaign()" class="pull-right btn btn-sm btn-labeled btn-info">
+      <span class="btn-label"><i class="icon-plus"></i>
+      </span>新增</a>
+   <from class="pull-right col-sm-3">
+      <div class="input-group">
+         <span class="input-group-addon">
+            <div class="icon-magnifier"></div>
+         </span>
+         <input type="text" placeholder="输入活动标题" ng-model="filter.text" ui-keypress="{13:'tableParams.reload()'}" class="form-control" />
+      </div>
+   </from>
+</h3>
+<div class="container-fluid">
+   <div class="panel panel-default">
+      <div class="table-responsive">
+         <table ng-table="tableParams" class="table table-bordered table-striped">
+            <tbody>
+               <tr ng-repeat="entity in $data" ui-sref="app.campaign({campaignId: entity.id})" class="text-center">
+                  <td data-title="'标题'">{{entity.title}}</td>
+                  <td data-title="'开始时间'">{{entity.date_info.begin_timestamp | moment_unix}}</td>
+                  <td data-title="'结束时间'">{{entity.date_info.end_timestamp | moment_unix}}</td>
+                  <td data-title="'活动门店'">{{entity.location_id_list.length || '全部'}}</td>
+                  <td data-title="'注册日期'">{{entity.created | moment}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

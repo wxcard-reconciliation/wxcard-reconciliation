@@ -1,0 +1,87 @@
+<h3>活动管理</h3>
+<div ng-controller="CampaignController" class="container-fluid">
+   <!-- START row-->
+   <div class="row">
+      <div class="col-md-12">
+         <form name="formValidate" ng-submit="submitForm()" novalidate="" class="form-validate form-horizontal">
+            <!-- START panel-->
+            <div class="panel panel-default">
+               <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+               <div class="panel-body">
+                  <fieldset class="b0">
+                     <legend>活动资料</legend>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">活动标题</label>
+                        <div class="col-sm-6">
+                           <input type="text" name="title" required="" ng-model="entity.title" class="form-control" />
+                           <span ng-show="validateInput('title', 'required')" class="text-danger">标题不能为空</span>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">必填</small>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">活动时间</label>
+                        <div class="col-sm-6">
+                           <input type="date" name="begin_timestamp" required="" ng-model="begin_timestamp" />
+                           <span>-</span>
+                           <input type="date" name="end_timestamp" required="" ng-model="end_timestamp" />
+                           <span ng-show="validateInput('begin_timestamp', 'required')" class="text-danger">开始时间不能为空</span>
+                           <span ng-show="validateInput('end_timestamp', 'required')" class="text-danger">结束时间不能为空</span>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">必填</small>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">活动描述</label>
+                        <div class="col-sm-6">
+                           <textarea type="text" name="description" required="" ng-model="entity.description" class="form-control"></textarea>
+                           <span ng-show="validateInput('description', 'required')" class="text-danger">活动描述不能为空</span>
+                        </div>
+                        <div class="col-sm-4">
+                           <small class="text-muted">必填</small>
+                        </div>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">活动门店</label>
+                        <div class="col-sm-4">
+                           <select ng-model="city" name="city" ng-change="fetchPois(city)" class="form-control">
+                              <option ng-repeat="c in cities">{{c}}</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="form-group mt">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4">
+                           <select multiple="" size="10" class="form-control">
+                              <option ng-repeat="poi in fetchedPois" ng-click="selectedPois.push(poi);fetchedPois.splice($index, 1)">{{poi.branch_name}}</option>
+                           </select>
+                        </div>
+                        <div class="col-sm-4">
+                           <select multiple="" size="10" class="form-control">
+                              <option ng-repeat="poi in selectedPois" ng-click="fetchedPois.push(poi);selectedPois.splice($index, 1)">{{poi.city}}-{{poi.branch_name}}</option>
+                           </select>
+                        </div>
+                     </div>
+                  </fieldset>
+               </div>
+               <div class="panel-footer text-center">
+                  <button type="submit" class="mb-sm btn btn-lg btn-info">提交</button>
+                  <button ui-sref="app.campaigns()" class="mb-sm btn btn-lg btn-default">取消</button>
+               </div>
+            </div>
+            <!-- END panel-->
+         </form>
+      </div>
+   </div>
+   <!-- END row-->
+</div>

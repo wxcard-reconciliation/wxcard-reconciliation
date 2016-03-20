@@ -1,0 +1,60 @@
+h3 活动管理
+
+.container-fluid(ng-controller="CampaignController")
+  // START row
+  .row
+    .col-md-12
+      form.form-validate.form-horizontal(name="formValidate", ng-submit="submitForm()", novalidate="")
+        // START panel
+        .panel.panel-default
+          toaster-container(toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}")
+          .panel-body
+            fieldset.b0
+              legend 活动资料
+            fieldset
+              .form-group
+                label.col-sm-2.control-label 活动标题
+                .col-sm-6
+                  input.form-control(type='text', name='title', required='', ng-model="entity.title")
+                  span.text-danger(ng-show="validateInput('title', 'required')") 标题不能为空
+                .col-sm-4
+                  small.text-muted 必填
+            fieldset
+              .form-group
+                label.col-sm-2.control-label 活动时间
+                .col-sm-6
+                  input(type='date', name='begin_timestamp', required='', ng-model="begin_timestamp")
+                  span -
+                  input(type='date', name='end_timestamp', required='', ng-model="end_timestamp")
+                  span.text-danger(ng-show="validateInput('begin_timestamp', 'required')") 开始时间不能为空
+                  span.text-danger(ng-show="validateInput('end_timestamp', 'required')") 结束时间不能为空
+                .col-sm-4
+                  small.text-muted 必填            
+            fieldset
+              .form-group
+                label.col-sm-2.control-label 活动描述
+                .col-sm-6
+                  textarea.form-control(type='text', name='description', required='', ng-model="entity.description")
+                  span.text-danger(ng-show="validateInput('description', 'required')") 活动描述不能为空
+                .col-sm-4
+                  small.text-muted 必填
+            fieldset
+              .form-group
+                label.col-sm-2.control-label 活动门店
+                .col-sm-4
+                  select.form-control(ng-model="city", name='city', ng-change="fetchPois(city)")
+                    option(ng-repeat="c in cities") {{c}} 
+              .form-group.mt
+                .col-sm-2
+                .col-sm-4
+                  select.form-control(multiple='', size="10")
+                    option(ng-repeat="poi in fetchedPois", ng-click="selectedPois.push(poi);fetchedPois.splice($index, 1)") {{poi.branch_name}}
+                .col-sm-4
+                  select.form-control(multiple='', size="10")
+                    option(ng-repeat="poi in selectedPois", ng-click="fetchedPois.push(poi);selectedPois.splice($index, 1)") {{poi.city}}-{{poi.branch_name}}
+          .panel-footer.text-center
+            button.mb-sm.btn.btn-lg.btn-info(type='submit') 提交   
+            button.mb-sm.btn.btn-lg.btn-default(ui-sref="app.campaigns()") 取消
+        // END panel
+  // END row
+                

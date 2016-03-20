@@ -46,6 +46,12 @@
     "translate": "sidebar.heading.PROMOTION"
   },
   {
+    "text": "Campaigns",
+    "icon": "fa fa-gift",
+    "sref": "app.campaigns",
+    "translate": "sidebar.nav.CAMPAIGNS"
+  },
+  {
     "text": "Shares",
     "icon": "icon-share",
     "sref": "app.shares",
