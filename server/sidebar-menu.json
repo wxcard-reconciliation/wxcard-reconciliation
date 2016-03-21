@@ -30,7 +30,7 @@
   },
   {
     "text": "Card Statistic",
-    "icon": "icon-list",
+    "icon": "fa fa-table",
     "sref": "app.card-statistic",
     "translate": "sidebar.nav.CARDSTATISTIC"
   },
