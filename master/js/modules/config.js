@@ -385,6 +385,12 @@ function ($stateProvider, $locationProvider, $urlRouterProvider, helper) {
         resolve: helper.resolveFor('ngTable', 'moment', 'ngDialog'),
         controller: 'CardsController'
     })
+    .state('app.card', {
+        url: '/cards/:cardId',
+        title: 'Card Detail',
+        resolve: helper.resolveFor('moment'),
+        templateUrl: helper.basepath('card.html')
+    })
     .state('app.campaigns', {
         url: '/campaigns',
         title: 'Campaigns List',
