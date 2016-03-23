@@ -16,7 +16,7 @@
       <div class="table-responsive">
          <table ng-table="tableParams" class="table table-bordered table-striped">
             <tbody>
-               <tr ng-repeat="entity in $data" ui-sref="app.card({cardId: entity.id})" class="text-center">
+               <tr ng-repeat="entity in $data" class="text-center">
                   <td data-title="'类型'" class="text-left">{{entity.card_type| uppercase | card_type}}</td>
                   <td data-title="'标题'" class="text-left">{{entity.title}}</td>
                   <td data-title="'编号'">{{entity.id}}</td>
