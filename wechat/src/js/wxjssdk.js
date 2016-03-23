@@ -37,6 +37,28 @@ var wxjssdk = {
       }
     });
   },
+  getOAuth: function (success, error) {
+    success = success || function (accesstoken) {
+      console.log(accesstoken);
+    };
+    error = error || function (res) {
+      console.log(res);
+    };
+    var code = getUrlVars().code;
+    if(!code) {
+      return error('no code');
+    }
+
+    $.ajax({
+      url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getoauthaccesstoken",
+      data: {
+        code: code
+      },
+      crossDomain: true,
+      success: success,
+      error: error
+    });
+  },
   getUser: function (success, error) {
     success = success || function (user) {
       wxjssdk.setCookie('wxuser', JSON.stringify(user));
