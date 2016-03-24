@@ -16,7 +16,7 @@ h3
     .table-responsive
       table.table.table-bordered.table-striped(ng-table='tableParams')
         tbody
-          tr.text-center(ng-repeat='entity in $data')
+          tr.text-center(ng-repeat='entity in $data', ui-sref='app.card({cardId: entity.id})')
             td.text-left(data-title="'类型'") {{entity.card_type| uppercase | card_type}}
             td.text-left(data-title="'标题'") {{entity.title}}
             td(data-title="'编号'") {{entity.id}}

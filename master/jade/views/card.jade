@@ -10,10 +10,14 @@ h3 卡卷管理
           toaster-container(toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}")
           .panel-body
             fieldset.b0
-              legend 活动资料
+              legend 卡卷资料
             fieldset
               .form-group
-                label.col-sm-2.control-label 活动标题
+                label.col-sm-2.control-label 卡卷编号
+                .col-sm-6
+                  p.form-control-static {{entity.id}}
+              .form-group
+                label.col-sm-2.control-label 卡卷标题
                 .col-sm-6
                   input.form-control(type='text', name='title', required='', ng-model="entity.title")
                   span.text-danger(ng-show="validateInput('title', 'required')") 标题不能为空
@@ -21,7 +25,7 @@ h3 卡卷管理
                   small.text-muted 必填
             fieldset
               .form-group
-                label.col-sm-2.control-label 活动时间
+                label.col-sm-2.control-label 卡卷时间
                 .col-sm-6
                   input(type='date', name='begin_timestamp', required='', ng-model="begin_timestamp")
                   span -
@@ -32,7 +36,7 @@ h3 卡卷管理
                   small.text-muted 必填            
             fieldset
               .form-group
-                label.col-sm-2.control-label 活动门店
+                label.col-sm-2.control-label 卡卷门店
                 .col-sm-4
                   select.form-control(ng-model="city", name='city', ng-change="fetchPois(city)")
                     option(ng-repeat="c in cities") {{c}} 
@@ -49,10 +53,10 @@ h3 卡卷管理
                     option(ng-repeat="poi in selectedPois", ng-click="fetchedPois.push(poi);selectedPois.splice($index, 1)") {{poi.city}}-{{poi.branch_name}}
             fieldset
               .form-group
-                label.col-sm-2.control-label 活动描述
+                label.col-sm-2.control-label 卡卷描述
                 .col-sm-6
                   textarea.form-control(type='text', name='description', required='', ng-model="entity.description")
-                  span.text-danger(ng-show="validateInput('description', 'required')") 活动描述不能为空
+                  span.text-danger(ng-show="validateInput('description', 'required')") 卡卷描述不能为空
                 .col-sm-4
                   small.text-muted 必填
             fieldset
