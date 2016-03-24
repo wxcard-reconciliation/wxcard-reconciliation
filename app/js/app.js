@@ -1451,6 +1451,8 @@ App.controller('CardController', ["$scope", "Card", "$state", "toaster", "Poi", 
   if(cardId) {
     Card.findById({id: cardId}, function (result) {
       $scope.entity = result;
+      $scope.advanced_info = result.advanced_info;
+      $scope.reduce_cost = result.reduce_cost;
       $scope.selectedPois = Poi.find({
         filter:{
           where: {poi_id: {inq: result.location_id_list.map(function (poi) {return poi+'';})}},
@@ -1535,21 +1537,38 @@ App.controller('CardController', ["$scope", "Card", "$state", "toaster", "Poi", 
       $scope.entity.update_time = Math.round(Date.now()/1000);
       var card = {
         card_type: 'CASH',
-        cash: {
+      }
+      if($scope.entity.id) {
+        card.card_id = $scope.entity.id;
+        card.cash = {
+          base_info: {
+            location_id_list: $scope.entity.location_id_list
+          }
+        };
+        Card.updateCard(card, function (entity) {
+          toaster.pop('success', '更新成功', '已经更新卡卷 '+$scope.entity.title)
+          setTimeout(function () {
+            $state.go('app.cards')
+          }, 2000)
+        }, function (res) {
+          toaster.pop('error', '更新错误', res.data.error.message)
+        });
+      } else {
+        card.cash = {
           base_info: $scope.entity,
           advanced_info: $scope.advanced_info,
           least_cost: 0,
           reduce_cost: $scope.reduce_cost*100
         }
+        Card.createCard(card, function (entity) {
+          toaster.pop('success', '创建成功', '已经创建卡卷 '+$scope.entity.title)
+          setTimeout(function () {
+            $state.go('app.cards')
+          }, 2000)
+        }, function (res) {
+          toaster.pop('error', '创建错误', res.data.error.message)
+        });
       }
-      Card.createCard(card, function (entity) {
-        toaster.pop('success', '创建成功', '已经创建卡卷 '+$scope.entity.title)
-        setTimeout(function () {
-          $state.go('app.cards')
-        }, 2000)
-      }, function (res) {
-        toaster.pop('error', '创建错误', res.data.error.message)
-      })
     } else {
       return false;
     }

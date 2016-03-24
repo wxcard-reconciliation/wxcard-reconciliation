@@ -63100,6 +63100,46 @@ module.factory(
           method: "POST"
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.Card#updateCard
+         * @methodOf lbServices.Card
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Card` object.)
+         * </em>
+         */
+        "updateCard": {
+          url: urlBase + "/cards/updateCard",
+          method: "POST"
+        },
+
         // INTERNAL. Use Campaign.cards.findById() instead.
         "::findById::campaign::cards": {
           params: {
@@ -65462,6 +65502,33 @@ module.factory(
           method: "PUT"
         },
 
+        // INTERNAL. Use Campaign.campaignclients.findById() instead.
+        "prototype$__findById__campaignclients": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/campaigns/:id/campaignclients/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.destroyById() instead.
+        "prototype$__destroyById__campaignclients": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/campaigns/:id/campaignclients/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.updateById() instead.
+        "prototype$__updateById__campaignclients": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/campaigns/:id/campaignclients/:fk",
+          method: "PUT"
+        },
+
         // INTERNAL. Use Campaign.cards() instead.
         "prototype$__get__cards": {
           isArray: true,
@@ -65484,6 +65551,31 @@ module.factory(
         // INTERNAL. Use Campaign.cards.count() instead.
         "prototype$__count__cards": {
           url: urlBase + "/campaigns/:id/cards/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients() instead.
+        "prototype$__get__campaignclients": {
+          isArray: true,
+          url: urlBase + "/campaigns/:id/campaignclients",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.create() instead.
+        "prototype$__create__campaignclients": {
+          url: urlBase + "/campaigns/:id/campaignclients",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.destroyAll() instead.
+        "prototype$__delete__campaignclients": {
+          url: urlBase + "/campaigns/:id/campaignclients",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.count() instead.
+        "prototype$__count__campaignclients": {
+          url: urlBase + "/campaigns/:id/campaignclients/count",
           method: "GET"
         },
 
@@ -66342,6 +66434,307 @@ module.factory(
           var action = TargetResource["::updateById::campaign::cards"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.Campaign.campaignclients
+     * @header lbServices.Campaign.campaignclients
+     * @object
+     * @description
+     *
+     * The object `Campaign.campaignclients` groups methods
+     * manipulating `Campaignclient` instances related to `Campaign`.
+     *
+     * Call {@link lbServices.Campaign#campaignclients Campaign.campaignclients()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaign#campaignclients
+         * @methodOf lbServices.Campaign
+         *
+         * @description
+         *
+         * Queries campaignclients of campaign.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Campaignclient` object.)
+         * </em>
+         */
+        R.campaignclients = function() {
+          var TargetResource = $injector.get("Campaignclient");
+          var action = TargetResource["::get::campaign::campaignclients"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaign.campaignclients#count
+         * @methodOf lbServices.Campaign.campaignclients
+         *
+         * @description
+         *
+         * Counts campaignclients of campaign.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.campaignclients.count = function() {
+          var TargetResource = $injector.get("Campaignclient");
+          var action = TargetResource["::count::campaign::campaignclients"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaign.campaignclients#create
+         * @methodOf lbServices.Campaign.campaignclients
+         *
+         * @description
+         *
+         * Creates a new instance in campaignclients of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Campaignclient` object.)
+         * </em>
+         */
+        R.campaignclients.create = function() {
+          var TargetResource = $injector.get("Campaignclient");
+          var action = TargetResource["::create::campaign::campaignclients"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaign.campaignclients#createMany
+         * @methodOf lbServices.Campaign.campaignclients
+         *
+         * @description
+         *
+         * Creates a new instance in campaignclients of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Campaignclient` object.)
+         * </em>
+         */
+        R.campaignclients.createMany = function() {
+          var TargetResource = $injector.get("Campaignclient");
+          var action = TargetResource["::createMany::campaign::campaignclients"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaign.campaignclients#destroyAll
+         * @methodOf lbServices.Campaign.campaignclients
+         *
+         * @description
+         *
+         * Deletes all campaignclients of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.campaignclients.destroyAll = function() {
+          var TargetResource = $injector.get("Campaignclient");
+          var action = TargetResource["::delete::campaign::campaignclients"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaign.campaignclients#destroyById
+         * @methodOf lbServices.Campaign.campaignclients
+         *
+         * @description
+         *
+         * Delete a related item by id for campaignclients.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for campaignclients
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.campaignclients.destroyById = function() {
+          var TargetResource = $injector.get("Campaignclient");
+          var action = TargetResource["::destroyById::campaign::campaignclients"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaign.campaignclients#findById
+         * @methodOf lbServices.Campaign.campaignclients
+         *
+         * @description
+         *
+         * Find a related item by id for campaignclients.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for campaignclients
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Campaignclient` object.)
+         * </em>
+         */
+        R.campaignclients.findById = function() {
+          var TargetResource = $injector.get("Campaignclient");
+          var action = TargetResource["::findById::campaign::campaignclients"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaign.campaignclients#updateById
+         * @methodOf lbServices.Campaign.campaignclients
+         *
+         * @description
+         *
+         * Update a related item by id for campaignclients.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for campaignclients
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Campaignclient` object.)
+         * </em>
+         */
+        R.campaignclients.updateById = function() {
+          var TargetResource = $injector.get("Campaignclient");
+          var action = TargetResource["::updateById::campaign::campaignclients"];
+          return action.apply(R, arguments);
+        };
 
     return R;
   }]);
@@ -66788,6 +67181,65 @@ module.factory(
         "createChangeStream": {
           url: urlBase + "/campaignclients/change-stream",
           method: "POST"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.findById() instead.
+        "::findById::campaign::campaignclients": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/campaigns/:id/campaignclients/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.destroyById() instead.
+        "::destroyById::campaign::campaignclients": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/campaigns/:id/campaignclients/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.updateById() instead.
+        "::updateById::campaign::campaignclients": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/campaigns/:id/campaignclients/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients() instead.
+        "::get::campaign::campaignclients": {
+          isArray: true,
+          url: urlBase + "/campaigns/:id/campaignclients",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.create() instead.
+        "::create::campaign::campaignclients": {
+          url: urlBase + "/campaigns/:id/campaignclients",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.createMany() instead.
+        "::createMany::campaign::campaignclients": {
+          isArray: true,
+          url: urlBase + "/campaigns/:id/campaignclients",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.destroyAll() instead.
+        "::delete::campaign::campaignclients": {
+          url: urlBase + "/campaigns/:id/campaignclients",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Campaign.campaignclients.count() instead.
+        "::count::campaign::campaignclients": {
+          url: urlBase + "/campaigns/:id/campaignclients/count",
+          method: "GET"
         },
       }
     );
