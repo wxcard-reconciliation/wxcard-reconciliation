@@ -15,18 +15,24 @@ var cards = [
 var index = Math.floor(Math.random() * cards.length);
 var card = cards[index];
 
-if(Date.now() < 146145960000) {
-  $.alert('活动还没有开始，请耐心等待！');
-  $('#iconTop').toggleClass('weui_icon_waiting weui_icon_safe_warn');
-  $('#cardTitle').html("活动还没有开始....");
+if(!wxjssdk.getCookie('gotcard')) {
+  if(Date.now() < 146145960000) {
+    $.alert('活动还没有开始，请耐心等待！');
+    $('#iconTop').toggleClass('weui_icon_waiting weui_icon_safe_warn');
+    $('#cardTitle').html("活动还没有开始....");
+  } else {
+    $.showLoading("正在抢卡卷");
+    setTimeout(function () {
+      $.hideLoading();
+      $('#iconTop').toggleClass('weui_icon_waiting weui_icon_success');
+      $('#cardTitle').html("有机会领取："+card.title);
+      $('#btnGetCard').removeClass('weui_btn_disabled');
+    }, 2000);
+  }
 } else {
-  $.showLoading("正在抢卡卷");
-  setTimeout(function () {
-    $.hideLoading();
-    $('#iconTop').toggleClass('weui_icon_waiting weui_icon_success');
-    $('#cardTitle').html("有机会领取："+card.title);
-    $('#btnGetCard').removeClass('weui_btn_disabled');
-  }, 2000);
+  $.alert("您已领过卡卷了，感谢参与！");
+  $('#iconTop').toggleClass('weui_icon_waiting weui_icon_safe_warn');
+  $('#cardTitle').html("您已领过卡卷了，感谢参与！");
 }
 
 wxjssdk.config({jsApiList: ['addCard']});
@@ -55,6 +61,7 @@ wx.error(function (res) {
 });
   
 $('#btnGetCard').on('click', function () {
+  if($('#btnGetCard').hasClass('weui_btn_disabled')) return;
   $.showLoading("正在领取奖券");
   $.ajax({
     url: "http://zsydz.aceweet.com:3000/api/wxaccesstokens/getcardext",
@@ -73,6 +80,7 @@ $('#btnGetCard').on('click', function () {
         }],
         success: function (res) {
           $('#btnGetCard').addClass('weui_btn_disabled');
+          wxjssdk.setCookie('gotcard', true);
         }
       });
     },
