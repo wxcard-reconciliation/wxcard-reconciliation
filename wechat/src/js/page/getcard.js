@@ -15,7 +15,7 @@ var cards = [
 var index = Math.floor(Math.random() * cards.length);
 var card = cards[index];
 
-if(Date.now() < 1461459600000) {
+if(Date.now() < 146145960000) {
   $.alert('活动还没有开始，请耐心等待！');
   $('#iconTop').toggleClass('weui_icon_waiting weui_icon_safe_warn');
   $('#cardTitle').html("活动还没有开始....");
