@@ -139,6 +139,7 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
         }, function (res) {
           toaster.pop('error', '更新错误', res.data.error.message)
         });
+        Card.prototype$updateAttributes({id: $scope.entity.id}, {location_id_list: $scope.entity.location_id_list});
       } else {
         card.cash = {
           base_info: $scope.entity,
