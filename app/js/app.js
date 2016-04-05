@@ -1644,22 +1644,28 @@ App.controller('CardeventsController', ["$scope", "Cardevent", "ngTableParams", 
   }   
 }])
 
-App.controller('CardStatisticController', ["$scope", "Cardevent", "ngTableParams", function ($scope, Cardevent, ngTableParams) {
+App.controller('CardStatisticController', ["$scope", "Cardevent", "ngTableParams", "Campaignclient", function ($scope, Cardevent, ngTableParams, Campaignclient) {
   
   $scope.filter = {
     where: {
       CardId: {
         $in:[
-          'pAtUNs2kaIzJjl6ZXUO-fMP_KabQ',
-          'pAtUNs5y63pZFOCoOD6V8pg4bMQk',
-          'pAtUNsyFRkWSW8D92mnqKyvNJFVA'
+          'pAtUNsyggXkmG15LTyoEPDGZWPrA',
+          'pAtUNs941xXpR6s6FwV22ygbnZFk',
+          'pAtUNswA_P0V5tDJKeKv0P7EqF5I',
+          'pAtUNs1sa1uyTOpAgvflCDBT67wc',
+          'pAtUNs33uwFIOrbw6BVy23yYBLZo',
+          'pAtUNs9RpArHsBJNsMIOkKOcvxbo',
+          'pAtUNs7xMlcsH77tFiZYJEPz-gH4',
+          'pAtUNs7zY1vW_JDYW6jln-hWWYc0',
+          'pAtUNsxoq4aEMV2shSjBMKeRHgsA'
         ]
       }
     }
   }
   
   $scope.tableParams = new ngTableParams({
-    count: 25,
+    count: 100,
     filter: $scope.filter
   }, {
     getData: function($defer, params) {
@@ -1676,26 +1682,26 @@ App.controller('CardStatisticController', ["$scope", "Cardevent", "ngTableParams
           consumed_card0: 0, donated_card0: 0, count_card0: 0,
           consumed_card1: 0, donated_card1: 0, count_card1: 0,
           consumed_card2: 0, donated_card2: 0, count_card2: 0,
+          consumed_card3: 0, donated_card3: 0, count_card3: 0,
+          consumed_card4: 0, donated_card4: 0, count_card4: 0,
+          consumed_card5: 0, donated_card5: 0, count_card5: 0,
+          consumed_card6: 0, donated_card6: 0, count_card6: 0,
+          consumed_card7: 0, donated_card7: 0, count_card7: 0,
+          consumed_card8: 0, donated_card8: 0, count_card8: 0,
           count: 0
         };
+        $scope.cityKeys = Object.keys($scope.summary);
         results.forEach(function (city) {
-          $scope.summary.consumed_card0 += city.consumed_card0;
-          $scope.summary.donated_card0 += city.donated_card0;
-          $scope.summary.count_card0 += city.count_card0;
-          $scope.summary.consumed_card1 += city.consumed_card1;
-          $scope.summary.donated_card1 += city.donated_card1;
-          $scope.summary.count_card1 += city.count_card1;
-          $scope.summary.consumed_card2 += city.consumed_card2;
-          $scope.summary.donated_card2 += city.donated_card2;
-          $scope.summary.count_card2 += city.count_card2;
-          $scope.summary.count += city.count;
+          $scope.cityKeys.forEach(function (key) {
+            $scope.summary[key] += city[key];
+          });
         });
       });
     }
   });
   
   $scope.tablePoi = new ngTableParams({
-    count: 50,
+    count: 200,
     filter: $scope.filter
   }, {
     getData: function ($defer, params) {
@@ -1712,18 +1718,45 @@ App.controller('CardStatisticController', ["$scope", "Cardevent", "ngTableParams
           count_card0: 0,
           count_card1: 0,
           count_card2: 0,
+          count_card3: 0,
+          count_card4: 0,
+          count_card5: 0,
+          count_card6: 0,
+          count_card7: 0,
+          count_card8: 0,
           count: 0
         };
         results.forEach(function (poi) {
-          $scope.summaryPoi.count_card0 += poi.count_card0;
-          $scope.summaryPoi.count_card1 += poi.count_card1;
-          $scope.summaryPoi.count_card2 += poi.count_card2;
-          $scope.summaryPoi.count += poi.count;
+          Object.keys($scope.summaryPoi).forEach(function (key) {
+            $scope.summaryPoi[key] += poi[key];
+          });
         });
       });
     }
   });
   
+  $scope.tableClient = new ngTableParams({
+    count: 14,
+    filter: $scope.filter
+  }, {
+    getData: function ($defer, params) {
+      var opt = {}
+      opt.limit = params.count()
+      opt.skip = (params.page()-1)*opt.limit
+      opt.skip = 0;
+      Campaignclient.statcity({filter: opt}, function (results) {
+        $defer.resolve(results);
+        $scope.summaryClient = {
+          clientCount: 0,
+          count: 0
+        };
+        results.forEach(function (poi) {
+          $scope.summaryClient.clientCount += poi.clientCount;
+          $scope.summaryClient.count += poi.count;
+        });
+      });
+    }
+  });
 }])
 
 App.controller('AngularCarouselController', ["$scope", function($scope) {

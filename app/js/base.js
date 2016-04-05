@@ -67183,6 +67183,40 @@ module.factory(
           method: "POST"
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.Campaignclient#statcity
+         * @methodOf lbServices.Campaignclient
+         *
+         * @description
+         *
+         * statistic campaign client of city
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Campaignclient` object.)
+         * </em>
+         */
+        "statcity": {
+          isArray: true,
+          url: urlBase + "/campaignclients/statcity",
+          method: "GET"
+        },
+
         // INTERNAL. Use Campaign.campaignclients.findById() instead.
         "::findById::campaign::campaignclients": {
           params: {

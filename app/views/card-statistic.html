@@ -1,39 +1,73 @@
 <h3>卡卷统计</h3>
 <div class="container-fluid">
+   <!-- statistic campaign client-->
+   <div class="panel panel-default">
+      <div class="panel-heading"><a ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="client.csv" class="pull-right btn btn-sm btn-info">导出</a>
+         <div class="panel-title">活动用户汇总</div>
+      </div>
+      <div class="table-responsive">
+         <table ng-table="tableClient" export-csv="csv" class="table table-bordered table-striped">
+            <tbody>
+               <tr ng-repeat="entity in $data" class="text-center">
+                  <td data-title="'序号'">{{$index+1}}</td>
+                  <td data-title="'地市'">{{entity._id}}</td>
+                  <td data-title="'参与人数'">{{entity.clientCount || 0}}</td>
+                  <td data-title="'抽奖人次'">{{entity.count || 0}}</td>
+               </tr>
+               <tr class="text-center text-primary">
+                  <td>总计</td>
+                  <td></td>
+                  <td>{{summaryClient.clientCount}}</td>
+                  <td>{{summaryClient.count}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <!--statistic city-->
    <div class="panel panel-default">
       <div class="panel-heading"><a ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="city.csv" class="pull-right btn btn-sm btn-info">导出</a>
          <div class="panel-title">地市汇总</div>
       </div>
       <div class="table-responsive">
-         <table ng-table="tableParams" export-csv="csv" class="table table-bordered table-striped">
+         <table ng-table="tableParams" export-csv="csv1" class="table table-bordered table-striped">
             <tbody>
                <tr ng-repeat="entity in $data" class="text-center">
                   <td data-title="'序号'">{{$index+1}}</td>
                   <td data-title="'地市'">{{entity._id || "其他"}}</td>
-                  <td data-title="'一等奖核销'">{{entity.consumed_card0 || 0}}</td>
-                  <td data-title="'一等奖转赠'">{{entity.donated_card0 || 0 }}</td>
-                  <td data-title="'一等奖参与'">{{entity.count_card0 || 0}}</td>
-                  <td data-title="'二等奖核销'">{{entity.consumed_card1 || 0}}</td>
-                  <td data-title="'二等奖转赠'">{{entity.donated_card1 || 0 }}</td>
-                  <td data-title="'二等奖参与'">{{entity.count_card1 || 0}}</td>
-                  <td data-title="'三等奖核销'">{{entity.consumed_card2 || 0}}</td>
-                  <td data-title="'三等奖转赠'">{{entity.donated_card2 || 0 }}</td>
-                  <td data-title="'三等奖参与'">{{entity.count_card2d || 0}}</td>
+                  <td data-title="'20元核销'">{{entity.consumed_card0 || 0}}</td>
+                  <td data-title="'20元转赠'">{{entity.donated_card0 || 0 }}</td>
+                  <td data-title="'20元参与'">{{entity.count_card0 || 0}}</td>
+                  <td data-title="'30元核销'">{{entity.consumed_card1 || 0}}</td>
+                  <td data-title="'30元转赠'">{{entity.donated_card1 || 0 }}</td>
+                  <td data-title="'30元参与'">{{entity.count_card1 || 0}}</td>
+                  <td data-title="'40元核销'">{{entity.consumed_card2 || 0}}</td>
+                  <td data-title="'40元转赠'">{{entity.donated_card2 || 0 }}</td>
+                  <td data-title="'40元参与'">{{entity.count_card2 || 0}}</td>
+                  <td data-title="'50元核销'">{{entity.consumed_card3 || 0}}</td>
+                  <td data-title="'50元转赠'">{{entity.donated_card3 || 0 }}</td>
+                  <td data-title="'50元参与'">{{entity.count_card3 || 0}}</td>
+                  <td data-title="'60元核销'">{{entity.consumed_card4 || 0}}</td>
+                  <td data-title="'60元转赠'">{{entity.donated_card4 || 0 }}</td>
+                  <td data-title="'60元参与'">{{entity.count_card4 || 0}}</td>
+                  <td data-title="'70元核销'">{{entity.consumed_card5 || 0}}</td>
+                  <td data-title="'70元转赠'">{{entity.donated_card5 || 0 }}</td>
+                  <td data-title="'70元参与'">{{entity.count_card5 || 0}}</td>
+                  <td data-title="'100元核销'">{{entity.consumed_card6 || 0}}</td>
+                  <td data-title="'100元转赠'">{{entity.donated_card6 || 0 }}</td>
+                  <td data-title="'100元参与'">{{entity.count_card6 || 0}}</td>
+                  <td data-title="'200元核销'">{{entity.consumed_card7 || 0}}</td>
+                  <td data-title="'200元转赠'">{{entity.donated_card7 || 0 }}</td>
+                  <td data-title="'200元参与'">{{entity.count_card7 || 0}}</td>
+                  <td data-title="'500元核销'">{{entity.consumed_card8 || 0}}</td>
+                  <td data-title="'500元转赠'">{{entity.donated_card8 || 0 }}</td>
+                  <td data-title="'500元参与'">{{entity.count_card8 || 0}}</td>
                   <td data-title="'总计参与'">{{entity.count || 0}}</td>
                </tr>
                <tr class="text-center text-primary">
                   <td>总计</td>
                   <td></td>
-                  <td>{{summary.consumed_card0}}</td>
-                  <td>{{summary.donated_card0}}</td>
-                  <td>{{summary.count_card0}}</td>
-                  <td>{{summary.consumed_card1}}</td>
-                  <td>{{summary.donated_card1}}</td>
-                  <td>{{summary.count_card1}}</td>
-                  <td>{{summary.consumed_card2}}</td>
-                  <td>{{summary.donated_card2}}</td>
-                  <td>{{summary.count_card2}}</td>
-                  <td>{{summary.count}}</td>
+                  <td ng-repeat="key in cityKeys">{{summary[key]}}</td>
                </tr>
             </tbody>
          </table>
@@ -45,15 +79,21 @@
          <div class="panel-title">油站核销汇总</div>
       </div>
       <div class="table-responsive">
-         <table ng-table="tablePoi" export-csv="csv" class="table table-bordered table-striped">
+         <table ng-table="tablePoi" export-csv="csv2" class="table table-bordered table-striped">
             <tbody>
                <tr ng-repeat="entity in $data" class="text-center">
                   <td data-title="'序号'">{{$index+1}}</td>
                   <td data-title="'地市'">{{entity._id && entity._id.city || "其他"}}</td>
                   <td data-title="'加油站'" class="text-left">{{entity._id && entity._id.name || "其他"}}</td>
-                  <td data-title="'一等奖核销'">{{entity.count_card0 || 0}}</td>
-                  <td data-title="'二等奖核销'">{{entity.count_card1 || 0}}</td>
-                  <td data-title="'三等奖核销'">{{entity.count_card2 || 0}}</td>
+                  <td data-title="'20元'">{{entity.count_card0 || 0}}</td>
+                  <td data-title="'30元'">{{entity.count_card1 || 0}}</td>
+                  <td data-title="'40元'">{{entity.count_card2 || 0}}</td>
+                  <td data-title="'50元'">{{entity.count_card3 || 0}}</td>
+                  <td data-title="'60元'">{{entity.count_card4 || 0}}</td>
+                  <td data-title="'70元'">{{entity.count_card5 || 0}}</td>
+                  <td data-title="'100元'">{{entity.count_card6 || 0}}</td>
+                  <td data-title="'200元'">{{entity.count_card7 || 0}}</td>
+                  <td data-title="'500元'">{{entity.count_card8 || 0}}</td>
                   <td data-title="'总计核销'">{{entity.count || 0}}</td>
                </tr>
                <tr class="text-center text-primary">
@@ -63,6 +103,12 @@
                   <td>{{summaryPoi.count_card0}}</td>
                   <td>{{summaryPoi.count_card1}}</td>
                   <td>{{summaryPoi.count_card2}}</td>
+                  <td>{{summaryPoi.count_card3}}</td>
+                  <td>{{summaryPoi.count_card4}}</td>
+                  <td>{{summaryPoi.count_card5}}</td>
+                  <td>{{summaryPoi.count_card6}}</td>
+                  <td>{{summaryPoi.count_card7}}</td>
+                  <td>{{summaryPoi.count_card8}}</td>
                   <td>{{summaryPoi.count}}</td>
                </tr>
             </tbody>
