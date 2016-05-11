@@ -2,8 +2,7 @@ var wxjssdk = require('../wxjssdk');
 
 function fetchPois(branch) {
   var filter = {limit: 10};
-  if(branch && branch != '') filter.where = {branch_name:{regex: branch}};
-  $('#poiList').empty();
+  if(branch && branch != '') filter.where = {or:[{branch_name:{regex: branch}}, {business_name: {regex: branch}}]};
   $.showLoading();
   $.ajax({
     url: "http://zsydz.aceweet.com:3000/api/pois",
@@ -12,6 +11,7 @@ function fetchPois(branch) {
     },
     crossDomain: true,
     success: function( data ) {
+      $('#poiList').empty();
       $.hideLoading();
       data.forEach(function (poi) {
         var dom = '<div class="weui_cell" id="'+poi.poi_id+'"> \
@@ -50,7 +50,7 @@ $('#search_clear').on("touchend", function () {
   fetchPois();
   $('#search_input').val('');
 });
-      
+
 var data = {};
 wxjssdk.config({jsApiList: ['hideOptionMenu']});
 wx.ready(function () {
