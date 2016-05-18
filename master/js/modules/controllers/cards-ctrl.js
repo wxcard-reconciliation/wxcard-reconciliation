@@ -4,7 +4,7 @@
  =========================================================*/
 
 App.controller('CardsController', function ($scope, Card, ngTableParams) {
-  
+
   $scope.filter = {text: ''}
   $scope.tableParams = new ngTableParams({
     count: 10,
@@ -26,7 +26,7 @@ App.controller('CardsController', function ($scope, Card, ngTableParams) {
         Card.find({filter:opt}, $defer.resolve)
       })
     }
-  })   
+  })
 })
 
 App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $q) {
@@ -48,8 +48,9 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
       $scope.end_timestamp = new Date(result.date_info.end_timestamp*1000);
     });
   } else {
+    var imgurl = "https://mmbiz.qlogo.cn/mmbiz/O1DymY4NpO8g6cYMtNXdeYPUT7eOUwnBUvdDNToOV2y4SiamGMreu85hn3oXiaWiaBeTJrY8BiadLGT3nvFmxiaficQg/0?wx_fmt=png";
     $scope.entity = {
-      logo_url: "http://mmbiz.qpic.cn/mmbiz/O1DymY4NpO88CjYk0XWw9VAW99RMibqchv2OVDOibPpmMu65H47usx4fjyRwvRaZwCccibCiccMgwPk9unibewSQfjw/0?wx_fmt=jpeg",
+      logo_url: imgurl,
       brand_name: "中国石油江苏好客E站",
       code_type: "CODE_TYPE_QRCODE",
       color: "Color010",
@@ -58,7 +59,7 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
       date_info:{
         type: "DATE_TYPE_FIX_TIME_RANGE"
       },
-      description: "满足以下条件之一，即可在指定加油站，由加油站充值员将电子充值券兑换为充值额充入加油卡：\r\n1. 您未办过昆仑加油卡，新办理昆仑个人加油卡并首次充值2000元（含）以上。\r\n2. 您已办理昆仑个人加油卡，但连续3个月以上未充值的，持原卡单次充2000元（含）以上的。\r\n3. 您已办理昆仑个人加油卡，2月份有一笔充值高于1000元，本次充值超过2月最高值500元及以上。举例：您上月最高充值1000元，本次充值达到1500元（高于上月最高充值额500元）即可。\r\n\r\n特别说明：\r\n1. 每日电子充值券投放数量有限，抢完为止。电子充值券有效期截至4月1日，4月1日之前未完成充值额兑换的，视为弃权，充值券失效。\r\n2. 充值券可与其他促销优惠同时使用。",
+      description: "本卷为周末优惠活动兑奖凭证，请凭卷到指定加油站兑换奖品。",
       notice: "请向充值员出示卡卷",
       sku: {
         quantity: 20,
@@ -94,14 +95,12 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
       ],
       "text_image_list": [],
       "abstract": {
-        "abstract": "踏青红包",
-        "icon_url_list": [
-          "http://mmbiz.qpic.cn/mmbiz/O1DymY4NpO9RFpM2RwHZ4pyia8tqY9c37ibEVEgibn7PU1vFaC66cuE8iaQlZOPmSziaqxp6Q8Euic773PZWm0K8g6qA/0?wx_fmt=jpeg"
-        ]
+        "abstract": "周末油惠",
+        "icon_url_list": [imgurl]
       }
     }
   }
-  
+
   $scope.reduce_cost = 0;
   $scope.begin_timestamp = new Date();
   $scope.end_timestamp = new Date();
@@ -115,18 +114,25 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
   $scope.submitForm = function() {
     $scope.submitted = true;
     if ($scope.formValidate.$valid) {
-      $scope.entity.location_id_list = $scope.selectedPois.map(function (poi) {
-        return parseInt(poi.poi_id);
-      });
+      // $scope.entity.location_id_list = $scope.selectedPois.map(function (poi) {
+      //   return parseInt(poi.poi_id);
+      // });
+      $scope.entity.location_id_list = [288654237,216148006,228214609,288646436,219550682,278556572,216022806,226790172,
+        293303866,288779835,276379023,230056882,288582503,218744842,288700798,281048614,277130186,228275599,275720615,
+        280969299,278607328,277249943,293304490,215442816,224599730,221882259,214037871,288679150,227857327,288721501,
+        233600668,215472047,225993753,233590747,213938485,220195018,281135782,218657764,288791433,277221869,276729992,
+        278409170,219700700,222892913,285605004,403610969,220853259,231460493,288763385,233451751,222652912,229020836,
+        288612802,229588276,293312097,216464420,281048614,288700798,218744842,293312163,225088340,213755969,281791637,
+        460688468];
       $scope.entity.date_info.begin_timestamp = moment($scope.begin_timestamp).startOf('day').unix();
       $scope.entity.date_info.end_timestamp = moment($scope.end_timestamp).endOf('day').unix();
       $scope.entity.update_time = Math.round(Date.now()/1000);
       var card = {
-        card_type: 'CASH',
+        card_type: 'GENERAL_COUPON'
       }
       if($scope.entity.id) {
         card.card_id = $scope.entity.id;
-        card.cash = {
+        card.general_coupon = {
           base_info: {
             location_id_list: $scope.entity.location_id_list
           }
@@ -141,11 +147,10 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
         });
         Card.prototype$updateAttributes({id: $scope.entity.id}, {location_id_list: $scope.entity.location_id_list});
       } else {
-        card.cash = {
+        card.general_coupon = {
           base_info: $scope.entity,
           advanced_info: $scope.advanced_info,
-          least_cost: 0,
-          reduce_cost: $scope.reduce_cost*100
+          default_detail: '凭卷到指定加油站兑换奖品'
         }
         Card.createCard(card, function (entity) {
           toaster.pop('success', '创建成功', '已经创建卡卷 '+$scope.entity.title)
@@ -160,7 +165,7 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
       return false;
     }
   };
-  
+
   $scope.fetchPois = function (city, branch_name) {
     var q = $q.defer();
     $scope.loadingPois = true;
@@ -176,7 +181,7 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
     })
     return q.promise;
   };
-  
+
   $scope.addPoi = function (poi, index) {
     $scope.selectedPois.push(poi);
     $scope.fetchedPois.splice(index, 1);
@@ -185,7 +190,7 @@ App.controller('CardController', function ($scope, Card, $state, toaster, Poi, $
 })
 
 App.controller('CardeventsController', function ($scope, Cardevent, ngTableParams, ngDialog) {
-  
+
   $scope.filter = {text: ''}
   $scope.tableParams = new ngTableParams({
     count: 10,
@@ -219,19 +224,19 @@ App.controller('CardeventsController', function ($scope, Cardevent, ngTableParam
       })
     }
   })
-  
+
   $scope.showReceipt = function (imageurl) {
     if(!imageurl) return;
     ngDialog.open({
       template: "<img src="+imageurl+" class='img-responsive'>",
       plain: true,
       className: 'ngdialog-theme-default'
-    });    
-  }   
+    });
+  }
 })
 
 App.controller('CardStatisticController', function ($scope, Cardevent, ngTableParams, Campaignclient) {
-  
+
   $scope.filter = {
     where: {
       CardId: {
@@ -249,7 +254,7 @@ App.controller('CardStatisticController', function ($scope, Cardevent, ngTablePa
       }
     }
   }
-  
+
   $scope.tableParams = new ngTableParams({
     count: 100,
     filter: $scope.filter
@@ -285,7 +290,7 @@ App.controller('CardStatisticController', function ($scope, Cardevent, ngTablePa
       });
     }
   });
-  
+
   $scope.tablePoi = new ngTableParams({
     count: 200,
     filter: $scope.filter
@@ -320,7 +325,7 @@ App.controller('CardStatisticController', function ($scope, Cardevent, ngTablePa
       });
     }
   });
-  
+
   $scope.tableClient = new ngTableParams({
     count: 14,
     filter: $scope.filter
