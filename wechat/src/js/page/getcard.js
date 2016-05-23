@@ -1,15 +1,15 @@
 var wxjssdk = require('../wxjssdk');
 
 var cards = [
-  {title: "20元充值抵用券", id: "pAtUNsyggXkmG15LTyoEPDGZWPrA"},
-  {title: "30元充值抵用券", id: "pAtUNs941xXpR6s6FwV22ygbnZFk"},
-  {title: "40元充值抵用券", id: "pAtUNswA_P0V5tDJKeKv0P7EqF5I"},
-  {title: "50元充值抵用券", id: "pAtUNs1sa1uyTOpAgvflCDBT67wc"},
-  {title: "60元充值抵用券", id: "pAtUNs33uwFIOrbw6BVy23yYBLZo"},
-  {title: "70元充值抵用券", id: "pAtUNs9RpArHsBJNsMIOkKOcvxbo"},
-  {title: "100元充值抵用券", id: "pAtUNs7xMlcsH77tFiZYJEPz-gH4"},
-  {title: "200元充值抵用券", id: "pAtUNs7zY1vW_JDYW6jln-hWWYc0"},
-  {title: "500元充值抵用券", id: "pAtUNsxoq4aEMV2shSjBMKeRHgsA"}
+  // {title: "20元充值抵用券", id: "pAtUNsyggXkmG15LTyoEPDGZWPrA"},
+  // {title: "30元充值抵用券", id: "pAtUNs941xXpR6s6FwV22ygbnZFk"},
+  // {title: "40元充值抵用券", id: "pAtUNswA_P0V5tDJKeKv0P7EqF5I"},
+  // {title: "50元充值抵用券", id: "pAtUNs1sa1uyTOpAgvflCDBT67wc"},
+  // {title: "60元充值抵用券", id: "pAtUNs33uwFIOrbw6BVy23yYBLZo"},
+  // {title: "70元充值抵用券", id: "pAtUNs9RpArHsBJNsMIOkKOcvxbo"},
+  // {title: "100元充值抵用券", id: "pAtUNs7xMlcsH77tFiZYJEPz-gH4"},
+  // {title: "200元充值抵用券", id: "pAtUNs7zY1vW_JDYW6jln-hWWYc0"},
+  {title: "500元充值抵用券", id: "pAtUNs7WTXGCHHUHsEVlI_X7rjIk"}
 ];
 
 var index = Math.floor(Math.random() * cards.length);
@@ -21,7 +21,7 @@ var card = cards[index];
 //   $('#iconTop').toggleClass('weui_icon_waiting weui_icon_safe_warn');
 //   $('#cardTitle').html("您已领过卡卷了，感谢参与！");
 // }
-if(Date.now() < 146145960) {
+if(Date.now() < 14614596) {
   $.alert('活动还没有开始，请耐心等待！');
   $('#iconTop').toggleClass('weui_icon_waiting weui_icon_safe_warn');
   $('#cardTitle').html("活动还没有开始....");
@@ -59,7 +59,7 @@ wx.ready(function () {
 wx.error(function (res) {
   console.log(res);
 });
-  
+
 $('#btnGetCard').on('click', function () {
   if($('#btnGetCard').hasClass('weui_btn_disabled')) return;
   $.showLoading("正在领取奖券");
